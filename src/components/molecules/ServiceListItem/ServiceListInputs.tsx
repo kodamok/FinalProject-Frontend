@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { CgPlayListAdd, CgRemove } from 'react-icons/cg';
 import { BsThreeDots } from 'react-icons/bs';
-
-/* import useForm from '../../../hooks/useForm'; */
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
@@ -58,9 +56,9 @@ const ThreeDotsMenuWrapper = styled.div`
 `;
 
 const TitleOfServices = styled.table`
-  ul {
+  tr {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     list-style: none;
   }
 
@@ -76,7 +74,7 @@ const TitleOfServices = styled.table`
     flex-grow: 6;
   }
 
-  h5 {
+  tr {
     margin: 0;
     text-align: left;
   }
@@ -88,15 +86,12 @@ const IconsContainer = styled.div`
 `;
 
 type Service = {
-  serviceId: number;
   serviceName: string;
   price: number;
   description: string;
 };
 
-function ServiceListItem({ handleChange }: any): JSX.Element {
-  const [serviceList, setServiceList] = useState([{ serviceName: '', price: 0, description: '' }]);
-
+function ServiceListItem({ serviceList, setServiceList }: any): JSX.Element {
   /* useEffect(() => {
     getServices(serviceList);
   }, [serviceList]); */
@@ -114,12 +109,11 @@ function ServiceListItem({ handleChange }: any): JSX.Element {
   };
 
   // FUNCTION TO HANDLE INPUT CHANGES AND MANAGING TO THE FORM
-  const handleServiceChange = (e: InputEvent, index: number) => {
+  const handleServiceChange = (e: InputEvent, index: any) => {
     const { value, name }: any = e.target as HTMLInputElement;
     const list: Service[] | any = [...serviceList];
     list[index][name] = value as string;
     setServiceList(list);
-    handleChange(e);
   };
 
   return (
@@ -143,24 +137,26 @@ function ServiceListItem({ handleChange }: any): JSX.Element {
 
       <Container>
         <TitleOfServices>
-          <ul>
-            <li className="title">
-              <h5>Title</h5>
-            </li>
-            <li className="price">
-              <h5>price</h5>
-            </li>
-            <li className="description">
-              <h5>Description</h5>
-            </li>
-          </ul>
+          <thead>
+            <tr>
+              <td className="title">
+                <h5>Title</h5>
+              </td>
+              <td className="price">
+                <h5>price</h5>
+              </td>
+              <td className="description">
+                <h5>Description</h5>
+              </td>
+            </tr>
+          </thead>
         </TitleOfServices>
         <AddNewServiceContainer>
           {serviceList.length === 0 ? (
             <h5 style={{ textAlign: 'center' }}>NO SERVICES</h5>
           ) : (
             serviceList.map((singleService: any, index: number) => (
-              <InputsContainer>
+              <InputsContainer key={index}>
                 <div>
                   <InputWithLabel
                     onChange={(e: any) => handleServiceChange(e, index)}

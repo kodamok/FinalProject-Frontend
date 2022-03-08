@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Context } from '../../../providers/GeneralProvider';
@@ -69,7 +69,11 @@ const projectInfo: initial = {
 function NewProject(): JSX.Element {
   const { userData } = useContext(Context);
   const { inputs, handleChange } = useForm(projectInfo);
+  const [serviceList, setServiceList] = useState([{ serviceName: '', price: 0, description: '' }]);
+  inputs.services = [...serviceList];
   const params = useParams();
+  console.log(inputs);
+  console.log(serviceList);
 
   // EXTRACT THE SERVICES FROM THE SERVICE LIST INPUT COMPONENT
   /* 
@@ -96,8 +100,10 @@ function NewProject(): JSX.Element {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userData.token}`
         },
+
         body: JSON.stringify({ inputs })
       });
+      console.log(inputs);
       const resJSON = await res.json();
       console.log(resJSON);
     } catch (error: any) {
@@ -163,7 +169,11 @@ function NewProject(): JSX.Element {
               onChange={handleChange}
             />
           </div>
-          <ServiceListInputs handleChange={handleChange} />
+          <ServiceListInputs
+            handleChange={handleChange}
+            serviceList={serviceList}
+            setServiceList={setServiceList}
+          />
         </BasicInfoContainer>
 
         <ButtonWrapper>

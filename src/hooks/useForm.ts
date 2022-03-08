@@ -24,9 +24,10 @@ export default function useForm(initial = initValue) {
     type: string;
   }
 
-  async function handleChange(e: React.ChangeEvent<HTMLInputElement> | any) {
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let { value }: ChangeEvent = e.target as HTMLInputElement;
     const { name, type }: ChangeEvent = e.target as HTMLInputElement;
+
     if (type === 'number') {
       value = parseInt(value, 10);
     }

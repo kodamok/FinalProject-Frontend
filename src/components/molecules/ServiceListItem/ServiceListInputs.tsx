@@ -1,33 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CgPlayListAdd, CgRemove } from 'react-icons/cg';
-import { BsThreeDots } from 'react-icons/bs';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
-import IconClickable from '../../atoms/IconClickable/IconClickable';
-import Button from '../../atoms/Button/Button';
 
 interface DivStyles {
   width?: string | undefined;
 }
 
-const Container = styled.div<DivStyles>`
-  display: flex;
-  flex-direction: column;
-  width: ${({ width }) => width};
-`;
-const AddNewServiceContainer = styled.div`
-  /* border: 2px solid black; */
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  justify-content: space-between;
-`;
-const InputsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-
-  margin: 0 0 1.5rem 0;
-`;
 /* const ListOfServicesWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -42,47 +21,91 @@ const InputsContainer = styled.div`
 `; */
 
 const WrapperContainer = styled.div`
-  flex-grow: 10;
-`;
-
-const IconBox = styled.div`
-  padding: 0.2rem;
-`;
-
-const ThreeDotsMenuWrapper = styled.div`
+  /* border: 5px solid red; */
   display: flex;
-  align-items: baseline;
+  flex-wrap: wrap;
+`;
+
+const Container = styled.div<DivStyles>`
+  /* border: 5px solid blue; */
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+`;
+
+const HeaderServiceGrid = styled.div`
+  /*  border: 5px solid yellow; */
+  display: inline-grid;
+  mix-width: 800px;
+  grid-template-columns: 8fr 8fr 8fr 1fr;
+  font-family: 'Inter';
+  font-size: ${({ theme }) => theme.fontSizeInter.ms};
+  font-weight: bold;
+
+  .boxTitle {
+    /* border: 5px solid black; */
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+  .boxPrice {
+    /* border: 5px solid black; */
+    display: flex;
+    justify-self: center;
+    padding: 0;
+  }
+  .boxDescription {
+    /* border: 5px solid black; */
+    display: flex;
+    justify-self: center;
+    padding: 0;
+  }
+  .threeDots {
+    /* border: 5px solid black; */
+    padding: 0;
+    align-self: end;
+  }
+`;
+
+const AddNewServiceContainer = styled.div`
+  /* border: 2px solid black; */
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
 `;
 
-const TitleOfServices = styled.table`
-  tr {
+const InputsContainer = styled.div`
+  /* border: 5px solid green; */
+  display: inline-grid;
+  grid-template-columns: 4fr 3fr 10fr 1fr;
+  column-gap: 0.5rem;
+
+  .serviceName {
+    /* border: 5px solid black; */
+  }
+
+  .servicePrice {
+    /* border: 5px solid black; */
+  }
+
+  .serviceDescription {
+    /* border: 5px solid black; */
+  }
+
+  .icons {
+    /* border: 5px solid black; */
     display: flex;
-    justify-content: space-between;
-    list-style: none;
-  }
-
-  .title {
-    margin-left: 1rem;
-    flex-grow: 3;
-  }
-
-  .price {
-    flex-grow: 2;
-  }
-  .description {
-    flex-grow: 6;
-  }
-
-  tr {
-    margin: 0;
-    text-align: left;
+    width: 70px;
   }
 `;
 
-const IconsContainer = styled.div`
+/* const IconsContainer = styled.div`
   display: flex;
   width: 70px;
+`; */
+
+const IconBox = styled.div`
+  padding: 0.2rem;
 `;
 
 type Service = {
@@ -91,15 +114,10 @@ type Service = {
   description: string;
 };
 
-function ServiceListItem({ serviceList, setServiceList }: any): JSX.Element {
+function ServiceListItem({ serviceList, setServiceList, handleServiceAdd }: any): JSX.Element {
   /* useEffect(() => {
     getServices(serviceList);
   }, [serviceList]); */
-
-  // FUNCTION TO ADD A SERVICE
-  const handleServiceAdd = () => {
-    setServiceList([...serviceList, { serviceName: '', price: 0, description: '' }]);
-  };
 
   // FUNCTION TO REMOVE A SERVICE
   const handleServiceRemove = (index: number): void => {
@@ -118,82 +136,54 @@ function ServiceListItem({ serviceList, setServiceList }: any): JSX.Element {
 
   return (
     <WrapperContainer>
-      <ThreeDotsMenuWrapper>
-        <h4 style={{ margin: '.5rem auto' }}>List Of Services</h4>
-        <IconClickable icon={<BsThreeDots fontSize={40} />}>
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.5rem' }}
-          >
-            <Button
-              whiteMenu
-              text="Add New Service"
-              width="200px"
-              fontSize="1rem"
-              onClick={() => handleServiceAdd}
-            />
-          </div>
-        </IconClickable>
-      </ThreeDotsMenuWrapper>
-
       <Container>
-        <TitleOfServices>
-          <thead>
-            <tr>
-              <td className="title">
-                <h5>Title</h5>
-              </td>
-              <td className="price">
-                <h5>price</h5>
-              </td>
-              <td className="description">
-                <h5>Description</h5>
-              </td>
-            </tr>
-          </thead>
-        </TitleOfServices>
+        <HeaderServiceGrid>
+          <div className="boxTitle">Title</div>
+          <div className="boxPrice">price</div>
+          <div className="boxDescription">Description</div>
+        </HeaderServiceGrid>
         <AddNewServiceContainer>
           {serviceList.length === 0 ? (
             <h5 style={{ textAlign: 'center' }}>NO SERVICES</h5>
           ) : (
             serviceList.map((singleService: any, index: number) => (
+              // eslint-disable-next-line react/no-array-index-key
               <InputsContainer key={index}>
-                <div>
+                <div className="serviceName">
                   <InputWithLabel
                     onChange={(e: any) => handleServiceChange(e, index)}
                     value={singleService.serviceName}
                     type="text"
                     name="serviceName"
                     placeholder="Title for the service"
-                    width="15vw"
                     height="35px"
                     margin="0.2rem"
                   />
                 </div>
-                <div>
+                <div className="servicePrice">
                   <InputWithLabel
                     onChange={(e: any) => handleServiceChange(e, index)}
                     value={singleService.price}
                     type="number"
                     name="price"
                     placeholder="Price"
-                    width="10vw"
                     height="35px"
                     margin="0.2rem"
                   />
                 </div>
-                <div>
+                <div className="serviceDescription">
                   <InputWithLabel
                     onChange={(e: any) => handleServiceChange(e, index)}
                     value={singleService.description}
                     type="text"
                     name="description"
                     placeholder="Short description"
-                    width="25vw"
                     height="35px"
                     margin="0.2rem"
                   />
                 </div>
-                <IconsContainer>
+
+                <div className="icons">
                   {serviceList.length < 9 && (
                     <IconBox>
                       <CgPlayListAdd size={30} onClick={handleServiceAdd} />
@@ -204,7 +194,7 @@ function ServiceListItem({ serviceList, setServiceList }: any): JSX.Element {
                       <CgRemove size={20} onClick={() => handleServiceRemove(index)} />
                     </IconBox>
                   )}
-                </IconsContainer>
+                </div>
               </InputsContainer>
             ))
           )}

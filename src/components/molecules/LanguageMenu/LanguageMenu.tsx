@@ -5,7 +5,7 @@ import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
 const Container = styled.div`
   position: relative;
-  background-color: ${({ theme }) => theme.color.main7};
+  background-color: inherit;
   border-radius: 0.6rem;
   z-index: 9999;
   > div:first-child {
@@ -20,6 +20,7 @@ const Container = styled.div`
   }
   > div:nth-child(2) {
     display: flex;
+    color: ${({ theme }) => theme.color.main8};
     background-color: ${({ theme }) => theme.color.main7};
     border-radius: 0.6rem;
     flex-direction: column;
@@ -29,7 +30,7 @@ const Container = styled.div`
   }
   > div:nth-child(2) > div {
     display: flex;
-    background-color: ${({ theme }) => theme.color.main7};
+
     border-radius: 0.6rem;
     gap: 0.2rem;
     transition: 0.3s;
@@ -43,12 +44,9 @@ const Container = styled.div`
 `;
 
 const languages = [
+  { id: 1, code: 'de', name: 'Deutsch', country_code: 'de' },
   {
-    code: 'de',
-    name: 'Deutsch',
-    country_code: 'de'
-  },
-  {
+    id: 2,
     code: 'en',
     name: 'English',
     country_code: 'gb'
@@ -73,6 +71,7 @@ function LanguageMenu() {
         <div ref={ref}>
           {languages.map((item) => (
             <div
+              key={item.id}
               onClick={() => {
                 i18next.changeLanguage(item.code);
                 setIsOpenMenuLanguage(false);

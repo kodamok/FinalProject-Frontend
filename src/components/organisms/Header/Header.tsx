@@ -448,7 +448,7 @@ function Header({ displayTimeToLogout }: HeaderI) {
                 {isOpenAvatarMenu && (
                   <AvatarMenu ref={ref}>
                     {dataAvatarMenu.map((item) => (
-                      <NavLink key={item.id} path={item.path} text={item.text} fontWeight="bold" />
+                      <NavLink key={item.id} path={item.path} text={item.text} />
                     ))}
                     <ButtonLogoutDesktop type="button" onClick={handleLogout}>
                       LOGOUT
@@ -500,9 +500,9 @@ function Header({ displayTimeToLogout }: HeaderI) {
                       onClick={handleOpenMenu}
                     />
                   ))}
-                  <NavLink path="/newClient" text="NEW CUSTOMER" />
-                  <NavLink path="/messages" text="MESSAGES" />
-                  <NavLink path="/statistics" text="STATISTICS" />
+                  <NavLink path="/newClient" text="NEW CUSTOMER" onClick={handleOpenMenu} />
+                  <NavLink path="/settings" text="SETTINGS" onClick={handleOpenMenu} />
+                  <NavLink path="/statistics" text="STATISTICS" onClick={handleOpenMenu} />
                   <ButtonLogoutMobilAdmin type="button" onClick={handleLogout}>
                     LOGOUT
                   </ButtonLogoutMobilAdmin>
@@ -547,7 +547,7 @@ function Header({ displayTimeToLogout }: HeaderI) {
                 {isOpenAvatarMenu && (
                   <AvatarMenu ref={ref}>
                     {dataAvatarMenu.map((item) => (
-                      <NavLink key={item.id} path={item.path} text={item.text} fontWeight="bold" />
+                      <NavLink key={item.id} path={item.path} text={item.text} />
                     ))}
                     <ButtonLogoutDesktop type="button" onClick={handleLogout}>
                       LOGOUT

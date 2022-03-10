@@ -52,8 +52,6 @@ const ContainerDesktop = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 2rem;
-  margin: 2rem 2rem;
   border: 1px solid ${({ theme }) => theme.color.main2};
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.color.main1};
@@ -75,6 +73,7 @@ const TitleAndPicture = styled.div`
   align-items: center;
   align-content: space-around;
   margin: auto;
+  padding-left: 30px;
   //border: 1px solid green;
 `;
 
@@ -171,7 +170,7 @@ function CardDetails({ projectData }: Project) {
           <ContainerDesktop>
             <ContainerDetailDesktop>
               <TitleAndPicture>
-                <h3>Nomad Studio</h3>
+                <h4>Nomad Studio</h4>
                 <RoundedPhoto
                   img={kim}
                   alt="avatar"

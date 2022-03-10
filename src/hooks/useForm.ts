@@ -11,7 +11,7 @@ export default function useForm(initial = initValue) {
   // create a state object for our inputs
   const [inputs, setInputs] = useState(initial);
   // const initialValues = Object.values(initial).join('');
-  // //
+  //
   // useEffect(() => {
   //   // This function runs when the things we are watching change
   //   setInputs(initial);
@@ -33,14 +33,12 @@ export default function useForm(initial = initValue) {
     }
     if (type === 'file') {
       // setPreviewImage(window.URL.createObjectURL(inputs.image) as any);
-      const file = (e.target as HTMLInputElement).files![0];
-      console.log(file);
-      if (file.type.startsWith('image')) {
-        console.log({ file });
-        await new Compressor(file, {
+      const { files }: any = e.target as HTMLInputElement;
+      if (files.length === 1 && files[0].type.startsWith('image') && inputs.files !== null) {
+        console.log('Using Cloudinary...');
+        await new Compressor(files[0], {
           quality: 0.6,
           success(result: File | Blob) {
-            console.log({ result });
             const reader = new FileReader();
             reader.readAsDataURL(result);
             reader.onloadend = () => {
@@ -51,10 +49,9 @@ export default function useForm(initial = initValue) {
               });
             };
           },
-          error(err) {
-            console.log('Hello');
+          error() {
             const reader = new FileReader();
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(files[0]);
             reader.onloadend = () => {
               value = reader.result;
               setInputs({
@@ -62,11 +59,33 @@ export default function useForm(initial = initValue) {
                 [name]: value
               });
             };
-            console.log(err.message);
           }
         });
       } else {
-        console.log('Wrong format');
+        // Read All Files (Multiple possible)
+        const filteredFiles = [];
+        for (let i = 0; i < files.length; i++) {
+          if (files[i].type.startsWith('image')) {
+            // eslint-disable-next-line no-new
+            new Compressor(files[i], {
+              quality: 0.6,
+              success(result: File | Blob) {
+                console.log({ result });
+                filteredFiles.push(result);
+              },
+              error() {
+                filteredFiles.push(files[i]);
+              }
+            });
+          } else {
+            filteredFiles.push(files[i]);
+          }
+        }
+        console.log('Using AWS S3...', files);
+        setInputs({
+          ...inputs,
+          [name]: filteredFiles
+        });
       }
     }
     if (type !== 'file') {

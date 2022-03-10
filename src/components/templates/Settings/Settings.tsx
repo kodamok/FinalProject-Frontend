@@ -1,13 +1,19 @@
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { SyntheticEvent, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { saveAs } from 'file-saver';
 import Button from '../../atoms/Button/Button';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
-import face from '../../../assets/images/face2small.jpg';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import { Context } from '../../../providers/GeneralProvider';
+import { InputFileStyle } from '../SignUp/SignUp';
+
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
 
 const FormContainer = styled.form`
   display: flex;
@@ -51,6 +57,7 @@ const ParagraphAdd = styled.div`
 const ContainerButton = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 const HeadingAdd = styled.div`
@@ -93,6 +100,7 @@ function Settings() {
     password: string;
     newPassword: string;
     newPasswordRepeated: string;
+    avatar: any;
     taxNumber: string;
     identityCardNumber: string | undefined;
   }
@@ -104,6 +112,7 @@ function Settings() {
     email: userData.email,
     password: '',
     newPassword: '',
+    avatar: userData.avatar,
     newPasswordRepeated: '',
     taxNumber: userData.taxNumber,
     identityCardNumber: userData.identityCardNumber
@@ -127,8 +136,8 @@ function Settings() {
         const resJSON = await res.json();
         if (res.status === 200) {
           handleError(resJSON.message || 'You changed data correctly', true);
-          const { identityCardNumber, email, name, taxNumber } = resJSON;
-          setUserData({ ...userData, identityCardNumber, email, name, taxNumber });
+          const { identityCardNumber, email, name, taxNumber, avatar } = resJSON;
+          setUserData({ ...userData, identityCardNumber, email, name, taxNumber, avatar });
         } else {
           handleError(resJSON.message);
         }
@@ -140,227 +149,47 @@ function Settings() {
     updateUserData();
   };
 
-  const htmlToDisplay = `<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title>A simple, clean, and responsive HTML invoice template</title>
+  // Fancy Stuff
 
-		<style>
-			.invoice-box {
-				max-width: 800px;
-				margin: auto;
-				padding: 30px;
-				border: 1px solid #eee;
-				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-				font-size: 16px;
-				line-height: 24px;
-				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-				color: #555;
-			}
+  // useEffect(() => {
+  // if ('speechSynthesis' in window) {
+  //   const speech = new SpeechSynthesisUtterance(
+  //     `Hello ${userData.name}`
+  //     // with email ${userData.email}
+  //   );
+  //   // speech.lang = 'en-US';
+  //   speech.lang = 'es';
+  //   // speech.lang = 'pl';
+  //   window.speechSynthesis.speak(speech);
+  // }
+  // console.group('User Details');
+  // console.log('name: Sudheer Jonna');
+  // console.log('job: Software Developer');
+  //
+  // // Nested Group
+  // console.group('Address');
+  // console.log('Street: Commonwealth');
+  // console.log('City: Los Angeles');
+  // console.log('State: California');
+  //
+  // console.groupEnd();
+  // }, []);
 
-			.invoice-box table {
-				width: 100%;
-				line-height: inherit;
-				text-align: left;
-			}
-
-			.invoice-box table td {
-				padding: 5px;
-				vertical-align: top;
-			}
-
-			.invoice-box table tr td:nth-child(2) {
-				text-align: right;
-			}
-
-			.invoice-box table tr.top table td {
-				padding-bottom: 20px;
-			}
-
-			.invoice-box table tr.top table td.title {
-				font-size: 45px;
-				line-height: 45px;
-				color: #333;
-			}
-
-			.invoice-box table tr.information table td {
-				padding-bottom: 40px;
-			}
-
-			.invoice-box table tr.heading td {
-				background: #eee;
-				border-bottom: 1px solid #ddd;
-				font-weight: bold;
-			}
-
-			.invoice-box table tr.details td {
-				padding-bottom: 20px;
-			}
-
-			.invoice-box table tr.item td {
-				border-bottom: 1px solid #eee;
-			}
-
-			.invoice-box table tr.item.last td {
-				border-bottom: none;
-			}
-
-			.invoice-box table tr.total td:nth-child(2) {
-				border-top: 2px solid #eee;
-				font-weight: bold;
-			}
-
-			@media only screen and (max-width: 600px) {
-				.invoice-box table tr.top table td {
-					width: 100%;
-					display: block;
-					text-align: center;
-				}
-
-				.invoice-box table tr.information table td {
-					width: 100%;
-					display: block;
-					text-align: center;
-				}
-			}
-
-			/** RTL **/
-			.invoice-box.rtl {
-				direction: rtl;
-				font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-			}
-
-			.invoice-box.rtl table {
-				text-align: right;
-			}
-
-			.invoice-box.rtl table tr td:nth-child(2) {
-				text-align: left;
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="invoice-box">
-			<table cellpadding="0" cellspacing="0">
-				<tr class="top">
-					<td colspan="2">
-						<table>
-							<tr>
-								<td class="title">
-									<img src="https://www.sparksuite.com/images/logo.png" style="width: 100%; max-width: 300px" />
-								</td>
-
-								<td>
-									Invoice #: 123<br />
-									Created: January 1, 2015<br />
-									Due: February 1, 2015
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-
-				<tr class="information">
-					<td colspan="2">
-						<table>
-							<tr>
-								<td>
-									Sparksuite, Inc.<br />
-									12345 Sunny Road<br />
-									Sunnyville, CA 12345
-								</td>
-
-								<td>
-									Acme Corp.<br />
-									John Doe<br />
-									john@example.com
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-
-				<tr class="heading">
-					<td>Payment Method</td>
-
-					<td>Check #</td>
-				</tr>
-
-				<tr class="details">
-					<td>Check</td>
-
-					<td>1000</td>
-				</tr>
-
-				<tr class="heading">
-					<td>Item</td>
-
-					<td>Price</td>
-				</tr>
-
-				<tr class="item">
-					<td>Website design</td>
-
-					<td>$300.00</td>
-				</tr>
-
-				<tr class="item">
-					<td>Hosting (3 months)</td>
-
-					<td>$75.00</td>
-				</tr>
-
-				<tr class="item last">
-					<td>Domain name (1 year)</td>
-
-					<td>$10.00</td>
-				</tr>
-
-				<tr class="total">
-					<td></td>
-
-					<td>Total: $385.00</td>
-				</tr>
-			</table>
-		</div>
-	</body>
-</html>`;
-
-  const handleGeneratePdf = (e: any) => {
-    e.preventDefault();
-    console.log('You send this html', htmlToDisplay);
-    const generatePdf = async () => {
-      try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND}/pdf`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userData.token}`
-          },
-          body: JSON.stringify({ htmlToDisplay })
-        });
-        const resJSON = await res.json();
-        if (res.status === 200) {
-          handleError(resJSON.message || 'You generated correctly', true);
-          console.log(resJSON);
-          saveAs(`http://localhost:5000/${resJSON.path}`, resJSON.fileName);
-        } else {
-          handleError(resJSON.message);
-        }
-      } catch (error: any) {
-        console.log('FETCHING ERROR', error);
-        handleError();
-      }
+  useEffect(() => {
+    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // webkitSpeechRecognition for Chrome and SpeechRecognition for FF
+    const recognition = new window.SpeechRecognition();
+    recognition.onresult = (event: any) => {
+      // SpeechRecognitionEvent type
+      const speechToText = event.results[0][0].transcript;
+      console.log(speechToText);
+      console.log('yup');
     };
-    generatePdf();
-  };
+    recognition.start();
+  }, []);
 
   return (
     <FormContainer onSubmit={handleSubmitUserDataChange}>
       <div>
-        <Button type="button" text="Generate Pdf" onClick={handleGeneratePdf} />
         <h3>Settings</h3>
         <ContainerDiv>
           <DivOne>
@@ -368,10 +197,16 @@ function Settings() {
               <HeadingAdd>
                 <h4>User Details</h4>
               </HeadingAdd>
-              <RoundedPhoto img={face} alt="face" width="250px" height="250px" />
+              <RoundedPhoto
+                img={inputs.image || inputs.avatar}
+                alt="face"
+                width="250px"
+                height="250px"
+              />
             </div>
             <ContainerButton>
               <Button background="#1F313E" text="Upload Photo" />
+              <InputFileStyle name="avatar" type="file" onChange={handleChange} />
             </ContainerButton>
           </DivOne>
           <DivTwo>

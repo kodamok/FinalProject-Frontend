@@ -2,10 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 // import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { GrClose } from 'react-icons/gr';
+import { BsThreeDots } from 'react-icons/bs';
 import { Context } from '../../../providers/GeneralProvider';
 import CardDetails from '../../molecules/CardDetails/CardDetails';
 import useError from '../../../hooks/useError';
 import useMediaQuery from '../../../hooks/useMediaQuery';
+import Button from '../../atoms/Button/Button';
+import IconClickable from '../../atoms/IconClickable/IconClickable';
+
 // /project/:projectId
 const Container = styled.div`
   display: flex;
@@ -23,7 +27,6 @@ const ContainerDetails = styled.div`
 `;
 const ProjectInvoicesFiles = styled.div`
   display: flex;
-  flex-direction: row;
   margin: auto;
   gap: 4rem;
   justify-content: space-around;
@@ -33,7 +36,7 @@ const ProjectInvoicesFiles = styled.div`
 const ServicesInvoice = styled.div`
   display: flex;
   flex-direction: column;
-  font-weight: bold;
+  
   }
 h4 {
   text-decoration: underline;
@@ -47,29 +50,18 @@ const ServicesButton = styled.button`
 const PricesInvoice = styled.div`
   display: flex;
   flex-direction: column;
+    }
+h4 {
+  text-decoration: underline;
+}
 `;
-const Invoice = styled.div`
-  //by the moment is a flex div
-  display: flex;
-  border: 1px solid black;
-  padding: 1rem;
-`;
-const Total = styled.div`
-  display: flex;
-  border: 1px solid black;
-  padding: 1rem;
-`;
-const Files = styled.div`
-  display: flex;
-  border: 1px solid black;
-  padding: 1rem;
-`;
+
 // Style Modal
 const ModalBackground = styled.div`
-  width: 70vw;
+  width: 50vw;
   height: 70vh;
   background-color: ${({ theme }) => theme.color.main8};
-  //position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-item: center;
@@ -77,6 +69,7 @@ const ModalBackground = styled.div`
 const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin: auto;
   width: 70vw;
   height: 70vh;
   border-radius: 0.6rem;
@@ -90,30 +83,119 @@ div {
   justify-content: flex-end;
 }
 `;
+const ModalText = styled.div`
+  margin: auto;
+`;
+// Style Modal Desktop
+const ModalBackgroundDesktop = styled.div`
+  width: 20vw;
+  height: 70vh;
+  background-color: ${({ theme }) => theme.color.main8};
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-item: center;
+`;
+const ModalContainerDesktop = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+  height: 65vh;
+  border-radius: 0.6rem;
+  overflow: scroll;
+  background-color: ${({ theme }) => theme.color.main1};
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 25px;
+}
+div {
+  display:flex;
+  justify-content: flex-end;
+}
+`;
+
 // Style Desktop Version
+const ContainerThreeDotsDesktop = styled.div`
+  position: relative;
+  margin: auto;
+  left: 32rem;
+  bottom: 9rem;
+`;
 const ContainerDesktop = styled.div`
   display: flex;
-  flex-direction: row;
-  margin: auto;
-  padding: 1rem;
-  border: 1px solid red;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  //border: 10px solid yellow;
 `;
 const ContainerDetailsDesktop = styled.div`
-  margin: auto;
-  border: 1px solid green;
+  position: relative;
+  //border: 10px solid green;
 `;
 const ProjectInvoicesFilesDesktop = styled.div`
   display: flex;
   flex-direction: column;
-  margin: auto;
-  gap: 4rem;
+  gap: 1rem;
   justify-content: space-around;
-  padding: 1rem 2rem;
-  padding: 1rem;
-  border: 1px solid red;
+  //border: 10px solid red;
 `;
-const ModalText = styled.div`
+const InvoiceDesktop = styled.div`
+  display: flex;
+  position: relative;
+  //border: 10px solid purple;
+  gap: 15px;
+`;
+const ServicesInvoiceDesktop = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex:10 5 10px;
+  }
+h5 {
+  text-decoration: underline;
+}
+`;
+const ShortDescriptionDesktop = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex:1 1 500px;
+}
+h5 {
+  text-decoration: underline;
+}  
+`;
+
+const PricesInvoiceDesktop = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex:10 5 10px;
+}
+h5 {
+  text-decoration: underline;
+}
+`;
+const Total = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //border: 10px solid black;
+  padding: 1rem;
+  gap: 2rem;
+`;
+const Files = styled.div`
+  display: flex;
+  border: 10px solid black;
+  padding: 1rem;
+`;
+const TotalInput = styled.input`
+  position: relative;
+  height: 2rem;
+  width: 5rem;
   margin: auto;
+  border-radius: 0.3rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+`;
+const LabelTotal = styled.label`
+  font-weight: bold;
+  gap: 1rem;
 `;
 const nameOfServicesData = [
   {
@@ -200,6 +282,48 @@ const pricesData = [
   }
 ];
 
+const shortDescriptionData = [
+  {
+    path: '/',
+    text: 'Low Res. Mockup',
+    id: 1
+  },
+  {
+    path: '/',
+    text: 'Back End Architecture',
+    id: 2
+  },
+  {
+    path: '/',
+    text: 'UX & UI Design',
+    id: 3
+  },
+  {
+    path: '/',
+    text: 'Front End Development',
+    id: 4
+  },
+  {
+    path: '/',
+    text: 'Low Res. Mockup',
+    id: 5
+  },
+  {
+    path: '/',
+    text: 'Back End Architecture',
+    id: 6
+  },
+  {
+    path: '/',
+    text: 'UX & UI Design',
+    id: 7
+  },
+  {
+    path: '/',
+    text: 'Front End Development',
+    id: 8
+  }
+];
 function ProjectDetail() {
   const [project, setProject] = useState({});
 
@@ -298,8 +422,98 @@ function ProjectDetail() {
             {project && <CardDetails projectData={project} />}
           </ContainerDetailsDesktop>
           <ProjectInvoicesFilesDesktop>
-            <Invoice>Invoice</Invoice>
-            <Total>Total</Total>
+            <InvoiceDesktop>
+              <ContainerThreeDotsDesktop>
+                <IconClickable icon={<BsThreeDots fontSize={38} />}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.5rem',
+                      padding: '1rem'
+                    }}
+                  >
+                    <Button text="What ever" width="180px" fontSize="1rem" padding="0.5rem 1rem" />
+                    <Button
+                      text="What ever too"
+                      width="180px"
+                      fontSize="1rem"
+                      padding="0.5rem 1rem"
+                    />
+                  </div>
+                </IconClickable>
+              </ContainerThreeDotsDesktop>
+              <ServicesInvoiceDesktop>
+                <h5>Service</h5>
+                {openModal && (
+                  <ModalBackgroundDesktop>
+                    <ModalContainerDesktop>
+                      <div>
+                        <GrClose onClick={handleModal} cursor="pointer" fontSize={28} />
+                      </div>
+                      <ModalText>
+                        <h5>
+                          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi expedita
+                          fugiat quos accusamus in soluta. Necessitatibus doloremque vitae quia
+                          totam ipsa! Esse fugit reprehenderit sequi molestiae possimus qui
+                          perspiciatis iste in recusandae, ratione quibusdam tenetur. Quibusdam
+                          incidunt iusto ipsum repellat natus fugiat voluptatem esse, architecto
+                          explicabo, inventore nulla quae dolorum!
+                        </h5>
+                      </ModalText>
+                    </ModalContainerDesktop>
+                  </ModalBackgroundDesktop>
+                )}
+                {nameOfServicesData.map((item) => (
+                  <div key={item.id}>
+                    <ServicesButton
+                      type="button"
+                      onClick={() => {
+                        setOpenModal(true);
+                      }}
+                    >
+                      {item.text}
+                    </ServicesButton>
+                  </div>
+                ))}
+              </ServicesInvoiceDesktop>
+              <PricesInvoiceDesktop>
+                <h5>Price</h5>
+                {pricesData.map((item) => (
+                  <div key={item.id}>
+                    <p>{item.text}</p>
+                  </div>
+                ))}
+              </PricesInvoiceDesktop>
+              <ShortDescriptionDesktop>
+                <h5>Short description</h5>
+                {shortDescriptionData.map((item) => (
+                  <div key={item.id}>
+                    <p>{item.text}</p>
+                  </div>
+                ))}
+              </ShortDescriptionDesktop>
+            </InvoiceDesktop>
+            <Total>
+              <Button
+                text="+ Add/Remove New Service"
+                height="50px"
+                width="200px"
+                fontSize="13px"
+                padding="0.5rem 1rem"
+              />
+              <Button
+                text="+ Add note"
+                height="50px"
+                width="140px"
+                fontSize="13px"
+                padding="0.5rem 1rem"
+              />
+              <LabelTotal>
+                Total:<span> </span>
+                <TotalInput type="number" />
+              </LabelTotal>
+            </Total>
             <Files>Files</Files>
           </ProjectInvoicesFilesDesktop>
         </ContainerDesktop>

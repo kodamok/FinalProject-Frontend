@@ -78,6 +78,7 @@ interface FormInput {
   width?: string;
   height?: string;
   margin?: string;
+  multiple?: boolean;
 }
 
 function InputWithLabel({
@@ -97,7 +98,8 @@ function InputWithLabel({
   id,
   width,
   height,
-  margin
+  margin,
+  multiple
 }: FormInput) {
   if (type === 'radio' || type === 'checkbox') {
     return (
@@ -113,6 +115,7 @@ function InputWithLabel({
             required={required}
             checked={checked}
             onChange={onChange}
+            multiple={multiple}
           />
         </CheckboxContainer>
       </div>
@@ -147,6 +150,7 @@ function InputWithLabel({
             value={value}
             required={required}
             onChange={onChange}
+            multiple={multiple}
           />
         </Container>
       )}
@@ -170,7 +174,8 @@ InputWithLabel.defaultProps = {
   label: undefined,
   width: undefined,
   height: undefined,
-  margin: undefined
+  margin: undefined,
+  multiple: false
 };
 
 export default InputWithLabel;

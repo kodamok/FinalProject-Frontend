@@ -155,7 +155,9 @@ function Footer() {
                 <Link to="/impressum">
                   <StyledLink>Impressum</StyledLink>
                 </Link>
-                <StyledLink>FAQ</StyledLink>
+                <Link to="/faqs">
+                  <StyledLink>FAQ</StyledLink>
+                </Link>
               </div>
             </StyledCol>
             <StyledCol>

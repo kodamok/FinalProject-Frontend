@@ -54,6 +54,8 @@ const ContainerProjects = styled.div`
 function ClientsOrProjects() {
   const [choiceRadio, setChoiceRadio] = useState('projects');
   const [clients, setClients] = useState([]);
+  console.log(clients[0]);
+
   const [projects, setProjects] = useState([]);
   const { userData } = useContext(Context);
   const { handleError } = useError();

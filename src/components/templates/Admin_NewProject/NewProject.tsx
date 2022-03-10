@@ -7,7 +7,6 @@ import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
-import COMPANYLOGO from '../../../assets/illustrations/COMPANYLOGO.png';
 import ServiceListInputs from '../../molecules/ServiceListItem/ServiceListInputs';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 
@@ -32,7 +31,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const Table = styled.div`
-  border: 2px solid black; 
+  /* border: 2px solid black;  */
   grid-column:1 / span 3;
   display: flex;
   justify-content:space-between;
@@ -58,7 +57,7 @@ const Table = styled.div`
 `;
 
 const BasicInfoContainer = styled.div`
-  border: 2px solid green;
+  /*  border: 2px solid green; */
   grid-column: 1 / span 3;
   grid-row: 2 / span 2;
   display: inline-grid;
@@ -100,49 +99,36 @@ const LeftContainer = styled.div`
   }
 `;
 
-interface initial {
-  companyName: string;
-  customerName: string;
-  website: string;
-  taxNumber: string;
-  services: any;
-}
-
-const projectInfo: initial = {
-  companyName: '',
-  customerName: '',
-  website: '',
-  taxNumber: '',
-  services: []
-};
-
 function NewProject(): JSX.Element {
+  interface initial {
+    image: File | string | null;
+    companyName: string;
+    customerName: string;
+    website: string;
+    taxNumber: string;
+    services: any;
+  }
+
+  const projectInfo: initial = {
+    image: '',
+    companyName: '',
+    customerName: '',
+    website: '',
+    taxNumber: '',
+    services: []
+  };
   const { userData } = useContext(Context);
   const { inputs, handleChange } = useForm(projectInfo);
+  console.log(inputs);
+
   const [serviceList, setServiceList] = useState([{ serviceName: '', price: 0, description: '' }]);
   inputs.services = [...serviceList];
   const params = useParams();
-  console.log(inputs);
-  console.log(serviceList);
 
+  // LISTS PREVIOS SERVICES ALREADY ADDED AND ADDS NEW SERVICES
   const handleServiceAdd = () => {
     setServiceList([...serviceList, { serviceName: '', price: 0, description: '' }]);
   };
-
-  // EXTRACT THE SERVICES FROM THE SERVICE LIST INPUT COMPONENT
-  /* 
-  const getServicesFromComponent = (array: any) => {
-    const listOfServicesCopy = [...array];
-    const arrayOfServices = listOfServicesCopy.map((service: any) => [
-      service.serviceName,
-      service.price,
-      service.description
-    ]);
-
-    return arrayOfServices;
-  }; */
-
-  /* console.log(inputs); */
 
   // SUBMIT THE NEW PROJECT INFORMATION
   const handleSubmitNewProject = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -155,7 +141,7 @@ function NewProject(): JSX.Element {
           Authorization: `Bearer ${userData.token}`
         },
 
-        body: JSON.stringify({ inputs })
+        body: JSON.stringify(inputs)
       });
       console.log(inputs);
       const resJSON = await res.json();
@@ -197,11 +183,12 @@ function NewProject(): JSX.Element {
             <div className="left">
               <RoundedPhoto
                 RoundedPhotoWithButton
-                img={COMPANYLOGO}
+                img={inputs.image || ''}
                 alt="blablabla"
                 width="150px"
                 height="150px"
                 border="2px solid black"
+                handleChange={handleChange}
               />
               <InputWithLabel
                 label="Start Date*"
@@ -253,7 +240,6 @@ function NewProject(): JSX.Element {
 
           <div className="listOfServices">
             <ServiceListInputs
-              handleChange={handleChange}
               serviceList={serviceList}
               setServiceList={setServiceList}
               handleServiceAdd={handleServiceAdd}

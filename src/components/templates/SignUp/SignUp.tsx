@@ -36,7 +36,7 @@ const FormContainer = styled.form`
   }
 `;
 
-const InputFileStyle = styled.input`
+export const InputFileStyle = styled.input`
   position: absolute;
   height: 100%;
   width: 100%;

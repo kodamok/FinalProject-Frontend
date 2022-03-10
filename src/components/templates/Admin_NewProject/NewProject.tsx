@@ -18,56 +18,63 @@ const PageContainer = styled.div`
 const FormContainer = styled.form`
   /* border: 5px solid black; */
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 70px 2fr 70px;
-  column-gap: 50px;
+  column-gap: 5px;
   padding-left: 5rem;
   padding-right: 5rem;
   margin-bottom: 5rem;
 `;
-
-const Table = styled.table`
-  /* border: 2px solid black; */
-  grid-column:1 / span 3
-  display: flex;
-  align-items: baseline;
+const ButtonWrapper = styled.div`
+  grid-row: 3;
+  grid-column: -1;
   padding: 1rem;
-  width: 80vw;
+`;
 
-  tr {
-    border: 2px solid black;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-    list-style: none;
-    padding: 0;
-
-    th {
-      padding: 0;
-    }
+const Table = styled.div`
+  border: 2px solid black; 
+  grid-column:1 / span 3;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
 
     .newProject {
       /* border: 2px solid black; */
-      font-size: ${({ theme }) => theme.fontSizeInter.ml};
+      font-size: ${({ theme }) => theme.fontSizeInter.m};
       text-align: left;
-      width: 25vw;
+      
     }
 
     .listOfServices {
       /* border: 2px solid black; */
       font-size: ${({ theme }) => theme.fontSizeInter.m};
-      width: 53vw;
+     
+    }
+
+    .threeDots{
+
     }
   }
 `;
 
 const BasicInfoContainer = styled.div`
-  /* border: 2px solid green; */
+  border: 2px solid green;
   grid-column: 1 / span 3;
   grid-row: 2 / span 2;
   display: inline-grid;
   grid-template-columns: minmax(450px, 2fr) 3.5fr;
+
+  ${({ theme }) => theme.down(theme.breakpoint.m)} {
+    grid-template-columns: minmax(450px, 2fr);
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .listOfServices {
+    ${({ theme }) => theme.down(theme.breakpoint.m)} {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
 `;
 
 const LeftContainer = styled.div`
@@ -91,13 +98,6 @@ const LeftContainer = styled.div`
     display: flex;
     flex-direction: column;
   }
-`;
-
-const ButtonWrapper = styled.div`
-  grid-row: 3;
-  grid-column: 3;
-  justify-self: end;
-  align-self: end;
 `;
 
 interface initial {
@@ -169,34 +169,28 @@ function NewProject(): JSX.Element {
     <PageContainer>
       <FormContainer onSubmit={handleSubmitNewProject}>
         <Table>
-          <thead>
-            <tr>
-              <th className="newProject">New Project</th>
-              <th className="listOfServices">List Of Services</th>
-              <th>
-                <div className="threeDots">
-                  <IconClickable icon={<BsThreeDots fontSize={40} />}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '0.5rem',
-                        padding: '0.5rem'
-                      }}
-                    >
-                      <Button
-                        whiteMenu
-                        text="Add New Service"
-                        width="200px"
-                        fontSize="1rem"
-                        onClick={handleServiceAdd}
-                      />
-                    </div>
-                  </IconClickable>
-                </div>
-              </th>
-            </tr>
-          </thead>
+          <div className="newProject">New Project</div>
+          <div className="listOfServices">List Of Services</div>
+          <div className="threeDots">
+            <IconClickable icon={<BsThreeDots fontSize={40} />}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.5rem',
+                  padding: '0.5rem'
+                }}
+              >
+                <Button
+                  whiteMenu
+                  text="Add New Service"
+                  width="200px"
+                  fontSize="1rem"
+                  onClick={handleServiceAdd}
+                />
+              </div>
+            </IconClickable>
+          </div>
         </Table>
         <BasicInfoContainer>
           <LeftContainer>
@@ -257,7 +251,7 @@ function NewProject(): JSX.Element {
             </div>
           </LeftContainer>
 
-          <div>
+          <div className="listOfServices">
             <ServiceListInputs
               handleChange={handleChange}
               serviceList={serviceList}

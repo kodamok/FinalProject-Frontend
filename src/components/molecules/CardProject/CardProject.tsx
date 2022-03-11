@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
 import { BiArrowFromBottom } from 'react-icons/bi';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
-import face1 from '../../../assets/images/face1small.jpg';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
 
@@ -26,6 +25,7 @@ const Container = styled.div<Card>`
     padding: 0.5rem 0 0.5rem 0;
     h4 {
       text-align: center;
+      font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
     }
     div:last-child {
       align-self: flex-start;
@@ -73,6 +73,7 @@ interface client {
     website: string;
     dueData: string;
     text: string;
+    avatar: string;
   };
 }
 
@@ -85,7 +86,13 @@ function CardProject({ projectData }: client) {
   return (
     <Container openDataDetails={openDataDetails} onClick={() => setOpenDataDetails(true)}>
       <div>
-        <RoundedPhoto img={face1} alt="face" width="60px" height="60px" outline="3px solid black" />
+        <RoundedPhoto
+          img={projectData.avatar}
+          alt="face"
+          width="60px"
+          height="60px"
+          outline="3px solid black"
+        />
         <div>
           <h4>{projectData.name}</h4>
         </div>

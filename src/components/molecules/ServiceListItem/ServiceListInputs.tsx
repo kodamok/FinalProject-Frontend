@@ -9,22 +9,28 @@ interface DivStyles {
 
 const WrapperContainer = styled.div`
   /* border: 5px solid red; */
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 70px;
+  justify-content: stretch;
+  overflow-y: scroll;
+  scrollbar-color: yellow blue;
+  height: 450px;
 `;
 
 const Container = styled.div<DivStyles>`
   /* border: 5px solid blue; */
-  display: flex;
-  flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: -1;
 `;
 
 const AddNewServiceContainer = styled.div`
   /* border: 2px solid black; */
+
   display: grid;
   grid-template-columns: 3fr 1fr 5fr 1fr;
   grid-template-rows: 1fr 1fr;
-  justify-items: stretch;
+  justify-content: stretch;
 
   .boxTitle {
     /* border: 5px solid black; */
@@ -45,7 +51,6 @@ const AddNewServiceContainer = styled.div`
     padding: 0;
   }
 `;
-
 const InputsContainer = styled.div`
   /* border: 5px solid green; */
   grid-column: 1 / -1;

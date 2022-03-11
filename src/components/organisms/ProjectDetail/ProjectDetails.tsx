@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 // import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { GrClose } from 'react-icons/gr';
@@ -9,6 +9,8 @@ import useError from '../../../hooks/useError';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import Button from '../../atoms/Button/Button';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
+import FileUploader from '../../molecules/FileUploader/FileUploader';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
 // /project/:projectId
 const Container = styled.div`
@@ -20,6 +22,7 @@ const Container = styled.div`
 const Title = styled.h3`
   margin: auto;
   text-align: center;
+  padding-top: 4rem;
 `;
 // Style Mobil Version
 const ContainerDetails = styled.div`
@@ -32,6 +35,7 @@ const ProjectInvoicesFiles = styled.div`
   justify-content: space-around;
   padding: 1rem 2rem;
   padding: 1rem;
+  padding-bottom: 16rem;
 `;
 const ServicesInvoice = styled.div`
   display: flex;
@@ -58,7 +62,8 @@ h4 {
 
 // Style Modal
 const ModalBackground = styled.div`
-  width: 50vw;
+  width: 80vw;
+  max-width: 350px;
   height: 70vh;
   background-color: ${({ theme }) => theme.color.main8};
   position: absolute;
@@ -69,27 +74,32 @@ const ModalBackground = styled.div`
 const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: auto;
-  width: 70vw;
-  height: 70vh;
+  width: 90vw;
+  max-width:350px;
+  max-height: 70vh;
   border-radius: 0.6rem;
-  overflow: scroll;
+  overflow-y: scroll;
   background-color: ${({ theme }) => theme.color.main1};
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 25px;
+  //scrollbar-color: Is in the GlobalStyle.ts
+  
 }
 div {
   display:flex;
   justify-content: flex-end;
 }
+
 `;
 const ModalText = styled.div`
   margin: auto;
 `;
 // Style Modal Desktop
 const ModalBackgroundDesktop = styled.div`
-  width: 20vw;
-  height: 70vh;
+  width: 40vw;
+  max-width: 550px;
+  height: 30vh;
+  //border: 10px solid red;
   background-color: ${({ theme }) => theme.color.main8};
   position: absolute;
   display: flex;
@@ -99,8 +109,9 @@ const ModalBackgroundDesktop = styled.div`
 const ModalContainerDesktop = styled.div`
   display: flex;
   flex-direction: column;
-  width: 20vw;
-  height: 65vh;
+  width: 40vw;
+  max-width: 550px;
+  height: 30vh;
   border-radius: 0.6rem;
   overflow: scroll;
   background-color: ${({ theme }) => theme.color.main1};
@@ -119,12 +130,16 @@ const ContainerThreeDotsDesktop = styled.div`
   margin: auto;
   left: 32rem;
   bottom: 9rem;
+  :hover {
+    cursor: pointer;
+  }
 `;
 const ContainerDesktop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 1rem;
+  padding-bottom: 4rem;
   //border: 10px solid yellow;
 `;
 const ContainerDetailsDesktop = styled.div`
@@ -137,6 +152,10 @@ const ProjectInvoicesFilesDesktop = styled.div`
   gap: 1rem;
   justify-content: space-around;
   //border: 10px solid red;
+}
+h6 {
+margin:0;
+}
 `;
 const InvoiceDesktop = styled.div`
   display: flex;
@@ -182,8 +201,7 @@ const Total = styled.div`
 `;
 const Files = styled.div`
   display: flex;
-  border: 10px solid black;
-  padding: 1rem;
+  //border: 10px solid black;
 `;
 const TotalInput = styled.input`
   position: relative;
@@ -196,6 +214,10 @@ const TotalInput = styled.input`
 const LabelTotal = styled.label`
   font-weight: bold;
   gap: 1rem;
+`;
+const Line = styled.div`
+  border: 0.2px solid black;
+  box-shadow: rgba(0, 0, 0, 0.75) 0px 5px 15px;
 `;
 const nameOfServicesData = [
   {
@@ -365,7 +387,10 @@ function ProjectDetail() {
   const handleModal = () => {
     setOpenModal((prev) => !prev);
   };
+  const ref: any = useRef(null);
+  useOnClickOutside(ref, () => handleModal());
   return (
+    // Project Details Mobil Version ----------------------------------------------
     <div>
       <Title>Project Details</Title>
       {!desktopVersion ? (
@@ -375,7 +400,7 @@ function ProjectDetail() {
             <ServicesInvoice>
               <h4>Service</h4>
               {openModal && (
-                <ModalBackground>
+                <ModalBackground ref={ref}>
                   <ModalContainer>
                     <div>
                       <GrClose onClick={handleModal} cursor="pointer" fontSize={28} />
@@ -417,6 +442,7 @@ function ProjectDetail() {
           </ProjectInvoicesFiles>
         </Container>
       ) : (
+        // Project Details Desktop Version ----------------------------------------------
         <ContainerDesktop>
           <ContainerDetailsDesktop>
             {project && <CardDetails projectData={project} />}
@@ -446,7 +472,7 @@ function ProjectDetail() {
               <ServicesInvoiceDesktop>
                 <h5>Service</h5>
                 {openModal && (
-                  <ModalBackgroundDesktop>
+                  <ModalBackgroundDesktop ref={ref}>
                     <ModalContainerDesktop>
                       <div>
                         <GrClose onClick={handleModal} cursor="pointer" fontSize={28} />
@@ -511,10 +537,15 @@ function ProjectDetail() {
               />
               <LabelTotal>
                 Total:<span> </span>
-                <TotalInput type="number" />
+                <TotalInput type="number" min="0" /> € <span />
               </LabelTotal>
             </Total>
-            <Files>Files</Files>
+            <Line />
+            <h6>Project Files</h6>
+            <Line />
+            <Files>
+              <FileUploader projectId=" " />
+            </Files>
           </ProjectInvoicesFilesDesktop>
         </ContainerDesktop>
       )}

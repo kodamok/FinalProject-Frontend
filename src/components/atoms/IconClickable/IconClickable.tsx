@@ -6,6 +6,9 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   position: relative;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ContainerChildrens = styled.div`

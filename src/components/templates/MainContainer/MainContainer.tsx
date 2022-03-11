@@ -6,12 +6,11 @@ import ErrorMessage from '../../molecules/ErrorMessage/ErrorMessage';
 import { Context } from '../../../providers/GeneralProvider';
 
 interface MainContainer {
-  displayTimeToLogout: boolean;
   children: ReactNode;
 }
 
 // Component which provide Header to Each Page
-function MainContainerApp({ children, displayTimeToLogout }: MainContainer) {
+function MainContainerApp({ children }: MainContainer) {
   const { myError } = useContext(Context);
   return (
     <>
@@ -22,7 +21,7 @@ function MainContainerApp({ children, displayTimeToLogout }: MainContainer) {
           successMessage={myError.successMessage === '1' ? undefined : myError.successMessage}
         />
       )}
-      <Header displayTimeToLogout={displayTimeToLogout} />
+      <Header />
       {children}
       <Footer />
     </>

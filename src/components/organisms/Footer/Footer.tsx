@@ -16,6 +16,8 @@ const FooterBody = styled.div`
   background-color: #001523;
   color: #ffffff;
   display: flex;
+  position: absolute;
+  bottom: 0;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -23,21 +25,27 @@ const FooterBody = styled.div`
   margin-top: -44px;
   font-size: 14px;
   padding-bottom: 30px;
+  z-index: -1;
 `;
 
 const FooterWave = styled.div`
   background-image: url(${mobileFooterWave});
   background-position: top;
+  position: relative;
   background-size: 100% 100px;
   background-repeat: no-repeat;
   width: 100%;
   height: 100px;
+  z-index: -1;
+  bottom: 138px;
 `;
 
 const MobileFooter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 50px;
+  margin-top: -50px;
 `;
 
 const FooterRow = styled.div`
@@ -70,7 +78,7 @@ const MyFooter = styled.div`
 
 const DesktopFooter = styled.div`
   background-color: #001523;
-  color: #ffffff;
+  color: ${({ theme }) => theme.color.main8};
   display: flex;
   padding: 100px 50px;
   flex-basis: 100%;

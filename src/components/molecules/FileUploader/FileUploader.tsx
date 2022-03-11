@@ -6,7 +6,11 @@ import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
 
-const Container = styled.form``;
+const Container = styled.form`
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+`;
 
 interface FileUploaderInterface {
   files: any;
@@ -59,8 +63,21 @@ function FileUploader({ projectId }: File) {
 
   return (
     <Container>
-      <InputWithLabel multiple type="file" label="File" name="files" onChange={handleChange} />
-      <Button type="submit" text="Upload a Document File" onClick={handleUploadDocumentFile} />
+      <InputWithLabel
+        multiple
+        type="file"
+        /* label="File" */ name="files"
+        onChange={handleChange}
+      />
+      <Button
+        type="submit"
+        text="Upload a File"
+        onClick={handleUploadDocumentFile}
+        height="50px"
+        width="140px"
+        fontSize="13px"
+        padding="0.5rem 1rem"
+      />
     </Container>
   );
 }

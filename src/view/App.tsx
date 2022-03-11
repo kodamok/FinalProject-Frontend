@@ -32,7 +32,6 @@ import useError from '../hooks/useError';
 import FAQs from '../components/molecules/FAQs/FAQs';
 
 function App(): JSX.Element {
-  const [displayTimeToLogout, setDisplayTimeToLogout] = useState(false);
   const { userData, setMessages, setUserData } = useContext(Context);
   const navigate = useNavigate();
   const { handleLogout } = useAuth();
@@ -50,12 +49,12 @@ function App(): JSX.Element {
         interval = setInterval(() => {
           // If yes then Display Message About It
           if (+userData.exp - Date.now() < 30000) {
-            setDisplayTimeToLogout(true);
+            handleError('For Your Safety We Will Logout You in a 30 seconds :)');
           }
           // If Token expired Clear UserData and Logout User/Admin
           if (Date.now() > userData.exp) {
             handleLogout();
-            setDisplayTimeToLogout(false);
+            handleError('We Logged Out You For Your Security :)');
             clearInterval(interval);
           }
           // console.log('Left', ((userData.exp - Date.now()) / 1000).toFixed(0), 's To Logout');
@@ -83,6 +82,7 @@ function App(): JSX.Element {
             // console.log(parsedData.text);
             if (parsedData.text === 'stopSSEEventsNow') {
               events.close();
+              console.log('I closed the connection Here');
             }
             setMessages((messagesItems) => messagesItems.concat(parsedData));
           };
@@ -150,7 +150,7 @@ function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <MainContainerApp displayTimeToLogout={displayTimeToLogout}>
+      <MainContainerApp>
         {token && role === 'Freelancer' ? (
           <Routes>
             <Route path="/" element={<AdminDashboard />} />

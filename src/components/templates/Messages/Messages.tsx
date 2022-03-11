@@ -7,7 +7,7 @@ import { Context } from '../../../providers/GeneralProvider';
 import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
-import face1 from '../../../assets/images/face1small.jpg';
+import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 
 const Container = styled.div`
   padding: 1rem;
@@ -56,13 +56,13 @@ const PContainer = styled.div`
 `;
 
 const ContactList = styled.div`
-  padding: 1rem;
+  padding: 0 1rem;
   border-right: 1px solid grey;
   overflow: hidden;
   overflow-y: scroll;
   min-width: 200px;
   overscroll-behavior: contain;
-  // Not good - to FIX
+  // TODO Not good - to FIX
   max-height: 566px;
 `;
 
@@ -116,16 +116,13 @@ function Messages() {
   // Fetching Clients from Freelancer
   const fetchClients = async () => {
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND}/user/freelancer/${userData.token}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userData?.token}`
-          }
+      const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancer`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userData?.token}`
         }
-      );
+      });
       const resJSON = await res.json();
       // console.log(resJSON);
       if (res.status === 200) {
@@ -142,16 +139,13 @@ function Messages() {
   // Fetching Freelancers from Client
   const fetchClientsForClient = async () => {
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_BACKEND}/user/freelancers/${userData.token}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-type': 'application/json',
-            Authorization: `Bearer ${userData?.token}`
-          }
+      const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancers`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userData?.token}`
         }
-      );
+      });
       const resJSON = await res.json();
       // console.log(resJSON);
       if (res.status === 200) {
@@ -245,11 +239,11 @@ function Messages() {
       <H3Styled>Messages</H3Styled>
       <ContainerContactListAndMessages>
         <ContactList>
-          <p>Chats</p>
+          {!clients.length && <NoItemsFound text="Clients" />}
           {clients.map((clientData: any) => (
             <Contact key={clientData._id} onClick={() => handleDisplayMessages(clientData._id)}>
               <RoundedPhoto
-                img={face1}
+                img={clientData.avatar}
                 alt="face"
                 width="60px"
                 height="60px"

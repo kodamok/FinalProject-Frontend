@@ -35,6 +35,7 @@ export const Wrapper = styled.div<Error>`
   position: fixed;
   z-index: 9999;
   left: 50%;
+  min-width: 300px;
   transform: translateX(-50%);
   bottom: 10%;
   background-color: white;
@@ -42,10 +43,17 @@ export const Wrapper = styled.div<Error>`
   color: ${({ theme, success }) => (success ? 'green' : theme.color.main6)};
   border: 3px solid ${({ theme, success }) => (success ? 'green' : theme.color.main6)};
   border-radius: 15px;
+  ${({ theme }) => theme.down(theme.breakpoint.s)} {
+    min-width: 90%;
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
+  }
   animation: ${slideAnimation} 1s ease-in-out 1 forwards,
     ${slideAnimation} 1s 6s ease-in-out 1 reverse forwards;
   ${Title} {
     color: ${({ theme, success }) => (success ? 'green' : theme.color.main6)};
+    ${({ theme }) => theme.down(theme.breakpoint.s)} {
+      font-size: ${({ theme }) => theme.fontSizeOpenSans.ms};
+    }
   }
   &::before,
   &::after {

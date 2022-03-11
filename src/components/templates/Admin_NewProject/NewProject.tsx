@@ -24,11 +24,6 @@ const FormContainer = styled.form`
   padding-right: 5rem;
   margin-bottom: 5rem;
 `;
-const ButtonWrapper = styled.div`
-  grid-row: 3;
-  grid-column: -1;
-  padding: 1rem;
-`;
 
 const Table = styled.div`
   /* border: 2px solid black;  */
@@ -45,6 +40,8 @@ const Table = styled.div`
     }
 
     .listOfServices {
+  
+
       /* border: 2px solid black; */
       font-size: ${({ theme }) => theme.fontSizeInter.m};
      
@@ -69,6 +66,8 @@ const BasicInfoContainer = styled.div`
   }
 
   .listOfServices {
+    /* border: 2px solid red; */
+
     ${({ theme }) => theme.down(theme.breakpoint.m)} {
       grid-column: 1;
       grid-row: 2;
@@ -81,6 +80,7 @@ const LeftContainer = styled.div`
   padding: 1rem;
   display: inline-grid;
   grid-template-columns: 0.5fr 1fr;
+  grid-template-rows: 1fr 50px;
   column-gap: 10px;
   border-radius: 10px;
   border: 3px solid black;
@@ -99,6 +99,13 @@ const LeftContainer = styled.div`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  grid-row: 2;
+  grid-column: 2 / span 1;
+  justify-self: end;
+  align-self: center;
+`;
+
 function NewProject(): JSX.Element {
   interface initial {
     image: File | string | null;
@@ -107,6 +114,8 @@ function NewProject(): JSX.Element {
     website: string;
     taxNumber: string;
     services: any;
+    startDate: string;
+    dueDate: string;
   }
 
   const projectInfo: initial = {
@@ -115,6 +124,8 @@ function NewProject(): JSX.Element {
     customerName: '',
     website: '',
     taxNumber: '',
+    startDate: '',
+    dueDate: '',
     services: []
   };
   const { userData } = useContext(Context);
@@ -200,7 +211,7 @@ function NewProject(): JSX.Element {
               <InputWithLabel
                 label="End Date*"
                 type="date"
-                name="endDate"
+                name="dueDate"
                 required
                 onChange={handleChange}
               />
@@ -236,6 +247,9 @@ function NewProject(): JSX.Element {
                 onChange={handleChange}
               />
             </div>
+            <ButtonWrapper>
+              <Button type="submit" text="submit" height="40px" width="150px" padding="0px;" />
+            </ButtonWrapper>
           </LeftContainer>
 
           <div className="listOfServices">
@@ -246,10 +260,6 @@ function NewProject(): JSX.Element {
             />
           </div>
         </BasicInfoContainer>
-
-        <ButtonWrapper>
-          <Button type="submit" text="submit" height="40px" width="150px" padding="0px;" />
-        </ButtonWrapper>
       </FormContainer>
     </PageContainer>
   );

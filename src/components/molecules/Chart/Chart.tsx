@@ -25,11 +25,11 @@ ChartJS.register(
 );
 
 const ContainerDoughnut = styled.div`
-  height: 350px;
-  width: 350px;
+  height: 280px;
+  width: 280px;
   margin: 2rem auto;
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    height: 450px;
+    height: 280px;
   }
 `;
 

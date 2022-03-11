@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
 import CardClient from '../../molecules/CardClient/CardClient';
@@ -6,6 +6,9 @@ import CardProject from '../../molecules/CardProject/CardProject';
 import { dataStats, optionsDoughnut } from '../../../helpers/chartSettings';
 import Chart from '../../molecules/Chart/Chart';
 import GlobalMessage from '../../organisms/GlobalMessage/GlobalMessage';
+import { Context } from '../../../providers/GeneralProvider';
+import useError from '../../../hooks/useError';
+import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 
 const Container = styled.div`
   padding: 1rem;
@@ -27,7 +30,7 @@ const Container = styled.div`
 `;
 
 const ContainerClients = styled.div`
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -39,7 +42,7 @@ const ContainerClients = styled.div`
 `;
 
 const ContainerProjects = styled.div`
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -52,15 +55,17 @@ const ContainerProjects = styled.div`
 
 const Data = styled.div`
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    width: 66%;
+    width: 76%;
   }
 `;
 const Stats = styled.div`
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    width: 30%;
+    width: 20%;
   }
 `;
 const ContainerDataAndStats = styled.div`
+  display: flex;
+  flex-direction: column;
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     display: flex;
     width: 100%;
@@ -70,55 +75,61 @@ const ContainerDataAndStats = styled.div`
   }
 `;
 
-const dummyClientData = [
-  {
-    name: 'David Rabinovich',
-    email: 'David@Rabinovichasdasdasdasd.com',
-    phone: '+49 112 1231 032',
-    projects: '2',
-    finished: 'Yes'
-  },
-  {
-    name: 'Gabo Fernandez',
-    email: 'Gabo@Fernandez.com',
-    phone: '+49 112 1231 032',
-    projects: '7',
-    finished: 'No'
-  },
-  {
-    name: 'Marlen Wied.....? xD',
-    email: 'Marlen@Marlen.com',
-    phone: '+49 112 1231 032',
-    projects: '1',
-    finished: '90%'
-  }
-];
-
-const dummyProjectData = [
-  {
-    name: 'Super Website',
-    website: 'superwebsite.de',
-    text: 'Something About',
-    dueData: '11-11-2022',
-    finished: '32%'
-  },
-  {
-    name: 'Worst Website',
-    website: 'worstwebsite.de',
-    text: 'Something About',
-    dueData: '21-11-2022',
-    finished: '66%'
-  },
-  {
-    name: 'Average Website',
-    website: 'averagewebsite.de',
-    text: 'Something About',
-    dueData: '13-11-2024',
-    finished: '90%'
-  }
-];
-
 function AdminDashboard() {
+  const [clients, setClients] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const { userData } = useContext(Context);
+  const { handleError } = useError();
+  const fetchClients = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancer/3`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userData.token}`
+        }
+      });
+      const resJSON = await res.json();
+      if (res.status === 200) {
+        setClients(resJSON);
+      } else {
+        handleError(resJSON.message);
+      }
+    } catch (error: any) {
+      console.log('FETCHING ERROR', error);
+      handleError();
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND}/project/3`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userData.token}`
+        }
+      });
+      const resJSON = await res.json();
+      console.log(resJSON);
+      if (res.status === 200) {
+        setProjects(resJSON);
+      } else {
+        handleError(resJSON.message);
+      }
+    } catch (error: any) {
+      console.log('FETCHING ERROR', error);
+      handleError();
+    }
+  };
+
+  useEffect(() => {
+    fetchClients();
+    fetchProjects();
+  }, []);
+
+  console.log({ clients, projects });
+
   return (
     <Container>
       <h3>Dashboard</h3>
@@ -127,29 +138,31 @@ function AdminDashboard() {
           <div>
             <TitleWithLines text="Recent Clients" />
             <ContainerClients>
-              {dummyClientData.map((item, i) => (
-                <div>
-                  {/* eslint-disable-next-line react/no-array-index-key */}
-                  <CardClient key={i} clientData={item} />
-                </div>
-              ))}
+              {clients.length ? (
+                clients.map((item: any) => <CardClient key={item._id} clientData={item} />)
+              ) : (
+                <NoItemsFound text="Clients" />
+              )}
             </ContainerClients>
           </div>
           <div>
             <TitleWithLines text="Recent Projects" />
             <ContainerProjects>
-              {dummyProjectData.map((item, i) => (
-                <div>
-                  {/* eslint-disable-next-line react/no-array-index-key */}
-                  <CardProject key={i} projectData={item} />
-                </div>
-              ))}
+              {projects.length ? (
+                projects.map((item: any) => <CardProject key={item._id} projectData={item} />)
+              ) : (
+                <NoItemsFound text="Projects" />
+              )}
             </ContainerProjects>
           </div>
         </Data>
         <Stats>
           <TitleWithLines text="Statistics" />
-          <Chart data={dataStats} options={optionsDoughnut} />
+          {projects.length || clients.length ? (
+            <Chart data={dataStats} options={optionsDoughnut} />
+          ) : (
+            <NoItemsFound text="Statistics" />
+          )}
         </Stats>
       </ContainerDataAndStats>
       <GlobalMessage />

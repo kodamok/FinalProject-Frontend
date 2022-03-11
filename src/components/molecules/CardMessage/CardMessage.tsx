@@ -11,11 +11,20 @@ const Container = styled.div<MessageStyled>`
   max-width: 80%;
   margin: ${({ marginLeft: m }) => (m ? '0 0.4rem 0 auto' : '0 0.4rem')};
   position: ${({ position }) => position && position};
-  p:last-child {
+  > div > p {
     background: #5757f3;
     border-radius: 1.4rem;
-    padding: 0.2rem 0.9rem;
+    padding: 0.2rem 0.6rem;
     color: white;
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
+  }
+  > div > span {
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.xxxs};
+    color: grey;
+  }
+  > div {
+    display: flex;
+    flex-direction: ${({ marginLeft: m }) => (m ? 'row-reverse' : 'row')};
   }
 `;
 
@@ -51,7 +60,19 @@ const CardMessage = React.forwardRef(
         {/*   {message.nameCreator && <p>{message.nameCreator} - </p>} */}
         {/*   <p>{message.createdAt}</p> */}
         {/* </NameAndDate> */}
-        <p>{message.text}</p>
+        {console.log(message)}
+        <div>
+          <p>{message.text}</p>
+          <span>
+            {new Date(message.createdAt).toLocaleTimeString([], {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            })}
+          </span>
+        </div>
       </Container>
     );
   }

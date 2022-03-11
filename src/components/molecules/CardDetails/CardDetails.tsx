@@ -6,6 +6,7 @@ import Button from '../../atoms/Button/Button';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import kim from '../../../assets/images/kim.jpg';
+import GeneratePdf from '../GeneratePdf/GeneratePdf';
 
 const Container = styled.div`
   display: flex;
@@ -162,6 +163,7 @@ function CardDetails({ projectData }: Project) {
               width="180px"
               fontSize="13px"
               padding="0.5rem 1rem"
+              onClick={GeneratePdf}
             />
           </DownloadInvoiceButton>
         </div>

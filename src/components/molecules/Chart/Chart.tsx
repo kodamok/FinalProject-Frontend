@@ -25,12 +25,9 @@ ChartJS.register(
 );
 
 const ContainerDoughnut = styled.div`
-  height: 280px;
-  width: 280px;
+  height: 300px;
+  width: 100%;
   margin: 2rem auto;
-  ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    height: 280px;
-  }
 `;
 
 interface ChartTypes {

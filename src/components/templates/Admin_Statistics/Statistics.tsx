@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Chart from '../../molecules/Chart/Chart';
-import { dataStats, optionsDoughnut } from '../../../helpers/chartSettings';
+import { backgroundColorSchema, optionsDoughnut } from '../../../helpers/chartSettings';
 import CardStatistic from '../../molecules/CardStatistic/CardStatistic';
 import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
@@ -21,7 +21,7 @@ const ContainerCardStatistics = styled.div`
 `;
 
 function Statistics() {
-  const [statistics, setStatistics] = useState([]);
+  const [statistics, setStatistics]: any = useState([]);
   const { handleError } = useError();
   const { userData } = useContext(Context);
   const fetchStatistics = async () => {
@@ -50,10 +50,29 @@ function Statistics() {
     fetchStatistics();
   }, []);
 
+  const dataStats = {
+    labels: ['Clients', 'Projects'],
+    datasets: [
+      {
+        label: 'Service',
+        data: [statistics.projects, statistics.clients],
+        backgroundColor: backgroundColorSchema,
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)'
+        ],
+        borderWidth: 3
+      }
+    ]
+  };
+
   return (
     <Container>
       <h4>Statistics</h4>
-      <Chart data={dataStats} options={optionsDoughnut} />
+      {statistics && statistics.clients && <Chart data={dataStats} options={optionsDoughnut} />}
       <ContainerCardStatistics>
         {Object.entries(statistics).map((item: [string, any], i) => (
           // eslint-disable-next-line react/no-array-index-key

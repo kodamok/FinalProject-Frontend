@@ -80,10 +80,8 @@ const DesktopFooter = styled.div`
   background-color: #001523;
   color: ${({ theme }) => theme.color.main8};
   display: flex;
-  padding: 100px 50px;
-  flex-basis: 100%;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 3vh;
 `;

@@ -31,6 +31,7 @@ export const theme = {
   },
   breakpoint: {
     s: '440px',
+    sm: '720px',
     m: '1060px',
     l: '1440px'
   },

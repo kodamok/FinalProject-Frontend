@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
@@ -6,6 +6,7 @@ import { BiArrowFromBottom } from 'react-icons/bi';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
+import { Context } from '../../../providers/GeneralProvider';
 
 interface Card {
   openDataDetails: boolean;
@@ -15,6 +16,12 @@ const Container = styled.div<Card>`
   border: 3px solid black;
   padding: 0 1rem 1rem 1rem;
   border-radius: 0.6rem;
+  min-width: 290px;
+  width: 100%;
+  max-width: 450px;
+  ${({ theme }) => theme.up(theme.breakpoint.sm)} {
+    max-width: 290px;
+  }
   * {
     margin: 0;
   }
@@ -31,13 +38,13 @@ const Container = styled.div<Card>`
 
   > div:nth-child(2) {
     padding: 0.5rem 0.5rem 0 0.5rem;
-    ${({ theme }) => theme.down(theme.breakpoint.m)} {
+    ${({ theme }) => theme.down(theme.breakpoint.sm)} {
       display: ${({ openDataDetails }) => (openDataDetails ? 'block' : 'none')};
     }
     > div:last-child {
       display: flex;
       justify-content: center;
-      ${({ theme }) => theme.up(theme.breakpoint.m)} {
+      ${({ theme }) => theme.up(theme.breakpoint.sm)} {
         display: none;
       }
     }
@@ -73,7 +80,7 @@ const ElementData = styled.div`
   }
 `;
 
-const ContainerOptionsToClick = styled.div`
+export const ContainerOptionsToClick = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -82,19 +89,22 @@ const ContainerOptionsToClick = styled.div`
 `;
 
 interface client {
-  clientData: {
-    _id?: string;
-    name: string;
-    email: string;
-    phone: string;
-    projects: string;
-    finished: string;
-    avatar: string;
-  };
+  clientData:
+    | {
+        _id?: string;
+        name: string;
+        email: string;
+        phone?: string;
+        projects: string;
+        finished: string;
+        avatar: string;
+      }
+    | any;
 }
 
 function CardClient({ clientData }: client) {
   const [openDataDetails, setOpenDataDetails] = useState(false);
+  const { setOpenChatBoxWithThisUser } = useContext(Context);
 
   const navigate = useNavigate();
   const handleCloseDetails = (e: SyntheticEvent) => {
@@ -109,6 +119,14 @@ function CardClient({ clientData }: client) {
     const userData = clientData;
 
     navigate(`/newProject/${userData._id}`);
+  };
+
+  const handleNavigateToClientDetails = () => {
+    navigate(`/client/${clientData._id}`);
+  };
+
+  const handleNavigateToChatBoxMessage = () => {
+    setOpenChatBoxWithThisUser(clientData._id);
   };
 
   return (
@@ -127,8 +145,16 @@ function CardClient({ clientData }: client) {
         <div>
           <IconClickable icon={<BsThreeDots fontSize={28} />}>
             <ContainerOptionsToClick>
-              <Button whiteMenu text="View" width="150px" fontSize="1rem" padding="0.3rem 1rem" />
               <Button
+                onClick={handleNavigateToClientDetails}
+                whiteMenu
+                text="View"
+                width="150px"
+                fontSize="1rem"
+                padding="0.3rem 1rem"
+              />
+              <Button
+                onClick={handleNavigateToChatBoxMessage}
                 whiteMenu
                 text="Message"
                 width="150px"
@@ -148,7 +174,6 @@ function CardClient({ clientData }: client) {
         </div>
       </div>
       <div>
-        <h5>Contact Overview:</h5>
         <ElementData>
           <span>Phone:</span>
           <p>{clientData.phone}</p>

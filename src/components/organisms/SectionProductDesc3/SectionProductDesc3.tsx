@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { Box } from '../SectionProductDesc1/SectionProductDesc1';
 import Button from '../../atoms/Button/Button';
 import { RedSpan } from '../../atoms/RedSpan/RedSpan';
@@ -159,6 +160,10 @@ const data = [
 ];
 
 function SectionProductDesc3(): JSX.Element {
+  const navigate = useNavigate();
+  const handleNavigateToSignup = () => {
+    navigate('/signup');
+  };
   return (
     <Container>
       <div>
@@ -214,7 +219,13 @@ function SectionProductDesc3(): JSX.Element {
         ))}
       </ContainerTestimonials>
       <div>
-        <Button text="Signup" background="#fcbf49" color="#001523" border="2px solid #001523" />
+        <Button
+          text="Signup"
+          onClick={handleNavigateToSignup}
+          background="#fcbf49"
+          color="#001523"
+          border="2px solid #001523"
+        />
       </div>
     </Container>
   );

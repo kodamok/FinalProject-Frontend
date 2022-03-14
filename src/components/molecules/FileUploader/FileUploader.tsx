@@ -21,7 +21,7 @@ const initialValue: FileUploaderInterface = {
 };
 
 interface File {
-  projectId: string;
+  projectId: string | undefined;
 }
 
 function FileUploader({ projectId }: File) {

@@ -1,11 +1,25 @@
 import React, { SyntheticEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useError from '../../../hooks/useError';
 
-function VerifyEmail() {
+const Container = styled.div`
+  padding: 2rem;
+  display: flex;
+  min-width: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  * {
+    min-width: 300px;
+  }
+`;
+
+function ResetPassword() {
   const { handleError } = useError();
   const { token } = useParams();
   const navigate = useNavigate();
@@ -45,7 +59,7 @@ function VerifyEmail() {
     resetPassword();
   };
   return (
-    <div>
+    <Container>
       <InputWithLabel
         type="password"
         label="Your New Password"
@@ -53,8 +67,8 @@ function VerifyEmail() {
         onChange={handleChange}
       />
       <Button text="Submit" onClick={handleResetPassword} />
-    </div>
+    </Container>
   );
 }
 
-export default VerifyEmail;
+export default ResetPassword;

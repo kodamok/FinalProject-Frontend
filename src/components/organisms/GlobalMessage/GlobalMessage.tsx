@@ -270,55 +270,12 @@ function GlobalMessage() {
     setIsOpenContactList((prev) => !prev);
     setOpenChatWithMessages(false);
   };
-  const [clients, setClients] = useState<any[]>([]);
-  const { userData, messages } = useContext(Context);
+  // const [clientsGlobal, setClientsGlobal] = useState<any[]>([]);
+  const { userData, messages, openChatBoxWithThisUser, setOpenChatBoxWithThisUser, clientsGlobal } =
+    useContext(Context);
   const { handleError } = useError();
   const [openChatWithMessages, setOpenChatWithMessages] = useState(false);
   const [displayChatBoxOnTheBottom, setDisplayChatBoxOnTheBottom] = useState(false);
-  // Fetching Clients from Freelancer
-  const fetchClients = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancer`, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userData?.token}`
-        }
-      });
-      const resJSON = await res.json();
-      // console.log(resJSON);
-      if (res.status === 200) {
-        setClients(resJSON);
-      } else {
-        handleError(resJSON.message);
-      }
-    } catch (error: any) {
-      console.log('FETCHING ERROR', error);
-      handleError();
-    }
-  };
-  // Fetching Freelancers from Client
-  const fetchClientsForClient = async () => {
-    try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancers`, {
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${userData?.token}`
-        }
-      });
-      const resJSON = await res.json();
-      // console.log(resJSON);
-      if (res.status === 200) {
-        setClients(resJSON);
-      } else {
-        handleError(resJSON.message);
-      }
-    } catch (error: any) {
-      console.log('FETCHING ERROR', error);
-      handleError();
-    }
-  };
   // Opening ChatBox With Messages
   const handleOpenChatBoxWithMessages = () => {
     setOpenChatWithMessages((prev) => !prev);
@@ -360,7 +317,7 @@ function GlobalMessage() {
   // Set actually client and his messages after click on his Avatar
   const handleOpenChatBox = (id: string) => {
     setClientMessages(messages.filter((item: any) => item.creator === id || item.receiver === id));
-    setActuallyClient(clients.filter((item: any) => item._id === id));
+    setActuallyClient(clientsGlobal.filter((item: any) => item._id === id));
     setIsOpenContactList(false);
     setOpenChatWithMessages(true);
     setDisplayChatBoxOnTheBottom(true);
@@ -370,16 +327,6 @@ function GlobalMessage() {
     setOpenChatWithMessages(false);
     setIsOpenContactList(false);
   };
-
-  // Fetching Clients (Freelancer or Client)
-  useEffect(() => {
-    if (userData.token && userData.role === 'Freelancer') {
-      fetchClients();
-    }
-    if (userData.token && userData.role === 'Client') {
-      fetchClientsForClient();
-    }
-  }, []);
 
   // Assign actually client id to inputs.receiverId
   useEffect(() => {
@@ -399,6 +346,14 @@ function GlobalMessage() {
       );
     }
   }, [messages]);
+
+  useEffect(() => {
+    console.log('in effect', openChatBoxWithThisUser);
+    if (openChatBoxWithThisUser) {
+      handleOpenChatBox(openChatBoxWithThisUser);
+      setOpenChatBoxWithThisUser('');
+    }
+  }, [openChatBoxWithThisUser]);
 
   const containerFixed = useRef(null);
 
@@ -471,7 +426,7 @@ function GlobalMessage() {
           </div>
           <div>
             <ContactList>
-              {clients.map((clientData: any) => (
+              {clientsGlobal.map((clientData: any) => (
                 <Contact key={clientData._id} onClick={() => handleOpenChatBox(clientData._id)}>
                   <RoundedPhoto img={clientData.avatar} alt="face" width="40px" height="40px" />
                   <div>

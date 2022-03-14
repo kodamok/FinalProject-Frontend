@@ -38,6 +38,10 @@ const ButtonWhiteStyle = styled.button<ButtonInterface>`
   text-transform: uppercase;
   font-weight: bold;
   transition: 0.3s ease-in-out;
+  > span {
+    font-weight: 600;
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
+  }
   //white-space: nowrap;
   &:hover {
     cursor: pointer;
@@ -54,7 +58,7 @@ interface ButtonInterface {
   border?: string;
   width?: string;
   height?: string;
-  onClick?: React.MouseEventHandler;
+  onClick?: React.MouseEventHandler | any;
   padding?: string;
   fontSize?: string;
   style?: React.CSSProperties;

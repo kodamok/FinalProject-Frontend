@@ -7,7 +7,7 @@ interface MessageStyled {
 }
 
 const Container = styled.div<MessageStyled>`
-  width: max-content;
+  //width: max-content;
   max-width: 80%;
   margin: ${({ marginLeft: m }) => (m ? '0 0.4rem 0 auto' : '0 0.4rem')};
   position: ${({ position }) => position && position};

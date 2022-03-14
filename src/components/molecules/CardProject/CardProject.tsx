@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
 import { BiArrowFromBottom } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
+import { Context } from '../../../providers/GeneralProvider';
 
 interface Card {
   openDataDetails: boolean;
@@ -14,19 +16,39 @@ const Container = styled.div<Card>`
   border: 3px solid black;
   padding: 0 1rem 1rem 1rem;
   border-radius: 0.6rem;
+  min-width: 290px;
+  width: 100%;
+  max-width: 450px;
+  ${({ theme }) => theme.up(theme.breakpoint.sm)} {
+    max-width: 290px;
+  }
   * {
     margin: 0;
   }
+
+  h4 {
+    max-width: 180px;
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
+  }
+  h5 {
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.ms};
+  }
+  p {
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
+    font-weight: bold;
+  }
+  span {
+    font-weight: 600;
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
+  }
+
   > div:first-child {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 4px solid black;
+    border-bottom: 3px solid grey;
     padding: 0.5rem 0 0.5rem 0;
-    h4 {
-      text-align: center;
-      font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
-    }
+
     div:last-child {
       align-self: flex-start;
     }
@@ -34,23 +56,16 @@ const Container = styled.div<Card>`
 
   > div:nth-child(2) {
     padding: 0.5rem 0.5rem 0 0.5rem;
-    ${({ theme }) => theme.down(theme.breakpoint.m)} {
+    ${({ theme }) => theme.down(theme.breakpoint.sm)} {
       display: ${({ openDataDetails }) => (openDataDetails ? 'block' : 'none')};
     }
     > div:last-child {
       display: flex;
       justify-content: center;
-      ${({ theme }) => theme.up(theme.breakpoint.m)} {
+      ${({ theme }) => theme.up(theme.breakpoint.sm)} {
         display: none;
       }
     }
-  }
-
-  h4 {
-    max-width: 180px;
-  }
-  span {
-    font-weight: 700;
   }
 `;
 
@@ -68,21 +83,39 @@ const ContainerOptionsToClick = styled.div`
 
 interface client {
   projectData: {
+    _id: string;
     name: string;
     finished: string;
     website: string;
     dueData: string;
     text: string;
     avatar: string;
+    ownerFreelancer: string;
+    ownerUser: string;
   };
 }
 
 function CardProject({ projectData }: client) {
   const [openDataDetails, setOpenDataDetails] = useState(false);
+  const { setOpenChatBoxWithThisUser, userData } = useContext(Context);
+  const navigate = useNavigate();
   const handleCloseDetails = (e: any) => {
     e.stopPropagation();
     setOpenDataDetails(false);
   };
+  const handleNavigateToProjectDetails = () => {
+    navigate(`/project/${projectData._id}`);
+  };
+
+  const handleNavigateToChatBoxMessage = () => {
+    if (userData.role === 'Client') {
+      setOpenChatBoxWithThisUser(projectData.ownerFreelancer);
+    }
+    if (userData.role === 'Freelancer') {
+      setOpenChatBoxWithThisUser(projectData.ownerUser);
+    }
+  };
+
   return (
     <Container openDataDetails={openDataDetails} onClick={() => setOpenDataDetails(true)}>
       <div>
@@ -99,16 +132,35 @@ function CardProject({ projectData }: client) {
         <div>
           <IconClickable icon={<BsThreeDots fontSize={28} />}>
             <ContainerOptionsToClick>
-              <Button text="View" width="150px" fontSize="1rem" padding="0.3rem 1rem" />
-              <Button text="Upload" width="150px" fontSize="1rem" padding="0.3rem 1rem" />
-              <Button text="Progress" width="150px" fontSize="1rem" padding="0.3rem 1rem" />
-              <Button text="Message" width="150px" fontSize="1rem" padding="0.3rem 1rem" />
+              <Button
+                whiteMenu
+                text="View"
+                width="150px"
+                fontSize="1rem"
+                padding="0.3rem 1rem"
+                onClick={handleNavigateToProjectDetails}
+              />
+              {/* <Button whiteMenu text="Upload" width="150px" fontSize="1rem" padding="0.3rem 1rem" /> */}
+              {/* <Button */}
+              {/*   whiteMenu */}
+              {/*   text="Progress" */}
+              {/*   width="150px" */}
+              {/*   fontSize="1rem" */}
+              {/*   padding="0.3rem 1rem" */}
+              {/* /> */}
+              <Button
+                whiteMenu
+                text="Message"
+                width="150px"
+                fontSize="1rem"
+                padding="0.3rem 1rem"
+                onClick={handleNavigateToChatBoxMessage}
+              />
             </ContainerOptionsToClick>
           </IconClickable>
         </div>
       </div>
       <div>
-        <h5>Project Overview:</h5>
         <ElementData>
           <span>Website:</span>
           <p>{projectData.website}</p>

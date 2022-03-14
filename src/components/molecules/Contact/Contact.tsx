@@ -8,10 +8,10 @@ import { dataContact } from '../../../data/dataContact';
 
 const StyledContact = styled.div`
   display: flex;
-  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 2rem;
   gap: 2rem;
 `;
 
@@ -39,7 +39,8 @@ const TelAndEmailContainer = styled.div`
 //= =======================
 const Container = styled.div`
   display: flex;
-  padding: 0.1rem;
+  align-items: center;
+  padding-left: 0.5rem;
   font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
   &: hover {
     cursor: pointer;
@@ -47,8 +48,8 @@ const Container = styled.div`
 `;
 const StyledSocialNetWorks = styled.div`
   display: flex;
-  gap: 4rem;
-  margin: auto;
+  padding-bottom: 2rem;
+  gap: 2rem;
   &: hover {
     cursor: pointer;
   }

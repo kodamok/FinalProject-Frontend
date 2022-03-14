@@ -22,7 +22,7 @@ import VerifyEmail from '../components/molecules/VerifyEmail/VerifyEmail';
 import ForgotPassword from '../components/molecules/ForgotPassword/ForgotPassword';
 import ResetPassword from '../components/molecules/ResetPassword/ResetPassword';
 import Statistics from '../components/templates/Admin_Statistics/Statistics';
-import ClientDetail from '../components/organisms/ClientDetail/ClientDetails';
+import ClientDetails from '../components/organisms/ClientDetail/ClientDetails';
 import ProjectDetail from '../components/organisms/ProjectDetail/ProjectDetails';
 import Messages from '../components/templates/Messages/Messages';
 import NewProject from '../components/templates/Admin_NewProject/NewProject';
@@ -32,11 +32,12 @@ import useError from '../hooks/useError';
 import FAQs from '../components/molecules/FAQs/FAQs';
 
 function App(): JSX.Element {
-  const { userData, setMessages, setUserData } = useContext(Context);
+  const { userData, setMessages, setUserData, setClientsGlobal } = useContext(Context);
   const navigate = useNavigate();
   const { handleLogout } = useAuth();
   const { token, role } = userData;
   const { handleError } = useError();
+
   useEffect(() => {
     let interval: any;
     if (userData.token) {
@@ -68,6 +69,60 @@ function App(): JSX.Element {
   }, [userData.exp]);
 
   const [listening, setListening] = useState(false);
+
+  // Fetching clientsGlobal from Freelancer
+  const fetchClients = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancer`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userData?.token}`
+        }
+      });
+      const resJSON = await res.json();
+      // console.log(resJSON);
+      if (res.status === 200) {
+        setClientsGlobal(resJSON);
+      } else {
+        handleError(resJSON.message);
+      }
+    } catch (error: any) {
+      console.log('FETCHING ERROR', error);
+      handleError();
+    }
+  };
+  // Fetching Freelancers from Client
+  const fetchClientsForClient = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancers`, {
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${userData?.token}`
+        }
+      });
+      const resJSON = await res.json();
+      // console.log(resJSON);
+      if (res.status === 200) {
+        setClientsGlobal(resJSON);
+      } else {
+        handleError(resJSON.message);
+      }
+    } catch (error: any) {
+      console.log('FETCHING ERROR', error);
+      handleError();
+    }
+  };
+  // Fetching clientsGlobal (Freelancer or Client)
+  useEffect(() => {
+    if (userData.token && userData.role === 'Freelancer') {
+      fetchClients();
+    }
+    if (userData.token && userData.role === 'Client') {
+      fetchClientsForClient();
+    }
+  }, []);
 
   useEffect(() => {
     const connectSSE = async () => {
@@ -155,7 +210,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<AdminDashboard />} />
             <Route path="/clients" element={<ClientsOrProjects />} />
-            <Route path="/client/:clientId" element={<ClientDetail />} />
+            <Route path="/client/:clientId" element={<ClientDetails />} />
             <Route path="/project/:projectId" element={<ProjectDetail />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/statistics" element={<Statistics />} />
@@ -165,18 +220,20 @@ function App(): JSX.Element {
             <Route path="/services" element={<Services />} />
             <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/impressum" element={<Impressum />} />
+            <Route path="/faqs" element={<FAQs />} />
           </Routes>
         ) : token && role === 'Client' ? (
           <Routes>
             <Route path="/" element={<UserDashboard />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/project/:projectId" element={<ProjectDetail />} />
-            <Route path="/freelancer/:freelancerId" element={<ClientDetail />} />
+            <Route path="/freelancer/:freelancerId" element={<ClientDetails />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/services" element={<Services />} />
             <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/impressum" element={<Impressum />} />
+            <Route path="/faqs" element={<FAQs />} />
           </Routes>
         ) : (
           <Routes>

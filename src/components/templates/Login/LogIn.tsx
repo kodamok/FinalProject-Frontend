@@ -65,6 +65,10 @@ function LogIn() {
   const { handleChange, inputs } = useForm(initialValue);
   const { handleError } = useError();
 
+  const handleOpenCreateNewAccountPage = () => {
+    navigate('/signup');
+  };
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     console.log('You try login with these inputs', inputs);
@@ -112,7 +116,11 @@ function LogIn() {
         <a href={googleLoginUrl}>
           <Button text="Login with Google" icon={<FcGoogle />} padding="1.3rem 1rem" />
         </a>
-        <Button background="#9e0059" text="Create New Account" />
+        <Button
+          background="#9e0059"
+          text="Create New Account"
+          onClick={handleOpenCreateNewAccountPage}
+        />
       </div>
     </Container>
   );

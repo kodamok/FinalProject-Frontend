@@ -1,6 +1,20 @@
 import React, { SyntheticEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
+
+const Container = styled.div`
+  padding: 2rem;
+  display: flex;
+  min-width: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  * {
+    min-width: 300px;
+  }
+`;
 
 function VerifyEmail() {
   const { token } = useParams();
@@ -29,9 +43,9 @@ function VerifyEmail() {
     verifyEmail();
   };
   return (
-    <div>
+    <Container>
       <Button text="Verify Email" onClick={handleVerifyEmail} />
-    </div>
+    </Container>
   );
 }
 

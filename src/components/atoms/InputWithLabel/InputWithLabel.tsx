@@ -5,6 +5,7 @@ interface ContainerProp {
   width: string | undefined;
   height: string | undefined;
   margin: string | undefined;
+  border: string | undefined;
 }
 
 const Container = styled.div<ContainerProp>`
@@ -22,13 +23,14 @@ const Container = styled.div<ContainerProp>`
     width: ${({ width }) => width || '100%'};
     height: ${({ height }) => height || '100%'};
     font-size: 14px;
+    border: ${({ border }) => border || 'medium none color'};
   }
   input:focus {
     outline: 3px solid ${({ theme }) => theme.color.main6};
   }
 `;
 
-const TextContainer = styled.div`
+const TextContainer = styled.div<{ border: string | undefined }>`
   display: block;
   color: ${({ color }) => color || 'black'};
   font-weight: bold;
@@ -37,14 +39,14 @@ const TextContainer = styled.div`
     margin: 0.7rem 0 0.7rem 0;
     border-radius: 10px;
     width: 100%;
-
+    border: ${({ border }) => border || 'medium none color'};
     &:focus {
       outline: 3px solid ${({ theme }) => theme.color.main6};
     }
   }
 `;
 
-const CheckboxContainer = styled.div`
+const CheckboxContainer = styled.div<{ border: string | undefined }>`
   display: flex;
   align-items: center;
   label {
@@ -57,6 +59,7 @@ const CheckboxContainer = styled.div`
     margin: 0.7rem 0 0.7rem 0;
     font-size: 14px;
     width: 25px;
+    border: ${({ border }) => border || 'medium none color'};
   }
 `;
 
@@ -79,6 +82,7 @@ interface FormInput {
   height?: string;
   margin?: string;
   multiple?: boolean;
+  border?: string;
 }
 
 function InputWithLabel({
@@ -99,12 +103,13 @@ function InputWithLabel({
   width,
   height,
   margin,
-  multiple
+  multiple,
+  border
 }: FormInput) {
   if (type === 'radio' || type === 'checkbox') {
     return (
       <div>
-        <CheckboxContainer>
+        <CheckboxContainer border={border}>
           {label && <label htmlFor={id || name}>{label}</label>}
           <input
             type={type}
@@ -125,7 +130,7 @@ function InputWithLabel({
   return (
     <div>
       {TextAreaWithLabel ? (
-        <TextContainer color={color}>
+        <TextContainer color={color} border={border}>
           {label && <label htmlFor={name}>{label}</label>}
           <textarea
             name={name}
@@ -140,7 +145,7 @@ function InputWithLabel({
           />
         </TextContainer>
       ) : (
-        <Container color={color} width={width} height={height} margin={margin}>
+        <Container color={color} width={width} height={height} margin={margin} border={border}>
           {label && <label htmlFor={name}>{label}</label>}
           <input
             type={type}
@@ -175,7 +180,8 @@ InputWithLabel.defaultProps = {
   width: undefined,
   height: undefined,
   margin: undefined,
-  multiple: false
+  multiple: false,
+  border: undefined
 };
 
 export default InputWithLabel;

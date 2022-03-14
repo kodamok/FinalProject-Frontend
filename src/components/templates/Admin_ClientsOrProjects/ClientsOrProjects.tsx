@@ -27,29 +27,40 @@ const ContainerFilterBy = styled.div`
 
 const ContainerClients = styled.div`
   padding: 0.3rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
-  max-width: 95%;
+  width: 100%;
+  max-width: 1600px;
   margin: 1.2rem auto 1.2rem auto;
   border-radius: 1rem;
-  ${({ theme }) => theme.down('700px')} {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
-    justify-content: center;
-  }
 `;
+
+// const ContainerClients = styled.div`
+//   padding: 0.3rem;
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+//   gap: 1rem;
+//   width: 100%;
+//   max-width: 1600px;
+//   margin: 1.2rem auto 1.2rem auto;
+//   border-radius: 1rem;
+//   ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+//     grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
+//     justify-content: center;
+//   }
+// `;
 const ContainerProjects = styled.div`
   padding: 0.3rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
-  max-width: 95%;
+  width: 100%;
+  max-width: 1600px;
   margin: 1.2rem auto 1.2rem auto;
   border-radius: 1rem;
-  ${({ theme }) => theme.down('700px')} {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 400px));
-    justify-content: center;
-  }
 `;
 
 function ClientsOrProjects() {
@@ -147,12 +158,14 @@ function ClientsOrProjects() {
               style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '1rem' }}
             >
               <Button
+                whiteMenu
                 text="Create New Client"
                 width="180px"
                 fontSize="1rem"
                 padding="0.5rem 1rem"
               />
               <Button
+                whiteMenu
                 text="Create New Project"
                 width="180px"
                 fontSize="1rem"

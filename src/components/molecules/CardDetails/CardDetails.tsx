@@ -89,7 +89,7 @@ interface Project {
     taxNumber: string;
   }; */
 }
-
+// Card Details Mobil Version
 function CardDetails({ projectData }: Project) {
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
   return (
@@ -168,6 +168,7 @@ function CardDetails({ projectData }: Project) {
           </DownloadInvoiceButton>
         </div>
       ) : (
+        // Card Details Desktop Version
         <div>
           <ContainerDesktop>
             <ContainerDetailDesktop>

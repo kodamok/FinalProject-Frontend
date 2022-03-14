@@ -14,7 +14,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  //gap: 3rem;
+  //border: 10px solid purple;
+  ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+    padding: 0;
+  }
 `;
 
 const Form = styled.form`
@@ -22,10 +25,67 @@ const Form = styled.form`
   align-items: flex-end;
   display: flex;
   flex-direction: column;
+
   * {
     width: 100%;
   }
-  //border: 1px solid grey;
+  //border: 10px solid grey;
+`;
+
+const ContainerContactListAndMessages = styled.div`
+  display: flex;
+  border: 1px solid grey;
+  margin: 0 auto;
+  justify-content: space-between;
+  border-radius: 0.6rem;
+  //gap: 3rem;
+`;
+
+const ContactList = styled.div`
+  border-right: 1px solid grey;
+  overflow: hidden;
+  overflow-y: auto;
+  min-width: 200px;
+  max-width: 250px;
+  overscroll-behavior: contain;
+  // TODO Not good - to FIX
+  max-height: 566px;
+  ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+    min-width: 50px;
+    max-width: 50px;
+  }
+`;
+
+const WrapperBoxMessage = styled.div`
+  width: auto;
+  min-width: auto;
+  ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+    min-width: 320px;
+  }
+`;
+
+const Contact = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid black;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  gap: 1rem;
+  transition: 0.3s;
+  &:hover {
+    cursor: pointer;
+    background: ${({ theme }) => theme.color.main3};
+    color: white;
+    border-radius: 0.6rem;
+  }
+  h5 {
+    padding: 0;
+    margin: 0;
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.ms};
+  }
+  ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+    padding: 0.2rem;
+  }
 `;
 
 const WrapperMessages = styled.div`
@@ -33,10 +93,11 @@ const WrapperMessages = styled.div`
   //border: 2px solid black;
   max-height: 100%;
   height: 400px;
-  width: 95vw;
+  width: auto;
   max-width: 600px;
   display: flex;
   flex-direction: column;
+  border-radius: 0.6rem;
   //gap: 0.4rem;
   > div:last-child {
     display: flex;
@@ -47,45 +108,16 @@ const WrapperMessages = styled.div`
     height: 100%;
     padding-top: 0.4rem;
   }
+  ${({ theme }) => theme.up(theme.breakpoint.sm)} {
+    min-width: 500px;
+  }
 `;
 
 const PContainer = styled.div`
   background: ${({ theme }) => theme.color.main3};
   color: white;
   padding: 1rem;
-`;
-
-const ContactList = styled.div`
-  padding: 0 1rem;
-  border-right: 1px solid grey;
-  overflow: hidden;
-  overflow-y: scroll;
-  min-width: 200px;
-  overscroll-behavior: contain;
-  // TODO Not good - to FIX
-  max-height: 566px;
-`;
-
-const Contact = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 4px solid black;
-  padding: 0.5rem 0 0.5rem 0;
-  gap: 1rem;
-  h5 {
-    padding: 0;
-    margin: 0;
-    font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
-  }
-`;
-
-const ContainerContactListAndMessages = styled.div`
-  display: flex;
-  border: 1px solid grey;
-  justify-content: center;
-  margin: 0 auto;
-  //gap: 3rem;
+  border-radius: 0.5rem;
 `;
 
 const H3Styled = styled.h3`
@@ -245,9 +277,9 @@ function Messages() {
               <RoundedPhoto
                 img={clientData.avatar}
                 alt="face"
-                width="60px"
-                height="60px"
-                outline="3px solid black"
+                width="40px"
+                height="40px"
+                outline="2px solid black"
               />
               <div>
                 <h5>{clientData.name}</h5>
@@ -255,7 +287,7 @@ function Messages() {
             </Contact>
           ))}
         </ContactList>
-        <div>
+        <WrapperBoxMessage>
           <WrapperMessages>
             {actuallyClient.length > 0 && (
               <PContainer>
@@ -287,7 +319,7 @@ function Messages() {
             />
             <Button text="Send a Message" type="submit" />
           </Form>
-        </div>
+        </WrapperBoxMessage>
       </ContainerContactListAndMessages>
     </Container>
   );

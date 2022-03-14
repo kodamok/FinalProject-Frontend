@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import {
   ContainerPhoto,
   FlexPhoto,
@@ -80,6 +81,10 @@ const ContainerFlex = styled.div`
 `;
 
 function SectionProductDesc2(): JSX.Element {
+  const navigate = useNavigate();
+  const handleNavigateToServices = () => {
+    navigate('/services');
+  };
   return (
     <Container>
       <div>
@@ -107,7 +112,12 @@ function SectionProductDesc2(): JSX.Element {
         </OneTestimonial>
       </ContainerFlex>
       <div>
-        <Button text="Choose a Plan" color="#001523" background="#fcbf49" />
+        <Button
+          text="Choose a Plan"
+          color="#001523"
+          background="#fcbf49"
+          onClick={handleNavigateToServices}
+        />
       </div>
     </Container>
   );

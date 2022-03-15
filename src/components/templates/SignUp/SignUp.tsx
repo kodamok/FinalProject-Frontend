@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';
 import Button from '../../atoms/Button/Button';
@@ -104,33 +104,31 @@ const DivThree = styled.div`
   max-width: 350px;
 `;
 
+interface FormSignUp {
+  name: string;
+  email: string;
+  password: string;
+  taxNumber: string;
+  identityCardNumber: string | undefined;
+  image: File | string | null;
+}
+
+const initialValue: FormSignUp = {
+  name: '',
+  email: '',
+  password: '',
+  taxNumber: '',
+  identityCardNumber: '',
+  image: ''
+};
+
 function SignUp() {
   const { handleError } = useError();
-
-  interface FormSignUp {
-    name: string;
-    email: string;
-    password: string;
-    taxNumber: string;
-    identityCardNumber: string | undefined;
-    image: File | string | null;
-  }
-
-  const initialValue: FormSignUp = {
-    name: '',
-    email: '',
-    password: '',
-    taxNumber: '',
-    identityCardNumber: '',
-    image: ''
-  };
-
+  const [isLoading, setIsLoading] = useState(false);
   const { handleChange, inputs, clearForm } = useForm(initialValue);
-  console.log(inputs);
-
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('You try submit these inputs', inputs);
+    setIsLoading(true);
     const signup = async () => {
       try {
         const res = await fetch(`${process.env.REACT_APP_BACKEND}/signup`, {
@@ -154,6 +152,8 @@ function SignUp() {
       } catch (error: any) {
         console.log('FETCHING ERROR', error);
         handleError();
+      } finally {
+        setIsLoading(false);
       }
     };
     signup();
@@ -232,7 +232,11 @@ function SignUp() {
               </ParagraphAdd>
             </div>
             <ContainerButton>
-              <Button type="submit" background="#9e0059" text="Create Account" />
+              <Button
+                type="submit"
+                background="#9e0059"
+                text={isLoading ? 'Loading...' : 'Create Account'}
+              />
             </ContainerButton>
           </DivThree>
         </ContainerDiv>

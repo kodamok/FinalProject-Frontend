@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../atoms/Button/Button';
 import { RedSpan } from '../../atoms/RedSpan/RedSpan';
 import { PurpleSpan } from '../../atoms/PurpleSpan/PurpleSpan';
@@ -168,6 +169,10 @@ const ContainerFlex = styled.div`
 `;
 
 function SectionProductDesc1(): JSX.Element {
+  const navigate = useNavigate();
+  const handleNavigateToSignup = () => {
+    navigate('/signup');
+  };
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
   return (
     <Container>
@@ -220,7 +225,12 @@ function SectionProductDesc1(): JSX.Element {
             </OneTestimonial>
           </Testimonials>
           <div>
-            <Button text="Start Free Trial" background="#001523" color="#fcbf49" />
+            <Button
+              text="Start Free Trial"
+              background="#001523"
+              color="#fcbf49"
+              onClick={handleNavigateToSignup}
+            />
           </div>
         </>
       ) : (
@@ -256,7 +266,12 @@ function SectionProductDesc1(): JSX.Element {
                 </TextTestimonial>
               </OneTestimonial>
               <div>
-                <Button text="Start Free Trial" background="#001523" color="#fcbf49" />
+                <Button
+                  text="Start Free Trial"
+                  background="#001523"
+                  color="#fcbf49"
+                  onClick={handleNavigateToSignup}
+                />
               </div>
             </Testimonials>
             <TextAndKidneyBackground>

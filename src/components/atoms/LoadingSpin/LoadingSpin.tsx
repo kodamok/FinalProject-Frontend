@@ -18,4 +18,8 @@ export const LoadingSpin = styled.div`
   height: 120px;
   -webkit-animation: ${Spin} 3s linear infinite;
   animation: ${Spin} 3s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
 
@@ -6,6 +6,8 @@ import { Context } from '../../../providers/GeneralProvider';
 import useForm from '../../../hooks/useForm';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useError from '../../../hooks/useError';
+import { InputFileStyle } from '../SignUp/SignUp';
+import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 // import useError from '../../../hooks/useError';
 
 const FormContainer = styled.form`
@@ -15,19 +17,22 @@ const FormContainer = styled.form`
   padding: 3rem 1rem;
   h3,
   h4 {
-    text-align: center;
-    margin: 0;
-    margin-top: 1rem;
+    text-align: left;
+    margin: 1rem 0 0 0;
   }
+
+  h3 {
+    max-width: 450px;
+    text-align: center;
+  }
+
   > div:first-child {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    ${({ theme }) => theme.up(theme.breakpoint.m)} {
-      h4 {
-        margin-bottom: 1rem;
-      }
+    gap: 1rem;
+    h4 {
+      margin-bottom: 1rem;
     }
   }
 `;
@@ -37,58 +42,28 @@ const ContainerDiv = styled.div`
     display: flex;
     gap: 3rem;
     padding: 2rem 3rem;
-
-    border: 1px solid black;
+    min-height: 500px;
+    border: 2px solid black;
+    border-radius: 0.6rem;
+    > div {
+      flex-basis: 100%;
+    }
   }
 `;
 
-const ContainerPhoto = styled.div`
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  margin-bottom: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-  ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    margin: auto;
-    margin-bottom: 3rem;
-    display: block;
-    border-radius: 50%;
-    width: 220px;
-    height: 220px;
-  }
-`;
 const ParagraphAdd = styled.div`
   display: none;
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     display: block;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
   }
 `;
 
 const ContainerButton = styled.div`
   display: flex;
   justify-content: center;
+  position: relative;
 `;
-const ContainerButton2 = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    display: none;
-  }
-`;
-const ContainerButtonSubmit = styled.div`
-  display: none;
-  ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    display: block;
-  }
-`;
+
 const HeadingAdd = styled.div`
   display: none;
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
@@ -99,17 +74,26 @@ const HeadingAdd = styled.div`
 const DivOne = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  max-width: 350px;
+  > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
 `;
 const DivTwo = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 350px;
+  min-width: 300px;
 `;
 const DivThree = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   max-width: 350px;
 `;
 
@@ -122,6 +106,7 @@ function NewClient() {
     phoneNumber: string;
     identityCardNumber: string;
     taxNumber: string;
+    image: any;
   }
   // updating both objects
   const initialValue: initial = {
@@ -130,14 +115,16 @@ function NewClient() {
     password: '',
     phoneNumber: '',
     identityCardNumber: '',
-    taxNumber: ''
+    taxNumber: '',
+    image: ''
   };
   const { inputs, handleChange } = useForm(initialValue);
   const { handleError } = useError();
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log({ inputs });
     try {
+      setIsLoading(true);
       const res = await fetch(`${process.env.REACT_APP_BACKEND}/user`, {
         method: 'POST',
         headers: {
@@ -155,6 +142,8 @@ function NewClient() {
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
       handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -164,14 +153,15 @@ function NewClient() {
           <h3>CREATE NEW CUSTOMER ACCOUNT</h3>
           <ContainerDiv>
             <DivOne>
-              <HeadingAdd>
-                <h4>User Customer</h4>
-              </HeadingAdd>
-              <ContainerPhoto>
-                <img src="" alt="" />
-              </ContainerPhoto>
+              <div>
+                <HeadingAdd>
+                  <h4>User Customer</h4>
+                </HeadingAdd>
+                <RoundedPhoto img={inputs.image || ''} alt="face" width="250px" height="250px" />
+              </div>
               <ContainerButton>
                 <Button background="#1F313E" text="Upload Photo" />
+                <InputFileStyle name="image" type="file" onChange={handleChange} />
               </ContainerButton>
             </DivOne>
             <DivTwo>
@@ -205,26 +195,25 @@ function NewClient() {
               />
             </DivTwo>
             <DivThree>
-              <h4>Billing</h4>
-              <InputWithLabel
-                label="Identity Card Number"
-                name="identityCardNumber"
-                onChange={handleChange}
-              />
-              <InputWithLabel label="Tax Number" name="taxNumber" onChange={handleChange} />
-              <ParagraphAdd>
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam odio sunt,
-                  provident dolorem, mollitia obcaecati quisquam, voluptate optio commodi
-                  repudiandae quae earum debitis eum error itaque quia nisi corrupti voluptatibus?
-                </p>
-              </ParagraphAdd>
-              <ContainerButton2>
-                <Button type="submit" background="#9e0059" text="Create Account" />
-              </ContainerButton2>
-              <ContainerButtonSubmit>
-                <Button background="#9e0059" text="Submit" type="submit" />
-              </ContainerButtonSubmit>
+              <div>
+                <h4>Billing</h4>
+                <InputWithLabel
+                  label="Identity Card Number"
+                  name="identityCardNumber"
+                  onChange={handleChange}
+                />
+                <InputWithLabel label="Tax Number" name="taxNumber" onChange={handleChange} />
+                <ParagraphAdd>
+                  <p>Lquia nisi corrupti voluptatibus?</p>
+                </ParagraphAdd>
+              </div>
+              <ContainerButton>
+                <Button
+                  type="submit"
+                  background="#9e0059"
+                  text={isLoading ? 'Loading...' : 'Save Changes'}
+                />
+              </ContainerButton>
             </DivThree>
           </ContainerDiv>
         </div>

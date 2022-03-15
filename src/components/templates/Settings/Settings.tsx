@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useContext, useEffect } from 'react';
+import React, { SyntheticEvent, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
@@ -93,6 +93,7 @@ const DivThree = styled.div`
 
 function Settings() {
   const { handleError } = useError();
+  const [isLoading, setIsLoading] = useState(false);
 
   interface FormSignUp {
     name: string;
@@ -122,7 +123,7 @@ function Settings() {
 
   const handleSubmitUserDataChange = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('You try change your data with these inputs', inputs);
+    setIsLoading(true);
     const updateUserData = async () => {
       try {
         const res = await fetch(`${process.env.REACT_APP_BACKEND}/user`, {
@@ -144,6 +145,8 @@ function Settings() {
       } catch (error: any) {
         console.log('FETCHING ERROR', error);
         handleError();
+      } finally {
+        setIsLoading(false);
       }
     };
     updateUserData();
@@ -269,7 +272,11 @@ function Settings() {
               </ParagraphAdd>
             </div>
             <ContainerButton>
-              <Button type="submit" background="#9e0059" text="Save Changes" />
+              <Button
+                type="submit"
+                background="#9e0059"
+                text={isLoading ? 'Loading...' : 'Save Changes'}
+              />
             </ContainerButton>
           </DivThree>
         </ContainerDiv>

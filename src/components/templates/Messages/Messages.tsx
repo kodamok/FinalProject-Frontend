@@ -8,6 +8,7 @@ import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
+import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const Container = styled.div`
   padding: 1rem;
@@ -109,7 +110,10 @@ const WrapperMessages = styled.div`
     padding-top: 0.4rem;
   }
   ${({ theme }) => theme.up(theme.breakpoint.sm)} {
-    min-width: 500px;
+    min-width: 400px;
+  }
+  ${({ theme }) => theme.up(theme.breakpoint.m)} {
+    min-width: 600px;
   }
 `;
 
@@ -139,6 +143,7 @@ const initialValue: Message = {
 
 function Messages() {
   const { messages, userData } = useContext(Context);
+  const [isLoading, setIsLoading] = useState(false);
   const [clientMessages, setClientMessages] = useState([]);
   const { inputs, handleChange, resetForm } = useForm(initialValue);
   const { handleError } = useError();
@@ -147,6 +152,7 @@ function Messages() {
 
   // Fetching Clients from Freelancer
   const fetchClients = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancer`, {
         method: 'GET',
@@ -165,11 +171,14 @@ function Messages() {
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
       handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // Fetching Freelancers from Client
   const fetchClientsForClient = async () => {
+    setIsLoading(true);
     try {
       const res = await fetch(`${process.env.REACT_APP_BACKEND}/user/freelancers`, {
         method: 'GET',
@@ -189,6 +198,8 @@ function Messages() {
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
       handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -266,12 +277,13 @@ function Messages() {
     }
   }, [messages]);
 
+  if (isLoading) return <LoadingSpin />;
+
   return (
     <Container>
       <H3Styled>Messages</H3Styled>
       <ContainerContactListAndMessages>
         <ContactList>
-          {!clients.length && <NoItemsFound text="Clients" />}
           {clients.map((clientData: any) => (
             <Contact key={clientData._id} onClick={() => handleDisplayMessages(clientData._id)}>
               <RoundedPhoto
@@ -296,6 +308,7 @@ function Messages() {
               </PContainer>
             )}
             <div>
+              {!clients.length && <NoItemsFound text="Messages" />}
               {clientMessages.map((item: any, i) => (
                 <CardMessage
                   // style={{ marginLeft: item.creator === userData.userId ? 'auto' : null }}

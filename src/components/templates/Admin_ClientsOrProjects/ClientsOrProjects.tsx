@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { BsThreeDots } from 'react-icons/bs';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
@@ -9,6 +10,7 @@ import CardClient from '../../molecules/CardClient/CardClient';
 import CardProject from '../../molecules/CardProject/CardProject';
 import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
+import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const ContainerFilterBy = styled.div`
   display: flex;
@@ -63,10 +65,15 @@ const ContainerProjects = styled.div`
   border-radius: 1rem;
 `;
 
+const H2 = styled.h2`
+  text-align: center;
+`;
+
 function ClientsOrProjects() {
+  const navigate = useNavigate();
   const [choiceRadio, setChoiceRadio] = useState('projects');
   const [clients, setClients] = useState([]);
-  console.log(clients[0]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [projects, setProjects] = useState([]);
   const { userData } = useContext(Context);
@@ -116,20 +123,25 @@ function ClientsOrProjects() {
   };
 
   useEffect(() => {
-    fetchClients();
-    fetchProjects();
+    (async () => {
+      await fetchClients();
+      await fetchProjects();
+      setIsLoading(false);
+    })();
   }, []);
-
-  console.log({ clients, projects });
 
   // Handling value when you click on choice
   const handleChangeRadio = (e: any) => {
     setChoiceRadio(e.target.value);
   };
-  console.log(choiceRadio);
+  const handleNavigateToCreateNewClient = () => {
+    navigate('/newClient');
+  };
+
+  if (isLoading) return <LoadingSpin />;
   return (
     <div>
-      <h2>Clients/Projects</h2>
+      <H2>Clients/Projects</H2>
       <ContainerFilterBy>
         <div>
           <p>Filter by:</p>
@@ -163,13 +175,7 @@ function ClientsOrProjects() {
                 width="180px"
                 fontSize="1rem"
                 padding="0.5rem 1rem"
-              />
-              <Button
-                whiteMenu
-                text="Create New Project"
-                width="180px"
-                fontSize="1rem"
-                padding="0.5rem 1rem"
+                onClick={handleNavigateToCreateNewClient}
               />
             </div>
           </IconClickable>

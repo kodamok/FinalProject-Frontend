@@ -6,7 +6,6 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.color.main8};
   border-radius: 0.6rem;
-  height: 1rem;
   img {
     width: 140px;
     height: auto;

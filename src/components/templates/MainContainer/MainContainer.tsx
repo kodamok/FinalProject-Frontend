@@ -4,6 +4,7 @@ import Footer from '../../organisms/Footer/Footer';
 
 import ErrorMessage from '../../molecules/ErrorMessage/ErrorMessage';
 import { Context } from '../../../providers/GeneralProvider';
+import GlobalMessage from '../../organisms/GlobalMessage/GlobalMessage';
 
 interface MainContainer {
   children: ReactNode;
@@ -11,7 +12,7 @@ interface MainContainer {
 
 // Component which provide Header to Each Page
 function MainContainerApp({ children }: MainContainer) {
-  const { myError } = useContext(Context);
+  const { myError, userData } = useContext(Context);
   return (
     <>
       {(myError.message || myError.successMessage) && (
@@ -24,6 +25,7 @@ function MainContainerApp({ children }: MainContainer) {
       <Header />
       {children}
       <Footer />
+      {userData.token && <GlobalMessage />}
     </>
   );
 }

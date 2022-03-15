@@ -12,6 +12,7 @@ import Button from '../../atoms/Button/Button';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import FileUploader from '../../molecules/FileUploader/FileUploader';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 // /project/:projectId
 const Container = styled.div`
@@ -352,15 +353,15 @@ const shortDescriptionData = [
 ];
 function ProjectDetail() {
   const [project, setProject] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const { userData } = useContext(Context);
   const { handleError } = useError();
   const { projectId } = useParams();
-  console.log(projectId);
 
   const fetchProject = async () => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND}/project/${projectId}`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND}/projectOne/${projectId}`, {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
@@ -378,6 +379,8 @@ function ProjectDetail() {
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
       handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -394,12 +397,15 @@ function ProjectDetail() {
   // useOnClickOutside(ref, () => handleModal()); Come from this one but is enough
   // with (ref, handleModal) if we have declared this function before
   useOnClickOutside(ref, handleModal);
+
+  if (isLoading) return <LoadingSpin />;
   return (
     // Project Details Mobil Version ----------------------------------------------
     <div>
       <Title>Project Details</Title>
       {!desktopVersion ? (
         <Container>
+          {console.log(project)}
           <ContainerDetails>{project && <CardDetails projectData={project} />}</ContainerDetails>
           <ProjectInvoicesFiles>
             <ServicesInvoice>

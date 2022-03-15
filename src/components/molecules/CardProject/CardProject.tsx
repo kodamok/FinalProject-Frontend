@@ -86,12 +86,21 @@ interface client {
     _id: string;
     name: string;
     finished: string;
-    website: string;
-    dueData: string;
+    websiteName: string;
+    startDate: string;
+    dueDate: string;
+    clientName: string;
+    companyName: string;
+    taxNumber: string;
     text: string;
     avatar: string;
     ownerFreelancer: string;
     ownerUser: string;
+    services: any;
+    images: any;
+    files: any;
+    updatedAt: string;
+    createdAt: string;
   };
 }
 
@@ -127,7 +136,7 @@ function CardProject({ projectData }: client) {
           outline="3px solid black"
         />
         <div>
-          <h4>{projectData.name}</h4>
+          <h4>{projectData.websiteName}</h4>
         </div>
         <div>
           <IconClickable icon={<BsThreeDots fontSize={28} />}>
@@ -162,20 +171,20 @@ function CardProject({ projectData }: client) {
       </div>
       <div>
         <ElementData>
-          <span>Website:</span>
-          <p>{projectData.website}</p>
+          <span>Start Date:</span>
+          <p>{projectData.startDate?.substring(0, 10)}</p>
         </ElementData>
         <ElementData>
           <span>Due Data:</span>
-          <p>{projectData.dueData}</p>
+          <p>{projectData.dueDate?.substring(0, 10)}</p>
         </ElementData>
         <ElementData>
-          <span>Finished:</span>
-          <p>{projectData.finished}</p>
+          <span>Client:</span>
+          <p>{projectData.clientName}</p>
         </ElementData>
         <ElementData>
-          <span>Text:</span>
-          <p>{projectData.text}</p>
+          <span>Company Name:</span>
+          <p>{projectData.companyName}</p>
         </ElementData>
         <div>
           <BiArrowFromBottom onClick={handleCloseDetails} fontSize={24} />

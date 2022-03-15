@@ -6,6 +6,7 @@ import CardProject from '../../molecules/CardProject/CardProject';
 import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
+import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const Container = styled.div`
   padding: 1rem;
@@ -52,6 +53,7 @@ const ContainerProjects = styled.div`
 
 function Projects() {
   const [projects, setProjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { userData } = useContext(Context);
   const { handleError } = useError();
   const fetchProjects = async () => {
@@ -73,6 +75,8 @@ function Projects() {
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
       handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -80,7 +84,7 @@ function Projects() {
     fetchProjects();
   }, []);
 
-  console.log({ projects });
+  if (isLoading) return <LoadingSpin />;
   return (
     <Container>
       <h3>My Projects</h3>

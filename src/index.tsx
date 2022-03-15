@@ -10,6 +10,7 @@ import 'sanitize.css/sanitize.css';
 import 'flag-icons/css/flag-icons.min.css';
 import reportWebVitals from './reportWebVitals';
 import App from './view/App';
+import { LoadingSpin } from './components/atoms/LoadingSpin/LoadingSpin';
 
 i18next
   .use(HttpApi)
@@ -44,7 +45,7 @@ i18next
   } as any);
 
 ReactDOM.render(
-  <Suspense fallback={<div />}>
+  <Suspense fallback={<LoadingSpin />}>
     <React.StrictMode>
       <GeneralProvider>
         <BrowserRouter>

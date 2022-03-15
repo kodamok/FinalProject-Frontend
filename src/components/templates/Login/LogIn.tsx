@@ -1,8 +1,9 @@
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
+/* import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
+ */ import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
 import { Context } from '../../../providers/GeneralProvider';
@@ -61,7 +62,7 @@ function LogIn() {
     email: '',
     password: ''
   };
-
+  const [isLoading, setIsLoading] = useState(false);
   const { handleChange, inputs } = useForm(initialValue);
   const { handleError } = useError();
 
@@ -71,7 +72,7 @@ function LogIn() {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('You try login with these inputs', inputs);
+    setIsLoading(true);
     const login = async () => {
       try {
         const res = await fetch(`${process.env.REACT_APP_BACKEND}/login`, {
@@ -92,6 +93,8 @@ function LogIn() {
       } catch (error: any) {
         console.log('FETCHING ERROR', error);
         handleError();
+      } finally {
+        setIsLoading(true);
       }
     };
     await login();
@@ -104,13 +107,19 @@ function LogIn() {
   return (
     <Container onSubmit={handleSubmit}>
       <h3>LOGIN</h3>
-      <InputWithLabel label="Email" name="email" onChange={handleChange} />
-      <InputWithLabel type="password" label="Password" name="password" onChange={handleChange} />
+      <Input label="Email" name="email" onChange={handleChange} placeholder="Email" />
+      <Input
+        label="Password"
+        type="password"
+        name="password"
+        placeholder="Password"
+        onChange={handleChange}
+      />
       <ContainerP>
         <p onClick={handleNavigateToForgotPassword}>I forgot my password</p>
       </ContainerP>
       <div>
-        <Button type="submit" background="#2A9D8F" text="Login" />
+        <Button type="submit" background="#2A9D8F" text={isLoading ? 'Loading...' : 'Login'} />
         <Line />
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <a href={googleLoginUrl}>

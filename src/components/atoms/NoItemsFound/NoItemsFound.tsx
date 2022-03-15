@@ -15,7 +15,7 @@ interface NoItems {
 }
 
 function NoItemsFound({ text, textAlign }: NoItems) {
-  return <PStyle textAlign={textAlign}>No {text} Found</PStyle>;
+  return <PStyle textAlign={textAlign}>None {text} Found</PStyle>;
 }
 
 NoItemsFound.defaultProps = {

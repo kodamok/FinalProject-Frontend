@@ -7,7 +7,6 @@ interface MessageStyled {
 }
 
 const Container = styled.div<MessageStyled>`
-  //width: max-content;
   max-width: 80%;
   margin: ${({ marginLeft: m }) => (m ? '0 0.4rem 0 auto' : '0 0.4rem')};
   position: ${({ position }) => position && position};
@@ -28,10 +27,6 @@ const Container = styled.div<MessageStyled>`
   }
 `;
 
-// const NameAndDate = styled.div`
-//   display: flex;
-// `;
-
 interface Message {
   message: {
     text: string;
@@ -48,30 +43,18 @@ interface Message {
 
 const CardMessage = React.forwardRef(
   ({ message, marginLeft, idName, position }: Message, ref: any) => {
-    // const { userData } = useContext(Context);
-    // // const marginLeft = message.nameCreator === userData.userId;
-    // const [marginLeft, setMarginLeft] = useState(false);
-    // useEffect(() => {
-    //   setMarginLeft(message.creator === userData.userId);
-    // }, []);
+    const date = new Date(message.createdAt).toLocaleTimeString([], {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
     return (
       <Container marginLeft={marginLeft} id={idName} position={position} ref={ref}>
-        {/* <NameAndDate> */}
-        {/*   {message.nameCreator && <p>{message.nameCreator} - </p>} */}
-        {/*   <p>{message.createdAt}</p> */}
-        {/* </NameAndDate> */}
-        {console.log(message)}
         <div>
           <p>{message.text}</p>
-          <span>
-            {new Date(message.createdAt).toLocaleTimeString([], {
-              year: 'numeric',
-              month: 'numeric',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit'
-            })}
-          </span>
+          <span>{date}</span>
         </div>
       </Container>
     );

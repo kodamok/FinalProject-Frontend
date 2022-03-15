@@ -9,9 +9,10 @@ import GlobalMessage from '../../organisms/GlobalMessage/GlobalMessage';
 import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
+import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 // LoadingSpin
-import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
+// import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const Container = styled.div`
   padding: 1rem;
@@ -83,7 +84,7 @@ function AdminDashboard() {
     setTimeout(() => {
       setIsLoading(false);
     }, 2500);
-  }, []);
+  });
 
   const fetchClients = async () => {
     try {
@@ -150,10 +151,17 @@ function AdminDashboard() {
     }
   };
 
+  const fetchAll = async () => {
+    await fetchClients();
+    await fetchProjects();
+    await fetchStatistics();
+  };
+
   useEffect(() => {
-    fetchClients();
-    fetchProjects();
-    fetchStatistics();
+    (async () => {
+      await fetchAll();
+      setIsLoading(false);
+    })();
   }, []);
 
   console.log({ clients, projects });
@@ -177,48 +185,44 @@ function AdminDashboard() {
     ]
   };
 
+  if (isLoading) return <LoadingSpin />;
+
   return (
     <Container>
-      {isLoading ? (
-        <LoadingSpin />
-      ) : (
-        <>
-          <h3>Dashboard</h3>
-          <ContainerDataAndStats>
-            <Data>
-              <div>
-                <TitleWithLines text="Recent Clients" />
-                <ContainerClients>
-                  {clients.length ? (
-                    clients.map((item: any) => <CardClient key={item._id} clientData={item} />)
-                  ) : (
-                    <NoItemsFound text="Clients" />
-                  )}
-                </ContainerClients>
-              </div>
-              <div>
-                <TitleWithLines text="Recent Projects" />
-                <ContainerProjects>
-                  {projects.length ? (
-                    projects.map((item: any) => <CardProject key={item._id} projectData={item} />)
-                  ) : (
-                    <NoItemsFound text="Projects" />
-                  )}
-                </ContainerProjects>
-              </div>
-            </Data>
-            <Stats>
-              <TitleWithLines text="Statistics" />
-              {projects.length || clients.length ? (
-                <Chart data={dataStats} options={optionsDoughnut} />
+      <h3>Dashboard</h3>
+      <ContainerDataAndStats>
+        <Data>
+          <div>
+            <TitleWithLines text="Recent Clients" />
+            <ContainerClients>
+              {clients.length ? (
+                clients.map((item: any) => <CardClient key={item._id} clientData={item} />)
               ) : (
-                <NoItemsFound text="Statistics" />
+                <NoItemsFound text="Clients" />
               )}
-            </Stats>
-          </ContainerDataAndStats>
-          <GlobalMessage />
-        </>
-      )}
+            </ContainerClients>
+          </div>
+          <div>
+            <TitleWithLines text="Recent Projects" />
+            <ContainerProjects>
+              {projects.length ? (
+                projects.map((item: any) => <CardProject key={item._id} projectData={item} />)
+              ) : (
+                <NoItemsFound text="Projects" />
+              )}
+            </ContainerProjects>
+          </div>
+        </Data>
+        <Stats>
+          <TitleWithLines text="Statistics" />
+          {projects.length || clients.length ? (
+            <Chart data={dataStats} options={optionsDoughnut} />
+          ) : (
+            <NoItemsFound text="Statistics" />
+          )}
+        </Stats>
+      </ContainerDataAndStats>
+      <GlobalMessage />
     </Container>
   );
 }

@@ -122,7 +122,7 @@ function App(): JSX.Element {
     if (userData.token && userData.role === 'Client') {
       fetchClientsForClient();
     }
-  }, []);
+  }, [userData.token]);
 
   useEffect(() => {
     const connectSSE = async () => {

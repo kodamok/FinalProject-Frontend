@@ -5,6 +5,7 @@ import { backgroundColorSchema, optionsDoughnut } from '../../../helpers/chartSe
 import CardStatistic from '../../molecules/CardStatistic/CardStatistic';
 import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
+import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const Container = styled.div`
   padding: 1rem;
@@ -22,6 +23,7 @@ const ContainerCardStatistics = styled.div`
 
 function Statistics() {
   const [statistics, setStatistics]: any = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { handleError } = useError();
   const { userData } = useContext(Context);
   const fetchStatistics = async () => {
@@ -43,6 +45,8 @@ function Statistics() {
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
       handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,6 +73,7 @@ function Statistics() {
     ]
   };
 
+  if (isLoading) return <LoadingSpin />;
   return (
     <Container>
       <h4>Statistics</h4>

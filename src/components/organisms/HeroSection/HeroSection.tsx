@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { MdCheckCircleOutline } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../atoms/Button/Button';
 import womenOnTheWay from '../../../assets/illustrations/WomanOnTheWay.png';
 import waveMobile from '../../../assets/illustrations/wave.svg';
@@ -129,6 +130,10 @@ const dataHeroSection = [
 ];
 
 function HeroSection() {
+  const navigate = useNavigate();
+  const handleNavigateToServices = () => {
+    navigate('/services');
+  };
   const { t } = useTranslation();
   return (
     <Background>
@@ -149,7 +154,12 @@ function HeroSection() {
             ))}
           </ContainerList>
           <div>
-            <Button background="red" color="white" text={"Let's Try It!"} />
+            <Button
+              background="red"
+              color="white"
+              text={"Let's Try It!"}
+              onClick={handleNavigateToServices}
+            />
           </div>
         </div>
       </Container>

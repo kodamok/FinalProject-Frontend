@@ -34,8 +34,6 @@ export const GlobalStyle = createGlobalStyle`
   input, select{
     font-family: 'Open Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
-  }
-
     //p {margin-bottom: 1rem;} it is necessary?
   p{
     margin:0;

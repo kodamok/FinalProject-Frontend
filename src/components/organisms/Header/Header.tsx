@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrClose } from 'react-icons/gr';
-
-/* import { useNavigate } from 'react-router-dom'; */
 import { useNavigate } from 'react-router-dom';
+import NS1blk from '../../../assets/images/Logos/newLogos/62x165/NS1blk.png';
+/* import { useNavigate } from 'react-router-dom'; */
 import AvatarWithMenu from '../../molecules/AvatarWithMenu/AvatarWithMenu';
 /* import CompanyLogo from '../../../assets/illustrations/COMPANYLOGO.png'; */
-import logoForWhiteBackground from '../../../assets/images/Logos/logoForWhiteBackground.svg';
-import NavLink from '../../atoms/NavLink/NavLink';
+/* import logoForWhiteBackground from '../../../assets/images/Logos/logoForWhiteBackground.svg';
+ */ import NavLink from '../../atoms/NavLink/NavLink';
 import Contact from '../../molecules/Contact/Contact';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import { Context } from '../../../providers/GeneralProvider';
@@ -25,7 +25,8 @@ const Container = styled.div<StyledDivProps>`
   background: ${({ theme }) => theme.color.main1};
   color: ${({ theme }) => theme.color.main2};
   font-size: ${({ theme }) => theme.fontSizeInter.m};
-  /* border: 2px solid black; */
+  border: 2px solid black;
+  padding: 0.7rem;
   min-height: ${({ isOpenMenu }) => (isOpenMenu ? '100vh' : 'auto')};
   /* border: 2px solid red; */
 `;
@@ -33,7 +34,6 @@ const Container = styled.div<StyledDivProps>`
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0.3rem 1rem 0 1rem;
   align-items: center;
 `;
 const FlexOpen = styled.div`
@@ -41,22 +41,21 @@ const FlexOpen = styled.div`
   justify-content: space-between;
   align-items: center;
   /* border: 1px solid grey; */
-  padding: 0.3rem 1rem 0 1rem;
 `;
 
-const StyledP = styled.p`
+/* const StyledP = styled.p`
   font-size: ${({ theme }) => theme.fontSizeOpenSans.xxxs};
   position: absolute;
   bottom: 5px;
   right: -19px;
   font-weight: bold;
-`;
-const StyledSlogan = styled.p`
+`; */
+/* const StyledSlogan = styled.p`
   font-size: ${({ theme }) => theme.fontSizeOpenSans.xxs};
   padding-left: 70px;
   margin-top: -15px;
   font-weight: bold;
-`;
+`; */
 const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
@@ -124,7 +123,7 @@ const ServicesAndLanguageAdmin = styled.div`
   display: flex;
   position: relative;
   gap: 1rem;
-
+  align-items: center;
   justify-content: space-around;
   margin: 1rem;
 `;
@@ -175,7 +174,7 @@ const ButtonLogoutMobil = styled.button`
   color: ${({ theme }) => theme.color.main2};
   background: none;
   font-size: ${({ theme }) => theme.fontSizeInter.m};
-  top: 25rem;
+  top: 17rem;
   border: none;
   &:hover {
     cursor: pointer;
@@ -312,8 +311,7 @@ function Header() {
             {!isOpenMenu && (
               <Flex>
                 <div style={{ position: 'relative' }}>
-                  <NavLink path="/" image={logoForWhiteBackground} alt="Logo" />
-                  <StyledP>live outside the box</StyledP>
+                  <NavLink path="/" image={NS1blk} alt="Logo" />
                 </div>
                 <div>
                   {!isOpenMenu && (
@@ -326,8 +324,7 @@ function Header() {
               <>
                 <FlexOpen>
                   <div style={{ position: 'relative' }}>
-                    <NavLink path="/" image={logoForWhiteBackground} alt="Logo" />
-                    <StyledP>live outside the box</StyledP>
+                    <NavLink path="/" image={NS1blk} alt="Logo" />
                   </div>
                   <div>
                     <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -342,15 +339,13 @@ function Header() {
                       onClick={handleOpenMenu}
                     />
                   ))}
-                  <NavLink path="/messages" text="MESSAGES" />
                   <ButtonLogoutMobil type="button" onClick={handleLogout}>
                     LOGOUT
                   </ButtonLogoutMobil>
                 </StyledMenu>
                 <br />
                 <StyledLogoSlogan>
-                  <NavLink path="/" bigLogo image={logoForWhiteBackground} alt="Logo" />
-                  <StyledSlogan>live outside the box</StyledSlogan>
+                  <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
                 </StyledLogoSlogan>
                 <Contact />
               </>
@@ -360,7 +355,7 @@ function Header() {
           // Client Desktop Version ----------------------------------------------
           <ContainerDesktopClient>
             <StyledLogoSlogan>
-              <NavLink path="/" bigLogo image={logoForWhiteBackground} alt="Logo" />
+              <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
             </StyledLogoSlogan>
             {/* <StyledInput type="text" placeholder="Search" /> */}
             <SearchBar />
@@ -406,8 +401,7 @@ function Header() {
             {!isOpenMenu && (
               <Flex>
                 <div style={{ position: 'relative' }}>
-                  <NavLink path="/" image={logoForWhiteBackground} alt="Logo" />
-                  <StyledP>live outside the box</StyledP>
+                  <NavLink path="/" image={NS1blk} alt="Logo" />
                 </div>
                 <div>
                   {!isOpenMenu && (
@@ -420,8 +414,7 @@ function Header() {
               <>
                 <FlexOpen>
                   <div style={{ position: 'relative' }}>
-                    <NavLink path="/" image={logoForWhiteBackground} alt="Logo" />
-                    <StyledP>live outside the box</StyledP>
+                    <NavLink path="/" image={NS1blk} alt="Logo" />
                   </div>
                   <div>
                     <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -445,8 +438,7 @@ function Header() {
                 </StyledMenu>
                 <br />
                 <StyledLogoSlogan>
-                  <NavLink path="/" bigLogo image={logoForWhiteBackground} alt="Logo" />
-                  <StyledSlogan>live outside the box</StyledSlogan>
+                  <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
                 </StyledLogoSlogan>
                 <Contact />
               </>
@@ -456,7 +448,7 @@ function Header() {
           // Freelancer Desktop Version ----------------------------------------------
           <ContainerDesktopAdmin>
             <StyledLogoSlogan>
-              <NavLink path="/" bigLogo image={logoForWhiteBackground} alt="Logo" />
+              <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
             </StyledLogoSlogan>
             {/* <StyledInput type="text" placeholder="Search" /> */}
             <SearchBar />
@@ -528,7 +520,7 @@ function Header() {
           {!isOpenMenu && (
             <Flex>
               <div>
-                <NavLink path="/" image={logoForWhiteBackground} alt="Logo" />
+                <NavLink path="/" image={NS1blk} alt="Logo" />
               </div>
               <div>
                 {!isOpenMenu && (
@@ -541,7 +533,7 @@ function Header() {
             <>
               <FlexOpen>
                 <div>
-                  <NavLink path="/" image={logoForWhiteBackground} alt="Logo" />
+                  <NavLink path="/" image={NS1blk} alt="Logo" />
                 </div>
                 <div>
                   <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -559,8 +551,7 @@ function Header() {
               </StyledMenu>
               <br />
               <StyledLogoSlogan>
-                <NavLink path="/" bigLogo image={logoForWhiteBackground} alt="Logo" />
-                <StyledSlogan>live outside the box</StyledSlogan>
+                <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
               </StyledLogoSlogan>
               <Contact />
             </>
@@ -570,7 +561,7 @@ function Header() {
         // Logout Desktop Version ----------------------------------------------
         <ContainerDesktop>
           <StyledLogoSlogan>
-            <NavLink path="/" bigLogo image={logoForWhiteBackground} alt="Logo" />
+            <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
           </StyledLogoSlogan>
           <ServicesAndLanguage>
             <StyledMenuDesktop>

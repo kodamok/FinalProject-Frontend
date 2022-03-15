@@ -32,9 +32,9 @@ export const TextContainer = styled.div`
     text-align: center;
     -webkit-text-stroke: 1px ${({ theme }) => theme.color.main2};
 
-    ${({ theme }) => theme.up(theme.breakpoint.m)} {
+    ${({ theme }) => theme.up(theme.breakpoint.l)} {
       {
-        font-size: ${({ theme }) => theme.fontSizeInter.xxl};
+        font-size: ${({ theme }) => theme.fontSizeInter.xl};
         text-align: start;
       }
   }
@@ -132,7 +132,7 @@ function Contact(): JSX.Element {
         <InputWithLabel
           name="email"
           label="E-mail"
-          type="input"
+          type="email"
           placeholder="E-Mail Address"
           color="white"
           onChange={handleChange}

@@ -151,6 +151,7 @@ const ChatBox = styled.div`
   > div:first-child > div:nth-child(2) > svg {
     position: relative;
     top: -6px;
+    z-index: 1;
   }
 
   > div:nth-child(2) {
@@ -282,10 +283,10 @@ function GlobalMessage() {
   };
   const handleCloseChatBoxWithMessages = (e: any) => {
     e.stopPropagation();
-    setDisplayChatBoxOnTheBottom(false);
     setOpenChatWithMessages(false);
+    setDisplayChatBoxOnTheBottom(false);
   };
-  // onSubmit = Sending message to backend
+
   const handleSubmitMessage = async (e: SyntheticEvent) => {
     e.preventDefault();
     const sendMessage = async () => {
@@ -348,7 +349,6 @@ function GlobalMessage() {
   }, [messages]);
 
   useEffect(() => {
-    console.log('in effect', openChatBoxWithThisUser);
     if (openChatBoxWithThisUser) {
       handleOpenChatBox(openChatBoxWithThisUser);
       setOpenChatBoxWithThisUser('');

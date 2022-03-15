@@ -9,6 +9,7 @@ import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import ServiceListInputs from '../../molecules/ServiceListItem/ServiceListInputs';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
+import useError from '../../../hooks/useError';
 
 const PageContainer = styled.div`
   /* border: 2px solid red; */
@@ -106,31 +107,33 @@ const ButtonWrapper = styled.div`
   align-self: center;
 `;
 
-function NewProject(): JSX.Element {
-  interface initial {
-    image: File | string | null;
-    companyName: string;
-    customerName: string;
-    website: string;
-    taxNumber: string;
-    services: any;
-    startDate: string;
-    dueDate: string;
-  }
+interface initial {
+  image: File | string | null;
+  companyName: string;
+  customerName: string;
+  website: string;
+  taxNumber: string;
+  services: any;
+  startDate: string;
+  dueDate: string;
+}
 
-  const projectInfo: initial = {
-    image: '',
-    companyName: '',
-    customerName: '',
-    website: '',
-    taxNumber: '',
-    startDate: '',
-    dueDate: '',
-    services: []
-  };
+const projectInfo: initial = {
+  image: '',
+  companyName: '',
+  customerName: '',
+  website: '',
+  taxNumber: '',
+  startDate: '',
+  dueDate: '',
+  services: []
+};
+
+function NewProject(): JSX.Element {
+  const [isLoading, setIsLoading] = useState(false);
   const { userData } = useContext(Context);
   const { inputs, handleChange } = useForm(projectInfo);
-  console.log(inputs);
+  const { handleError } = useError();
 
   const [serviceList, setServiceList] = useState([{ serviceName: '', price: 0, description: '' }]);
   inputs.services = [...serviceList];
@@ -145,6 +148,7 @@ function NewProject(): JSX.Element {
   const handleSubmitNewProject = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const res = await fetch(`${process.env.REACT_APP_BACKEND}/project/${params.clientId}`, {
         method: 'POST',
         headers: {
@@ -154,11 +158,17 @@ function NewProject(): JSX.Element {
 
         body: JSON.stringify(inputs)
       });
-      console.log(inputs);
       const resJSON = await res.json();
-      console.log(resJSON);
+      if (res.status >= 200 && res.status < 300) {
+        handleError(resJSON.message, true);
+      } else {
+        handleError(resJSON.message);
+      }
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
+      handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -248,7 +258,13 @@ function NewProject(): JSX.Element {
               />
             </div>
             <ButtonWrapper>
-              <Button type="submit" text="submit" height="40px" width="150px" padding="0px;" />
+              <Button
+                type="submit"
+                text={isLoading ? 'Loading...' : 'Submit'}
+                height="40px"
+                width="150px"
+                padding="0px;"
+              />
             </ButtonWrapper>
           </LeftContainer>
 

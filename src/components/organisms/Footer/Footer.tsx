@@ -7,7 +7,8 @@ import { SiTwitter } from 'react-icons/si';
 import { IoLogoInstagram } from 'react-icons/io';
 import mobileFooterWave from '../../../assets/illustrations/mobileFooterWaveBlue.png';
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import companyLogo from '../../../assets/illustrations/COMPANYLOGO.png';
+/* import companyLogo from '../../../assets/illustrations/COMPANYLOGO.png'; */
+import NS3wht from '../../../assets/images/Logos/newLogos/81x195/NS3wht.png';
 import LanguageMenu from '../../molecules/LanguageMenu/LanguageMenu';
 // import NavLink from '../../atoms/NavLink/NavLink';
 // Mobile Styles
@@ -119,9 +120,20 @@ const StyledLink = styled.div`
 `;
 // bei 100% passt sich das Bild dem parentelement an, es ist so groß, wie Platz da ist
 const CompanyLogo = styled.img`
-  width: 100%;
-  height: auto;
+  width: 300px;
   align-items: bottom;
+`;
+
+const LogoAndCopyrights = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0;
+
+  & > p {
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.xxs};
+    line-height: 0;
+  }
 `;
 
 // alles, was html(html tags) ist klein schreiben, nur Components groß
@@ -178,9 +190,12 @@ function Footer() {
               </FooterRow>
             </StyledCol>
           </LeftCol>
-          <Link to="/">
-            <CompanyLogo src={companyLogo} />
-          </Link>
+          <LogoAndCopyrights>
+            <Link to="/">
+              <CompanyLogo src={NS3wht} />
+            </Link>
+            <p>&copy; All rights Reserved to Nomad Studio</p>
+          </LogoAndCopyrights>
         </DesktopFooter>
       ) : (
         <MobileFooter>

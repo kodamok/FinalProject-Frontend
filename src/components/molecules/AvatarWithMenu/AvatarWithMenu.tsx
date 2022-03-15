@@ -23,7 +23,7 @@ const AvatarMenu = styled.div`
   display:flex;
   padding: 0.5rem;
   flex-direction:column;
-  top: 64px;
+  top: 60px;
   right: 0px;
   z-index: 50;
 

@@ -36,6 +36,8 @@ function Services(): JSX.Element {
   const PhotoServiceThree = styled.img`
     height: auto;
     width: 390px;
+    right: 29px;
+    position: relative;
   `;
 
   return (

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 import CardClientDetails from '../../molecules/CardClientDetails/CardClientDetails';
+import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ const ContainerClientDetails = styled.div`
 `;
 function ClientDetails() {
   const [client, setClient] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const { userData } = useContext(Context);
   const { handleError } = useError();
   const { clientId } = useParams();
@@ -46,6 +48,8 @@ function ClientDetails() {
     } catch (error: any) {
       console.log('FETCHING ERROR', error);
       handleError();
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -54,6 +58,8 @@ function ClientDetails() {
   useEffect(() => {
     fetchClientDetails();
   }, [clientId]);
+
+  if (isLoading) return <LoadingSpin />;
   return (
     <div>
       <Title>Customer Details</Title>

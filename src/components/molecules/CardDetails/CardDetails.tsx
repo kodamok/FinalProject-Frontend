@@ -131,27 +131,27 @@ function CardDetails({ projectData }: Project) {
               <Details>
                 <DetailsElement>
                   <span>Staring Date</span>
-                  <p>{projectData?.oneProject?.createdAt}</p>
+                  <p>{projectData?.createdAt}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Due Date</span>
-                  <p>{projectData?.oneProject?.updatedAt}</p>
+                  <p>{projectData?.updatedAt}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Company Name</span>
-                  <p>{projectData?.oneProject?.clientName}</p>
+                  <p>{projectData?.clientName}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Customer Name</span>
-                  <p>{projectData?.oneProject?.name}</p>
+                  <p>{projectData?.name}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Website</span>
-                  <p>{projectData?.oneProject?.text}</p>
+                  <p>{projectData?.text}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Tax Number</span>
-                  <p>{projectData?.oneProject?.ownerUser}</p>
+                  <p>{projectData?.ownerUser}</p>
                 </DetailsElement>
               </Details>
             )}
@@ -189,27 +189,27 @@ function CardDetails({ projectData }: Project) {
                   <Details>
                     <DetailsElement>
                       <span>Staring Date</span>
-                      <p>{projectData?.oneProject?.createdAt}</p>
+                      <p>{projectData?.createdAt}</p>
                     </DetailsElement>
                     <DetailsElement>
                       <span>Due Date</span>
-                      <p>{projectData?.oneProject?.updatedAt}</p>
+                      <p>{projectData?.updatedAt}</p>
                     </DetailsElement>
                     <DetailsElement>
                       <span>Company Name</span>
-                      <p>{projectData?.oneProject?.clientName}</p>
+                      <p>{projectData?.clientName}</p>
                     </DetailsElement>
                     <DetailsElement>
                       <span>Customer Name</span>
-                      <p>{projectData?.oneProject?.name}</p>
+                      <p>{projectData?.name}</p>
                     </DetailsElement>
                     <DetailsElement>
                       <span>Website</span>
-                      <p>{projectData?.oneProject?.text}</p>
+                      <p>{projectData?.text}</p>
                     </DetailsElement>
                     <DetailsElement>
                       <span>Tax Number</span>
-                      <p>{projectData?.oneProject?.ownerUser}</p>
+                      <p>{projectData?.ownerUser}</p>
                     </DetailsElement>
                   </Details>
                 )}

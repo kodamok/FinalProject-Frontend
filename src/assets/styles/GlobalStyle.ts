@@ -12,6 +12,9 @@ export const GlobalStyle = createGlobalStyle`
   
   #root{
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   html {font-size: 100%;
@@ -34,10 +37,18 @@ export const GlobalStyle = createGlobalStyle`
   input, select{
     font-family: 'Open Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
+
+  }
     //p {margin-bottom: 1rem;} it is necessary?
+  
   p{
     margin:0;
   }
+
+  a{
+    text-decoration: none;
+  }
+
 
   h1, h2, h3, h4, h5 {
     margin: 3rem 0 1.38rem;

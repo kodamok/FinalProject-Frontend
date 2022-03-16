@@ -98,6 +98,7 @@ interface Photo {
   icon?: any;
   handleChange?: any;
   onClick?: any;
+  className?: any;
 }
 
 function RoundedPhoto({
@@ -112,7 +113,8 @@ function RoundedPhoto({
   outlineOffset,
   icon,
   handleChange,
-  onClick
+  onClick,
+  className
 }: Photo) {
   return (
     <Container>
@@ -147,7 +149,7 @@ function RoundedPhoto({
           outlineOffset={outlineOffset}
           onClick={onClick}
         >
-          {img && <img src={img} alt={alt} />}
+          {img && <img src={img} alt={alt} className={className} />}
           {icon && !img && icon}
         </ContainerPhoto>
       )}
@@ -165,7 +167,8 @@ RoundedPhoto.defaultProps = {
   RoundedPhotoWithButton: false,
   icon: undefined,
   handleChange: undefined,
-  onClick: false
+  onClick: false,
+  className: undefined
 };
 
 export default RoundedPhoto;

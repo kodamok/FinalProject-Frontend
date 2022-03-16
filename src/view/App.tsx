@@ -30,6 +30,7 @@ import Impressum from '../components/templates/Impressum/Impressum';
 import { useAuth } from '../hooks/useAuth';
 import useError from '../hooks/useError';
 import FAQs from '../components/molecules/FAQs/FAQs';
+import EditProject from '../components/organisms/EditProject/EditProject';
 
 function App(): JSX.Element {
   const { userData, setMessages, setUserData, setClientsGlobal } = useContext(Context);
@@ -212,6 +213,7 @@ function App(): JSX.Element {
             <Route path="/clients" element={<ClientsOrProjects />} />
             <Route path="/client/:clientId" element={<ClientDetails />} />
             <Route path="/project/:projectId" element={<ProjectDetail />} />
+            <Route path="/editProject/:projectId" element={<EditProject />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/messages" element={<Messages />} />

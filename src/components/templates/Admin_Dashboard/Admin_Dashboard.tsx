@@ -5,14 +5,10 @@ import CardClient from '../../molecules/CardClient/CardClient';
 import CardProject from '../../molecules/CardProject/CardProject';
 import { backgroundColorSchema, optionsDoughnut } from '../../../helpers/chartSettings';
 import Chart from '../../molecules/Chart/Chart';
-import GlobalMessage from '../../organisms/GlobalMessage/GlobalMessage';
 import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
-
-// LoadingSpin
-// import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const Container = styled.div`
   padding: 1rem;
@@ -74,17 +70,9 @@ function AdminDashboard() {
   const [clients, setClients]: any = useState([]);
   const [projects, setProjects]: any = useState([]);
   const [statistics, setStatistics]: any = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { userData } = useContext(Context);
   const { handleError } = useError();
-
-  // LoadingSpin
-
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2500);
-  });
 
   const fetchClients = async () => {
     try {
@@ -151,20 +139,19 @@ function AdminDashboard() {
     }
   };
 
-  const fetchAll = async () => {
-    await fetchClients();
-    await fetchProjects();
-    await fetchStatistics();
-  };
-
   useEffect(() => {
     (async () => {
-      await fetchAll();
-      setIsLoading(false);
+      try {
+        await fetchClients();
+        await fetchProjects();
+        await fetchStatistics();
+      } catch (e: any) {
+        console.log(e);
+      } finally {
+        setIsLoading(false);
+      }
     })();
   }, []);
-
-  console.log({ clients, projects });
 
   const dataStats = {
     labels: ['Clients', 'Projects'],
@@ -222,7 +209,6 @@ function AdminDashboard() {
           )}
         </Stats>
       </ContainerDataAndStats>
-      <GlobalMessage />
     </Container>
   );
 }

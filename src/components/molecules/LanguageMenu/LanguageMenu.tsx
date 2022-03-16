@@ -1,9 +1,12 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import i18next from 'i18next';
-import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
-const Container = styled.div`
+import Button from '../../atoms/Button/Button';
+import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import AvatarWithMenu from '../AvatarWithMenu/AvatarWithMenu';
+
+/* const Container = styled.div`
   position: relative;
   background-color: inherit;
   border-radius: 0.6rem;
@@ -41,8 +44,18 @@ const Container = styled.div`
       background: ${({ theme }) => theme.color.main3};
     }
   }
+`; */
+
+const Text = styled.span`
+  width: 250px;
+  color: white;
+  padding: 0.3rem;
 `;
 
+const Bla = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const languages = [
   { id: 1, code: 'de', name: 'Deutsch', country_code: 'de' },
   {
@@ -53,7 +66,12 @@ const languages = [
   }
 ];
 
-function LanguageMenu() {
+interface Lang {
+  background?: any;
+  top?: any;
+}
+
+function LanguageMenu({ background, top }: Lang) {
   const [actuallyLng, setActuallyLng] = useState(i18next.resolvedLanguage);
   const [isOpenMenuLanguage, setIsOpenMenuLanguage] = useState(false);
   const handleOpenLanguageMenu = () => {
@@ -62,30 +80,40 @@ function LanguageMenu() {
   const ref: any = useRef(null);
   useOnClickOutside(ref, () => setIsOpenMenuLanguage(false));
   return (
-    <Container>
-      <div onClick={handleOpenLanguageMenu}>
-        <span className={`fi fi-${actuallyLng === 'en' ? 'gb' : 'de'}`} />
-        {actuallyLng && <p>{actuallyLng.toUpperCase()}</p>}
-      </div>
+    <AvatarWithMenu
+      emptyAvatar
+      onClick={handleOpenLanguageMenu}
+      className={`fi fi-${actuallyLng === 'en' ? 'gb' : 'de'}`}
+      width="50px"
+      background={background}
+      top={top}
+    >
       {isOpenMenuLanguage && (
-        <div ref={ref}>
+        <Bla ref={ref}>
           {languages.map((item) => (
-            <div
+            <Button
+              dropMenu
               key={item.id}
               onClick={() => {
                 i18next.changeLanguage(item.code);
                 setIsOpenMenuLanguage(false);
                 setActuallyLng(item.code);
               }}
+              width="70px"
+              background={background}
             >
-              <span className={`fi fi-${item.country_code}`} />
-              <p>{item.name}</p>
-            </div>
+              <Text className={`fi fi-${item.country_code}`} />
+            </Button>
           ))}
-        </div>
+        </Bla>
       )}
-    </Container>
+    </AvatarWithMenu>
   );
 }
+
+LanguageMenu.defaultProps = {
+  background: undefined,
+  top: undefined
+};
 
 export default LanguageMenu;

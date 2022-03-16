@@ -23,7 +23,8 @@ to {
 const Container = styled.div<ContainerProp>`
   color: ${({ color }) => color || 'black'};
   width: 100%;
-  margin: 50px 3%;
+  margin: ${({ margin }) => margin || '50px 3%;'};
+  height: ${({ height }) => height};
   position: relative;
 
   input {

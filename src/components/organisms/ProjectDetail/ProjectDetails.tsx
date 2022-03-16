@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { GrClose } from 'react-icons/gr';
 import { BsThreeDots } from 'react-icons/bs';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Context } from '../../../providers/GeneralProvider';
 import CardDetails from '../../molecules/CardDetails/CardDetails';
 import useError from '../../../hooks/useError';
@@ -352,7 +352,8 @@ const shortDescriptionData = [
   }
 ];
 function ProjectDetail() {
-  const [project, setProject] = useState({});
+  const navigate = useNavigate();
+  const [project, setProject]: any = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   const { userData } = useContext(Context);
@@ -398,6 +399,16 @@ function ProjectDetail() {
   // with (ref, handleModal) if we have declared this function before
   useOnClickOutside(ref, handleModal);
 
+  const handleNavigateToClient = () => {
+    if (userData.role === 'Freelancer') {
+      navigate(`/client/${project.ownerUser}`);
+    } else {
+      navigate(`/client/${project.ownerFreelancer}`);
+    }
+  };
+  const handleNavigateToEditProject = () => {
+    navigate(`/editProject/${projectId}`);
+  };
   if (isLoading) return <LoadingSpin />;
   return (
     // Project Details Mobil Version ----------------------------------------------
@@ -405,7 +416,6 @@ function ProjectDetail() {
       <Title>Project Details</Title>
       {!desktopVersion ? (
         <Container>
-          {console.log(project)}
           <ContainerDetails>{project && <CardDetails projectData={project} />}</ContainerDetails>
           <ProjectInvoicesFiles>
             <ServicesInvoice>
@@ -474,12 +484,21 @@ function ProjectDetail() {
                       padding: '1rem'
                     }}
                   >
-                    <Button text="What ever" width="180px" fontSize="1rem" padding="0.5rem 1rem" />
                     <Button
-                      text="What ever too"
+                      whiteMenu
+                      text="View Client"
                       width="180px"
                       fontSize="1rem"
                       padding="0.5rem 1rem"
+                      onClick={handleNavigateToClient}
+                    />
+                    <Button
+                      whiteMenu
+                      text="Edit Project"
+                      width="180px"
+                      fontSize="1rem"
+                      padding="0.5rem 1rem"
+                      onClick={handleNavigateToEditProject}
                     />
                   </div>
                 </IconClickable>

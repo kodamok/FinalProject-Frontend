@@ -7,7 +7,8 @@ export const theme = {
     main5: '#2A9D8F',
     main6: '#FF0054',
     main7: '#1F313E',
-    main8: '#FFFFFF'
+    main8: '#FFFFFF',
+    main9: '#e76f51'
   },
   fontSizeInter: {
     xxl: '5.61rem',
@@ -29,6 +30,7 @@ export const theme = {
     xxs: '0.694rem',
     xxxs: '0.5793rem'
   },
+
   breakpoint: {
     s: '440px',
     sm: '720px',

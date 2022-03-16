@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import kim from '../../../assets/images/kim.jpg';
 import GeneratePdf from '../GeneratePdf/GeneratePdf';
+import { Context } from '../../../providers/GeneralProvider';
 
 const Container = styled.div`
   display: flex;
@@ -91,7 +93,21 @@ interface Project {
 }
 // Card Details Mobil Version
 function CardDetails({ projectData }: Project) {
+  const navigate = useNavigate();
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
+  const { userData } = useContext(Context);
+
+  const handleNavigateToClient = () => {
+    if (userData.role === 'Freelancer') {
+      navigate(`/client/${projectData.ownerUser}`);
+    } else {
+      navigate(`/client/${projectData.ownerFreelancer}`);
+    }
+  };
+  const handleNavigateToEditProject = () => {
+    navigate(`/editProject/${projectData._id}`);
+  };
+
   return (
     <div>
       {!desktopVersion ? (
@@ -107,12 +123,21 @@ function CardDetails({ projectData }: Project) {
                     padding: '1rem'
                   }}
                 >
-                  <Button text="What ever" width="180px" fontSize="1rem" padding="0.5rem 1rem" />
                   <Button
-                    text="What ever too"
+                    whiteMenu
+                    text="View Client"
                     width="180px"
                     fontSize="1rem"
                     padding="0.5rem 1rem"
+                    onClick={handleNavigateToClient}
+                  />
+                  <Button
+                    whiteMenu
+                    text="Edit Project"
+                    width="180px"
+                    fontSize="1rem"
+                    padding="0.5rem 1rem"
+                    onClick={handleNavigateToEditProject}
                   />
                 </div>
               </IconClickable>

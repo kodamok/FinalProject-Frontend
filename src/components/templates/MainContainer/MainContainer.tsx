@@ -22,8 +22,10 @@ function MainContainerApp({ children }: MainContainer) {
           successMessage={myError.successMessage === '1' ? undefined : myError.successMessage}
         />
       )}
-      <Header />
-      {children}
+      <div>
+        <Header />
+        {children}
+      </div>
       <Footer />
       {userData.token && <GlobalMessage />}
     </>

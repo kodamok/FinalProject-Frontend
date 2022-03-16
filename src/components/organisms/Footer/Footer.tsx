@@ -10,6 +10,7 @@ import useMediaQuery from '../../../hooks/useMediaQuery';
 /* import companyLogo from '../../../assets/illustrations/COMPANYLOGO.png'; */
 import NS3wht from '../../../assets/images/Logos/newLogos/81x195/NS3wht.png';
 import LanguageMenu from '../../molecules/LanguageMenu/LanguageMenu';
+import NavLink from '../../atoms/NavLink/NavLink';
 // import NavLink from '../../atoms/NavLink/NavLink';
 // Mobile Styles
 
@@ -45,8 +46,9 @@ const MobileFooter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 50px;
-  margin-top: -50px;
+  height: 10vh;
+  margin-top: 16vh;
+  width: 100%;
 `;
 
 const FooterRow = styled.div`
@@ -78,13 +80,14 @@ const MyFooter = styled.div`
 // Desktop Styles
 
 const DesktopFooter = styled.div`
-  background-color: #001523;
+  background-color: ${({ theme }) => theme.color.main2};
   color: ${({ theme }) => theme.color.main8};
   display: flex;
   width: 100%;
   justify-content: space-around;
   align-items: center;
   padding: 3vh;
+  border-top: 2px solid #e76f51;
 `;
 
 const LeftCol = styled.div`
@@ -98,26 +101,36 @@ const LeftCol = styled.div`
 */
 
 const StyledCol = styled.div`
+  /* border: 2px solid white; */
   width: 140px;
-  margin-right: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  gap: 1rem;
+  justify-content: space-between;
+
+  div > span {
+    margin-left: 0.7rem;
+
+    &:hover {
+      cursor: pointer;
+      color: ${({ theme }) => theme.color.main9};
+    }
+  }
+
+  p {
+    text-align: left;
+    text-decoration: underline;
+  }
 `;
 
 const CountryFlag = styled.div`
   display: flex;
   gap: 0.2rem;
-  margin: auto;
+  margin: auto 3%;
   :hover {
     cursor: pointer;
   }
 `;
 
-const StyledLink = styled.div`
-  color: white;
-`;
 // bei 100% passt sich das Bild dem parentelement an, es ist so groß, wie Platz da ist
 const CompanyLogo = styled.img`
   width: 300px;
@@ -147,6 +160,11 @@ function Footer() {
         <DesktopFooter>
           <LeftCol>
             <StyledCol>
+              <CountryFlag>
+                <LanguageMenu top="-50px" />
+              </CountryFlag>
+            </StyledCol>
+            <StyledCol>
               <div>
                 <MdOutlineFacebook size={28} color="white" />
                 <span>Facebook</span>
@@ -161,25 +179,16 @@ function Footer() {
               </div>
             </StyledCol>
             <StyledCol>
-              <CountryFlag>
-                <LanguageMenu />
-              </CountryFlag>
-            </StyledCol>
-            <StyledCol>
-              <div>
-                <StyledLink>About Us</StyledLink>
-                <StyledLink>Services</StyledLink>
-                <StyledLink>Payments</StyledLink>
-                <Link to="/impressum">
-                  <StyledLink>Impressum</StyledLink>
-                </Link>
-                <Link to="/faqs">
-                  <StyledLink>FAQ</StyledLink>
-                </Link>
+              <div className="contact">
+                <NavLink path="/aboutUs" text="About Us" color="white" />
+                <NavLink path="/services" text="Services" color="white" />
+                <NavLink path="/payments" text="Payments" color="white" />
+                <NavLink path="/impresum" text="Impresum" color="white" />
+                <NavLink path="/faq" text="FAQ" color="white" />
               </div>
             </StyledCol>
             <StyledCol>
-              <span>CONTACT US : </span>
+              <p>CONTACT US : </p>
               <FooterRow>
                 <MdLocalPhone color="white" size={28} />
                 <StyledSpan>+49 1234 6666666</StyledSpan>

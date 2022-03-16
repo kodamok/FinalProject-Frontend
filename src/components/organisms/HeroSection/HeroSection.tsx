@@ -43,18 +43,7 @@ const Container = styled.div`
       margin-top: 1.5rem;
     }
   }
-  button {
-    padding: 1.3rem 2rem;
-    background: ${({ theme }) => theme.color.main3};
-    font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
-    border-radius: 0.6rem;
-    color: ${({ theme }) => theme.color.main1};
-    border: none;
-    outline: none;
-    width: 300px;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
+
   div:last-child {
     margin-bottom: 2.6rem;
   }
@@ -154,12 +143,7 @@ function HeroSection() {
             ))}
           </ContainerList>
           <div>
-            <Button
-              background="red"
-              color="white"
-              text={"Let's Try It!"}
-              onClick={handleNavigateToServices}
-            />
+            <Button text="LETS TRY IT!" onClick={handleNavigateToServices} />
           </div>
         </div>
       </Container>

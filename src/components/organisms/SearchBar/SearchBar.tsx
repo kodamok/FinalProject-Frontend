@@ -1,7 +1,8 @@
 import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
+/* import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel'; */
+import Input from '../../atoms/Input/Input';
 import useForm from '../../../hooks/useForm';
 import { Context } from '../../../providers/GeneralProvider';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
@@ -14,30 +15,29 @@ const Container = styled.div`
 `;
 
 const ContainerFilteredList = styled.div`
-  background: ${({ theme }) => theme.color.main8};
-  border: 2px solid black;
-  border-radius: 0.6rem;
-  padding: 0.5rem;
-  width: 120%;
-  min-height: 50px;
+  border: 1px solid black;
+  background: ${({ theme }) => theme.color.main7};
+  padding: 0.1rem;
+  position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  position: absolute;
-  top: 96px;
-  left: 0;
+  top: 60px;
+  width: 100%;
   z-index: 5;
   max-height: 500px;
   overflow: auto;
-  > p {
+  & > p {
     padding: 0.6rem 0.8rem;
-    border-radius: 0.4rem;
-    color: black;
-    text-align: center;
+    color: ${({ theme }) => theme.color.main1};
+    text-align: left;
     &:hover {
-      background: black;
-      color: white;
       cursor: pointer;
+      color: ${({ theme }) => theme.color.main9};
+      border-bottom: ${({ theme }) => theme.color.main9};
+    }
+
+    &:hover {
+      border-bottom: ${({ theme }) => `0.5px solid ${theme.color.main9}`};
     }
   }
 `;
@@ -54,12 +54,13 @@ function SearchBar() {
   useOnClickOutside(ref, clearForm);
   return (
     <Container ref={ref}>
-      <InputWithLabel
+      <Input
+        margin="0px"
+        width="500px"
         name="searchBar"
         value={inputs.searchBar}
         onChange={handleChange}
         placeholder="Search"
-        border="none"
       />
       {clientsGlobal && inputs.searchBar && (
         <ContainerFilteredList>

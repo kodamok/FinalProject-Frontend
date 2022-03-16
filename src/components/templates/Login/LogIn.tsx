@@ -11,7 +11,7 @@ import useError from '../../../hooks/useError';
 import { googleLoginUrl } from '../../../helpers/googleLoginUrl';
 
 const Container = styled.form`
-  padding: 0 1rem;
+  padding: 1rem;
   max-width: 350px;
   margin: 1rem auto;
 
@@ -94,7 +94,7 @@ function LogIn() {
         console.log('FETCHING ERROR', error);
         handleError();
       } finally {
-        setIsLoading(true);
+        setIsLoading(false);
       }
     };
     await login();
@@ -107,26 +107,33 @@ function LogIn() {
   return (
     <Container onSubmit={handleSubmit}>
       <h3>LOGIN</h3>
-      <Input label="Email" name="email" onChange={handleChange} placeholder="Email" />
+      <Input
+        margin="50px 0 0.1rem 0"
+        label="Email"
+        name="email"
+        onChange={handleChange}
+        placeholder="Email"
+      />
       <Input
         label="Password"
         type="password"
         name="password"
         placeholder="Password"
         onChange={handleChange}
+        margin="50px 0 0.1rem 0"
       />
       <ContainerP>
         <p onClick={handleNavigateToForgotPassword}>I forgot my password</p>
       </ContainerP>
       <div>
-        <Button type="submit" background="#2A9D8F" text={isLoading ? 'Loading...' : 'Login'} />
-        <Line />
-        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <Button type="submit" color="#eae2b7" text={isLoading ? 'Loading...' : 'Login'} />
         <a href={googleLoginUrl}>
-          <Button text="Login with Google" icon={<FcGoogle />} padding="1.3rem 1rem" />
+          <Button text="Login with Google" icon={<FcGoogle />} background="white" color="black" />
         </a>
+        <Line />
         <Button
-          background="#9e0059"
+          background="#1F313E"
+          color="#eae2b7"
           text="Create New Account"
           onClick={handleOpenCreateNewAccountPage}
         />

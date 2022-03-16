@@ -26,9 +26,10 @@ const BigLogo = styled(Link)`
 const ContainerNavText = styled.div`
   padding: 0.2rem;
   color: ${({ color }) => color || 'black'};
+  font-weight: 600;
   &:hover {
     cursor: pointer;
-    color: ${({ theme }) => theme.color.main4};
+    color: ${({ theme }) => theme.color.main9};
   }
 `;
 // Style desktopVersion

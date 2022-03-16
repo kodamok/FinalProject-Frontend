@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrClose } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
-import NS1blk from '../../../assets/images/Logos/newLogos/62x165/NS1blk.png';
+import NSLogo from '../../../assets/images/Logos/newLogos/53x161/NSLogo.png';
 /* import { useNavigate } from 'react-router-dom'; */
 import AvatarWithMenu from '../../molecules/AvatarWithMenu/AvatarWithMenu';
 /* import CompanyLogo from '../../../assets/illustrations/COMPANYLOGO.png'; */
@@ -24,8 +24,8 @@ interface StyledDivProps {
 const Container = styled.div<StyledDivProps>`
   background: ${({ theme }) => theme.color.main1};
   color: ${({ theme }) => theme.color.main2};
-  font-size: ${({ theme }) => theme.fontSizeInter.m};
-  border: 2px solid black;
+  font-size: ${({ theme }) => theme.fontSizeOpenSans.l};
+  border: 2px solid #001523;
   padding: 0.7rem;
   min-height: ${({ isOpenMenu }) => (isOpenMenu ? '100vh' : 'auto')};
   /* border: 2px solid red; */
@@ -58,12 +58,13 @@ const FlexOpen = styled.div`
 `; */
 const StyledMenu = styled.div`
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
-  margin: 2rem 0 1rem 2rem;
+  padding: 2rem;
 `;
 const StyledLogoSlogan = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -71,18 +72,17 @@ const StyledLogoSlogan = styled.div`
 const ContainerDesktop = styled.div`
   display: flex;
   justify-content: space-around;
-  align-items: baseline;
+  align-items: center;
   background: ${({ theme }) => theme.color.main1};
   color: ${({ theme }) => theme.color.main2};
   font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
-  border: 2px solid black;
-  padding: 0.2rem;
+  border-bottom: 1px solid ${({ theme }) => theme.color.main9};
+  padding: 0.5rem;
 `;
 const StyledMenuDesktop = styled.div`
   display: flex;
   align-items: center;
-  gap: 2rem;
-  font-weight: bold;
+  gap: 1.5rem;
 `;
 const CountryFlag = styled.div`
   display: flex;
@@ -100,21 +100,33 @@ const ServicesAndLanguage = styled.div`
 const ContainerDesktopAdmin = styled.div`
   display: flex;
   justify-content: space-around;
-  background: ${({ theme }) => theme.color.main7};
+  align-items: center;
+  background: ${({ theme }) => theme.color.main2};
   color: ${({ theme }) => theme.color.main8};
   font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
-  padding: 0.2rem;
+  border-bottom: 2px solid ${({ theme }) => theme.color.main9};
+  padding: 0.5rem;
 `;
 
 const StyledMenuDesktopAdmin = styled.div`
   display: flex;
-  gap: 2rem;
-  font-weight: bold;
+  align-items: center;
+  gap: 1.5rem;
+  font-weight: 600;
+  @media (max-width: 1200px) {
+    > div:last-child {
+      display: none;
+    }
+  }
 `;
+const DropdownMenuDesktopAdmin = styled.div`
+@media (min-width: 1200px) and (max-width: 2000px) {
+    > div:first-child {
+      display: none;
+    }`;
+
 const CountryFlagAdmin = styled.div`
   display: flex;
-  gap: 0.1rem;
-  margin: auto;
   :hover {
     cursor: pointer;
   }
@@ -125,7 +137,6 @@ const ServicesAndLanguageAdmin = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: space-around;
-  margin: 1rem;
 `;
 // const StyledInput = styled.input`
 //   position: relative;
@@ -142,21 +153,22 @@ const ServicesAndLanguageAdmin = styled.div`
 const ContainerDesktopClient = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
   background: ${({ theme }) => theme.color.main7};
   color: ${({ theme }) => theme.color.main8};
   font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
-  padding: 0.2rem;
+  border-bottom: 1px solid ${({ theme }) => theme.color.main9};
+  padding: 0.5rem;
 `;
 
 const StyledMenuDesktopClient = styled.div`
   display: flex;
-  gap: 2rem;
-  font-weight: bold;
+  align-items: center;
+  gap: 1.5rem;
+  font-weight: 600;
 `;
 const CountryFlagClient = styled.div`
   display: flex;
-  z-index: 0;
-  gap: 0.1rem;
   :hover {
     cursor: pointer;
   }
@@ -164,30 +176,22 @@ const CountryFlagClient = styled.div`
 const ServicesAndLanguageClient = styled.div`
   display: flex;
   position: relative;
-  gap: 3rem;
+  gap: 1rem;
+  align-items: center;
   justify-content: space-around;
-  margin: 1rem;
 `;
 
-const ButtonLogoutMobil = styled.button`
-  position: absolute;
+const ButtonLogoutMobil = styled.div`
   color: ${({ theme }) => theme.color.main2};
-  background: none;
-  font-size: ${({ theme }) => theme.fontSizeInter.m};
-  top: 17rem;
-  border: none;
+  padding-left: 0.5rem;
   &:hover {
     cursor: pointer;
     color: ${({ theme }) => theme.color.main4};
   }
 `;
-const ButtonLogoutMobilAdmin = styled.button`
-  position: absolute;
+const ButtonLogoutMobilAdmin = styled.div`
   color: ${({ theme }) => theme.color.main2};
-  background: none;
-  font-size: ${({ theme }) => theme.fontSizeInter.m};
-  top: 28rem;
-  border: none;
+  padding-left: 0.5rem;
   &:hover {
     cursor: pointer;
     color: ${({ theme }) => theme.color.main4};
@@ -197,27 +201,27 @@ const ButtonLogoutMobilAdmin = styled.button`
 const data = [
   {
     path: '/aboutUs',
-    text: 'ABOUT US',
+    text: 'About Us',
     id: 1
   },
   {
     path: '/services',
-    text: 'SERVICES',
+    text: 'Services',
     id: 2
   },
   {
     path: '/login',
-    text: 'LOGIN',
+    text: 'Login',
     id: 3
   },
   {
     path: '/signup',
-    text: 'SIGN UP',
+    text: 'Signup',
     id: 4
   },
   {
     path: '/contact',
-    text: 'CONTACT',
+    text: 'Contact',
     id: 5
   }
 ];
@@ -225,39 +229,39 @@ const data = [
 const dataDesktop = [
   {
     path: '/aboutUs',
-    text: 'ABOUT US',
+    text: 'About Us',
     id: 1
   },
   {
     path: '/services',
-    text: 'SERVICES',
+    text: 'Services',
     id: 2
   },
   {
     path: '/contact',
-    text: 'CONTACT',
+    text: 'Contact',
     id: 3
   },
   {
     path: '/login',
-    text: 'LOGIN',
+    text: 'Login',
     id: 4
   }
 ];
 const dataHeaderAdmin = [
   {
     path: '/',
-    text: 'DASHBOARD',
+    text: 'Dashboard',
     id: 1
   },
   {
     path: '/clients',
-    text: 'CLIENTS/PROJECTS',
+    text: 'Clients/Projects',
     id: 2
   },
   {
     path: '/messages',
-    text: 'MESSAGES',
+    text: 'Messages',
     id: 3
   }
 ];
@@ -265,17 +269,17 @@ const dataHeaderAdmin = [
 const dataHeaderClient = [
   {
     path: '/',
-    text: 'DASHBOARD',
+    text: 'Dashboard',
     id: 1
   },
   {
     path: '/projects',
-    text: 'PROJECTS',
+    text: 'Projects',
     id: 2
   },
   {
     path: '/messages',
-    text: 'MESSAGES',
+    text: 'Messages',
     id: 3
   }
 ];
@@ -311,7 +315,7 @@ function Header() {
             {!isOpenMenu && (
               <Flex>
                 <div style={{ position: 'relative' }}>
-                  <NavLink path="/" image={NS1blk} alt="Logo" />
+                  <NavLink path="/" image={NSLogo} alt="Logo" />
                 </div>
                 <div>
                   {!isOpenMenu && (
@@ -324,7 +328,7 @@ function Header() {
               <>
                 <FlexOpen>
                   <div style={{ position: 'relative' }}>
-                    <NavLink path="/" image={NS1blk} alt="Logo" />
+                    <NavLink path="/" image={NSLogo} alt="Logo" />
                   </div>
                   <div>
                     <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -339,13 +343,10 @@ function Header() {
                       onClick={handleOpenMenu}
                     />
                   ))}
-                  <ButtonLogoutMobil type="button" onClick={handleLogout}>
-                    LOGOUT
-                  </ButtonLogoutMobil>
+                  <ButtonLogoutMobil onClick={handleLogout}>Logout</ButtonLogoutMobil>
                 </StyledMenu>
-                <br />
                 <StyledLogoSlogan>
-                  <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
+                  <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
                 </StyledLogoSlogan>
                 <Contact />
               </>
@@ -355,7 +356,7 @@ function Header() {
           // Client Desktop Version ----------------------------------------------
           <ContainerDesktopClient>
             <StyledLogoSlogan>
-              <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
+              <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
             </StyledLogoSlogan>
             {/* <StyledInput type="text" placeholder="Search" /> */}
             <SearchBar />
@@ -371,17 +372,17 @@ function Header() {
               <AvatarWithMenu img={userData.avatar}>
                 <div>
                   <Button
-                    whiteMenu
-                    text="Settings"
+                    dropMenu
+                    color="white"
+                    text="Statistics"
                     width="100px"
-                    fontSize="1rem"
                     onClick={() => navigateTo('/settings')}
                   />
                   <Button
-                    whiteMenu
+                    dropMenu
+                    color="white"
                     text="Logout"
                     width="100px"
-                    fontSize="1rem"
                     onClick={handleLogout}
                   />
                 </div>
@@ -401,7 +402,7 @@ function Header() {
             {!isOpenMenu && (
               <Flex>
                 <div style={{ position: 'relative' }}>
-                  <NavLink path="/" image={NS1blk} alt="Logo" />
+                  <NavLink path="/" image={NSLogo} alt="Logo" />
                 </div>
                 <div>
                   {!isOpenMenu && (
@@ -414,7 +415,7 @@ function Header() {
               <>
                 <FlexOpen>
                   <div style={{ position: 'relative' }}>
-                    <NavLink path="/" image={NS1blk} alt="Logo" />
+                    <NavLink path="/" image={NSLogo} alt="Logo" />
                   </div>
                   <div>
                     <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -429,16 +430,13 @@ function Header() {
                       onClick={handleOpenMenu}
                     />
                   ))}
-                  <NavLink path="/newClient" text="NEW CUSTOMER" onClick={handleOpenMenu} />
-                  <NavLink path="/settings" text="SETTINGS" onClick={handleOpenMenu} />
-                  <NavLink path="/statistics" text="STATISTICS" onClick={handleOpenMenu} />
-                  <ButtonLogoutMobilAdmin type="button" onClick={handleLogout}>
-                    LOGOUT
-                  </ButtonLogoutMobilAdmin>
+                  <NavLink path="/newClient" text="New Customer" onClick={handleOpenMenu} />
+                  <NavLink path="/settings" text="Settings" onClick={handleOpenMenu} />
+                  <NavLink path="/statistics" text="Statistics" onClick={handleOpenMenu} />
+                  <ButtonLogoutMobilAdmin onClick={handleLogout}>Logout</ButtonLogoutMobilAdmin>
                 </StyledMenu>
-                <br />
                 <StyledLogoSlogan>
-                  <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
+                  <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
                 </StyledLogoSlogan>
                 <Contact />
               </>
@@ -448,7 +446,7 @@ function Header() {
           // Freelancer Desktop Version ----------------------------------------------
           <ContainerDesktopAdmin>
             <StyledLogoSlogan>
-              <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
+              <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
             </StyledLogoSlogan>
             {/* <StyledInput type="text" placeholder="Search" /> */}
             <SearchBar />
@@ -457,27 +455,40 @@ function Header() {
                 {dataHeaderAdmin.map((item) => (
                   <NavLink key={item.id} path={item.path} text={item.text} color="white" />
                 ))}
+                <NavLink
+                  path="/statistics"
+                  text="Statistics"
+                  onClick={handleOpenMenu}
+                  color="white"
+                />
               </StyledMenuDesktopAdmin>
               <CountryFlagClient>
                 <LanguageMenu />
               </CountryFlagClient>
               <AvatarWithMenu img={userData.avatar}>
-                <div>
+                <DropdownMenuDesktopAdmin>
                   <Button
-                    whiteMenu
+                    dropMenu
+                    color="white"
+                    text="Statistics"
+                    width="100px"
+                    onClick={() => navigateTo('/statistics')}
+                  />
+                  <Button
+                    dropMenu
+                    color="white"
                     text="Settings"
                     width="100px"
-                    fontSize="1rem"
                     onClick={() => navigateTo('/settings')}
                   />
                   <Button
-                    whiteMenu
+                    dropMenu
+                    color="white"
                     text="Logout"
                     width="100px"
-                    fontSize="1rem"
                     onClick={handleLogout}
                   />
-                </div>
+                </DropdownMenuDesktopAdmin>
               </AvatarWithMenu>
 
               {/* <AvatarContainer onClick={handleOpenAvatarMenu} ref={ref}>
@@ -520,7 +531,7 @@ function Header() {
           {!isOpenMenu && (
             <Flex>
               <div>
-                <NavLink path="/" image={NS1blk} alt="Logo" />
+                <NavLink path="/" image={NSLogo} alt="Logo" />
               </div>
               <div>
                 {!isOpenMenu && (
@@ -533,7 +544,7 @@ function Header() {
             <>
               <FlexOpen>
                 <div>
-                  <NavLink path="/" image={NS1blk} alt="Logo" />
+                  <NavLink path="/" image={NSLogo} alt="Logo" />
                 </div>
                 <div>
                   <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -549,9 +560,8 @@ function Header() {
                   />
                 ))}
               </StyledMenu>
-              <br />
               <StyledLogoSlogan>
-                <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
+                <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
               </StyledLogoSlogan>
               <Contact />
             </>
@@ -561,7 +571,7 @@ function Header() {
         // Logout Desktop Version ----------------------------------------------
         <ContainerDesktop>
           <StyledLogoSlogan>
-            <NavLink path="/" bigLogo image={NS1blk} alt="Logo" />
+            <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
           </StyledLogoSlogan>
           <ServicesAndLanguage>
             <StyledMenuDesktop>
@@ -569,10 +579,18 @@ function Header() {
                 <NavLink key={item.id} path={item.path} text={item.text} />
               ))}
 
-              <NavLink path="/signup" text="SIGN UP" border="2px solid black" />
+              <Button
+                onClick={() => navigateTo('/signup')}
+                text="SignUp"
+                border="2px solid #9e0059"
+                width="100px"
+                background="transparent"
+                color="#9e0059"
+                height="40px"
+              />
             </StyledMenuDesktop>
             <CountryFlag>
-              <LanguageMenu />
+              <LanguageMenu background="#eae2b7" />
             </CountryFlag>
           </ServicesAndLanguage>
         </ContainerDesktop>

@@ -65,7 +65,7 @@ const ContainerProjects = styled.div`
   border-radius: 1rem;
 `;
 
-const H2 = styled.h2`
+const H3 = styled.h3`
   text-align: center;
 `;
 
@@ -141,7 +141,7 @@ function ClientsOrProjects() {
   if (isLoading) return <LoadingSpin />;
   return (
     <div>
-      <H2>Clients/Projects</H2>
+      <H3>Clients/Projects</H3>
       <ContainerFilterBy>
         <div>
           <p>Filter by:</p>

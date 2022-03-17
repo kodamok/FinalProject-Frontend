@@ -140,7 +140,7 @@ function CardClient({ clientData }: client) {
           outline="3px solid black"
         />
         <div>
-          <h4>{clientData.name}</h4>
+          <h5>{clientData.name}</h5>
         </div>
         <div>
           <IconClickable icon={<BsThreeDots fontSize={28} />}>

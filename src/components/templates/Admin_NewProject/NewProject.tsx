@@ -110,7 +110,7 @@ const ButtonWrapper = styled.div`
 interface initial {
   image: File | string | null;
   companyName: string;
-  customerName: string;
+  description: string;
   website: string;
   taxNumber: string;
   services: any;
@@ -121,7 +121,7 @@ interface initial {
 const projectInfo: initial = {
   image: '',
   companyName: '',
-  customerName: '',
+  description: '',
   website: '',
   taxNumber: '',
   startDate: '',
@@ -205,7 +205,7 @@ function NewProject(): JSX.Element {
               <RoundedPhoto
                 RoundedPhotoWithButton
                 img={inputs.image || ''}
-                alt="blablabla"
+                alt="logo or company avatar"
                 width="150px"
                 height="150px"
                 border="2px solid black"
@@ -228,32 +228,29 @@ function NewProject(): JSX.Element {
             </div>
             <div className="right">
               <InputWithLabel
-                label="Company Name"
-                type="input"
+                label="Company Name*"
                 name="companyName"
                 placeholder="enter the name of the company"
-                onChange={handleChange}
-              />
-              <InputWithLabel
-                label="Customer Name*"
-                type="input"
-                name="customerName"
-                placeholder="enter a customer name"
                 onChange={handleChange}
                 required
               />
               <InputWithLabel
-                label="Website"
-                type="input"
+                label="Website*"
                 name="website"
                 placeholder="enter a website"
                 onChange={handleChange}
+                required
               />
               <InputWithLabel
                 label="Tax Number"
-                type="input"
                 name="taxNumber"
                 placeholder="enter a tax ID"
+                onChange={handleChange}
+              />
+              <InputWithLabel
+                label="Description"
+                name="description"
+                placeholder="enter a description"
                 onChange={handleChange}
               />
             </div>

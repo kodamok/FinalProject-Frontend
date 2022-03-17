@@ -18,7 +18,7 @@ const AvatarContainer = styled.div<Avatar>`
 `;
 
 const AvatarMenu = styled.div`
-  border: 1px solid black;
+  border: 1px solid #e76f51;
   background: ${({ theme }) => theme.color.main2};
   padding: 0.7rem;
   position: absolute;

@@ -7,8 +7,6 @@ export const GlobalStyle = createGlobalStyle`
   *:after {
     box-sizing: inherit;
   }
-
-  
   
   #root{
     min-height: 100vh;
@@ -29,23 +27,22 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin:0;
   }
+  
   button, label{
     font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
   }
 
-  input, select{
-    font-family: 'Open Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
+  input, select {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
-
   }
-    //p {margin-bottom: 1rem;} it is necessary?
   
-  p{
+  p {
     margin:0;
   }
 
-  a{
+  a {
     text-decoration: none;
   }
 
@@ -92,6 +89,6 @@ export const GlobalStyle = createGlobalStyle`
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
-  }
+  };
   
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Compressor from 'compressorjs';
 
 interface objectValues {
@@ -10,13 +10,13 @@ const initValue: objectValues = {};
 export default function useForm(initial = initValue) {
   // create a state object for our inputs
   const [inputs, setInputs] = useState(initial);
-  // const initialValues = Object.values(initial).join('');
-  //
-  // useEffect(() => {
-  //   // This function runs when the things we are watching change
-  //   setInputs(initial);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [initialValues]);
+  const initialValues = Object.values(initial).join('');
+
+  useEffect(() => {
+    // This function runs when the things we are watching change
+    setInputs(initial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   interface ChangeEvent {
     value: string | number | File | any;

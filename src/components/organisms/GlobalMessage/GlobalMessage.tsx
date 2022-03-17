@@ -69,8 +69,8 @@ const Form = styled.form`
 // `;
 //
 const ContactList = styled.div`
-  margin: 0 0 3rem 0;
-  overflow-y: auto;
+  padding: 0 0 3rem 0;
+  overflow: auto;
   overscroll-behavior: contain;
 `;
 

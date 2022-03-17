@@ -54,15 +54,12 @@ function ClientDetails() {
   };
   useEffect(() => {
     fetchClientDetails();
-  }, []);
-  useEffect(() => {
-    fetchClientDetails();
   }, [clientId]);
 
   if (isLoading) return <LoadingSpin />;
   return (
     <div>
-      <Title>Customer Details</Title>
+      <Title>{userData.role === 'Freelancer' ? 'Client' : 'Freelancer'} Details</Title>
 
       <Container>
         <ContainerClientDetails>

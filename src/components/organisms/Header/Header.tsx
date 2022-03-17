@@ -154,7 +154,7 @@ const ContainerDesktopClient = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: ${({ theme }) => theme.color.main7};
+  background: ${({ theme }) => theme.color.main2};
   color: ${({ theme }) => theme.color.main8};
   font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
   border-bottom: 1px solid ${({ theme }) => theme.color.main9};

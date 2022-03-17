@@ -6,7 +6,6 @@ import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import kim from '../../../assets/images/kim.jpg';
 import GeneratePdf from '../GeneratePdf/GeneratePdf';
 import { Context } from '../../../providers/GeneralProvider';
 
@@ -25,6 +24,7 @@ const Container = styled.div`
     font-size: 22px;
     
   }
+  
 `;
 const ContainerThreeDots = styled.div`
   position: relative;
@@ -34,15 +34,15 @@ const ContainerThreeDots = styled.div`
 const Details = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 7px;
   color: ${({ theme }) => theme.color.main2};
-  align-content: center;
+  align-items: center;
+  gap: 2rem;
 `;
 const DetailsElement = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3px;
-  justify-content: center;
+  align-items: center;
 `;
 const DownloadInvoiceButton = styled.div`
   display: flex;
@@ -58,26 +58,45 @@ const ContainerDesktop = styled.div`
   border: 1px solid ${({ theme }) => theme.color.main2};
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.color.main1};
-  }
+
   span {
     font-weight: 700;
     font-size: 22px;
-    
+    @media (max-width: 1142px) {
+       {
+        font-size: 15px;
+      }
+    }
   }
 `;
 const ContainerDetailDesktop = styled.div`
   display: flex;
-  //border: 1px solid red;
+  padding: 2rem;
   gap: 2rem;
+  //border: 10px solid red;
 `;
-const TitleAndPicture = styled.div`
+const TitleAndPictureDesktop = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   align-content: space-around;
-  margin: auto;
-  padding-left: 30px;
-  //border: 1px solid green;
+  //border: 10px solid green;
+
+  @media (max-width: 1142px) {
+    > h4 {
+      font-size: 25px;
+    }
+  }
+`;
+const DetailsDesktop = styled.div`
+  display: flex;
+  color: ${({ theme }) => theme.color.main2};
+  align-content: center;
+  gap: 2rem;
+`;
+const ContainerDetailsElement = styled.div`
+  padding-top: 3rem;
+  //border: 10px solid blue;
 `;
 
 interface Project {
@@ -91,7 +110,6 @@ interface Project {
     taxNumber: string;
   }; */
 }
-// Card Details Mobil Version
 function CardDetails({ projectData }: Project) {
   const navigate = useNavigate();
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
@@ -108,6 +126,7 @@ function CardDetails({ projectData }: Project) {
     navigate(`/editProject/${projectData._id}`);
   };
 
+  // Card Details Mobil Version
   return (
     <div>
       {!desktopVersion ? (
@@ -125,58 +144,61 @@ function CardDetails({ projectData }: Project) {
                 >
                   <Button
                     whiteMenu
-                    text="View Client"
+                    text={userData.role === 'Freelancer' ? 'View Client' : 'View Freelancer'}
                     width="180px"
                     fontSize="1rem"
                     padding="0.5rem 1rem"
                     onClick={handleNavigateToClient}
                   />
-                  <Button
-                    whiteMenu
-                    text="Edit Project"
-                    width="180px"
-                    fontSize="1rem"
-                    padding="0.5rem 1rem"
-                    onClick={handleNavigateToEditProject}
-                  />
+                  {userData.role === 'Freelancer' && (
+                    <Button
+                      whiteMenu
+                      text="Edit Project"
+                      width="180px"
+                      fontSize="1rem"
+                      padding="0.5rem 1rem"
+                      onClick={handleNavigateToEditProject}
+                    />
+                  )}
                 </div>
               </IconClickable>
             </ContainerThreeDots>
-            <h3>Nomad Studio</h3>
-            <RoundedPhoto
-              img={kim}
-              alt="avatar"
-              outline="3px solid black"
-              width="12rem"
-              height="12rem"
-            />
+
             {/* check this part later, because the ? are not the best solution  */}
             {/* the problem is of the time of rendering */}
             {projectData && (
               <Details>
+                <h3>Nomad Studio</h3>
+                <RoundedPhoto
+                  img={projectData?.avatar}
+                  alt="avatar"
+                  outline="3px solid black"
+                  width="12rem"
+                  height="12rem"
+                />
                 <DetailsElement>
                   <span>Staring Date</span>
-                  <p>{projectData?.createdAt}</p>
+                  <p>{projectData?.startDate.substring(0, 15)}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Due Date</span>
-                  <p>{projectData?.updatedAt}</p>
+                  <p>{projectData?.updatedAt.substring(0, 10)}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Company Name</span>
-                  <p>{projectData?.clientName}</p>
+                  <p>{projectData?.companyName}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Customer Name</span>
-                  <p>{projectData?.name}</p>
+                  <p>{projectData?.clientName}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Website</span>
-                  <p>{projectData?.text}</p>
+                  <p>{projectData?.websiteName}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Tax Number</span>
-                  <p>{projectData?.ownerUser}</p>
+                  <p>{projectData?.taxNumber}</p>
                 </DetailsElement>
               </Details>
             )}
@@ -197,46 +219,48 @@ function CardDetails({ projectData }: Project) {
         <div>
           <ContainerDesktop>
             <ContainerDetailDesktop>
-              <TitleAndPicture>
-                <h4>Nomad Studio</h4>
-                <RoundedPhoto
-                  img={kim}
-                  alt="avatar"
-                  outline="3px solid black"
-                  width="12rem"
-                  height="12rem"
-                />
-              </TitleAndPicture>
               {/* check this part later, because the ? are not the best solution  */}
               {/* the problem is of the time of rendering */}
               <div>
                 {projectData && (
-                  <Details>
-                    <DetailsElement>
-                      <span>Staring Date</span>
-                      <p>{projectData?.createdAt}</p>
-                    </DetailsElement>
-                    <DetailsElement>
-                      <span>Due Date</span>
-                      <p>{projectData?.updatedAt}</p>
-                    </DetailsElement>
-                    <DetailsElement>
-                      <span>Company Name</span>
-                      <p>{projectData?.clientName}</p>
-                    </DetailsElement>
-                    <DetailsElement>
-                      <span>Customer Name</span>
-                      <p>{projectData?.name}</p>
-                    </DetailsElement>
-                    <DetailsElement>
-                      <span>Website</span>
-                      <p>{projectData?.text}</p>
-                    </DetailsElement>
-                    <DetailsElement>
-                      <span>Tax Number</span>
-                      <p>{projectData?.ownerUser}</p>
-                    </DetailsElement>
-                  </Details>
+                  <DetailsDesktop>
+                    <TitleAndPictureDesktop>
+                      <h4>Nomad Studio</h4>
+                      <RoundedPhoto
+                        img={projectData?.avatar}
+                        alt="avatar"
+                        outline="3px solid black"
+                        width="12rem"
+                        height="12rem"
+                      />
+                      <DetailsElement>
+                        <span>Staring</span>
+                        <p>{projectData?.startDate.substring(0, 15)}</p>
+                      </DetailsElement>
+                      <DetailsElement>
+                        <span>Due Date</span>
+                        <p>{projectData?.updatedAt.substring(0, 10)}</p>
+                      </DetailsElement>
+                    </TitleAndPictureDesktop>
+                    <ContainerDetailsElement>
+                      <DetailsElement>
+                        <span>Company Name</span>
+                        <p>{projectData?.companyName}</p>
+                      </DetailsElement>
+                      <DetailsElement>
+                        <span>Customer Name</span>
+                        <p>{projectData?.clientName}</p>
+                      </DetailsElement>
+                      <DetailsElement>
+                        <span>Website</span>
+                        <p>{projectData?.websiteName}</p>
+                      </DetailsElement>
+                      <DetailsElement>
+                        <span>Tax Number</span>
+                        <p>{projectData?.taxNumber}</p>
+                      </DetailsElement>
+                    </ContainerDetailsElement>
+                  </DetailsDesktop>
                 )}
               </div>
             </ContainerDetailDesktop>

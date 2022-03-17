@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
-import CardClient from '../../molecules/CardClient/CardClient';
-import CardProject from '../../molecules/CardProject/CardProject';
+/* import CardClient from '../../molecules/CardClient/CardClient';
+ */ import CardProject from '../../molecules/CardProject/CardProject';
 import { backgroundColorSchema, optionsDoughnut } from '../../../helpers/chartSettings';
 import Chart from '../../molecules/Chart/Chart';
 import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
+import CardProfile from '../../molecules/CardProfile/CardProfile';
 
 const Container = styled.div`
   padding: 1rem;
@@ -183,7 +184,9 @@ function AdminDashboard() {
             <TitleWithLines text="Recent Clients" />
             <ContainerClients>
               {clients.length ? (
-                clients.map((item: any) => <CardClient key={item._id} clientData={item} />)
+                clients.map((item: any) => (
+                  <CardProfile key={item._id} clientData={item} projectData={projects} />
+                ))
               ) : (
                 <NoItemsFound text="Clients" />
               )}

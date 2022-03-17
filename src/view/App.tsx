@@ -34,6 +34,7 @@ import EditProject from '../components/organisms/EditProject/EditProject';
 
 function App(): JSX.Element {
   const { userData, setMessages, setUserData, setClientsGlobal } = useContext(Context);
+  const [messageDisplay, setMessageDisplayed] = useState(false);
   const navigate = useNavigate();
   const { handleLogout } = useAuth();
   const { token, role } = userData;
@@ -45,19 +46,22 @@ function App(): JSX.Element {
       // When entering the website, check whether the token's time has expired
       if (Date.now() > userData.exp) {
         handleLogout();
+        setMessageDisplayed(false);
       }
       // If token exist check whether the token is close to expiration ( < 30s )
-      if (userData.token) {
+      if (userData.token && !messageDisplay) {
         interval = setInterval(() => {
           // If yes then Display Message About It
           if (+userData.exp - Date.now() < 30000) {
             handleError('For Your Safety We Will Logout You in a 30 seconds :)');
+            setMessageDisplayed(true);
           }
           // If Token expired Clear UserData and Logout User/Admin
           if (Date.now() > userData.exp) {
             handleLogout();
             handleError('We Logged Out You For Your Security :)');
             clearInterval(interval);
+            setMessageDisplayed(false);
           }
           // console.log('Left', ((userData.exp - Date.now()) / 1000).toFixed(0), 's To Logout');
         }, 5000);
@@ -229,7 +233,7 @@ function App(): JSX.Element {
             <Route path="/" element={<UserDashboard />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/project/:projectId" element={<ProjectDetail />} />
-            <Route path="/freelancer/:freelancerId" element={<ClientDetails />} />
+            <Route path="/client/:clientId" element={<ClientDetails />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/services" element={<Services />} />

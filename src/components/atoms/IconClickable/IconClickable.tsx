@@ -30,7 +30,8 @@ interface Icon {
 
 function IconClickable({ icon, children }: Icon) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
+  const handleOpen = (e: any) => {
+    e.stopPropagation();
     setOpen((prev) => !prev);
   };
   const handleClose = () => {

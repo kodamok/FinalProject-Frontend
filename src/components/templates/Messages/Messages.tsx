@@ -11,13 +11,14 @@ import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 
 const Container = styled.div`
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   position: relative;
+  min-width: 100%;
   //border: 10px solid purple;
   ${({ theme }) => theme.down(theme.breakpoint.sm)} {
-    padding: 0;
+    padding: 1rem 0;
   }
 `;
 
@@ -36,9 +37,12 @@ const Form = styled.form`
 const ContainerContactListAndMessages = styled.div`
   display: flex;
   border: 1px solid grey;
-  margin: 0 auto;
+  //margin: 0 auto;
   justify-content: space-between;
   border-radius: 0.6rem;
+  ${({ theme }) => theme.up(theme.breakpoint.sm)} {
+    margin: 0 auto;
+  }
   //gap: 3rem;
 `;
 
@@ -61,7 +65,8 @@ const WrapperBoxMessage = styled.div`
   width: auto;
   min-width: auto;
   ${({ theme }) => theme.down(theme.breakpoint.sm)} {
-    min-width: 320px;
+    width: 100%;
+    min-width: 300px;
   }
 `;
 
@@ -95,7 +100,7 @@ const WrapperMessages = styled.div`
   max-height: 100%;
   height: 400px;
   width: auto;
-  max-width: 600px;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   border-radius: 0.6rem;
@@ -111,9 +116,11 @@ const WrapperMessages = styled.div`
   }
   ${({ theme }) => theme.up(theme.breakpoint.sm)} {
     min-width: 400px;
+    max-width: 400px;
   }
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    min-width: 600px;
+    min-width: 700px;
+    max-width: 700px;
   }
 `;
 

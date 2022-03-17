@@ -140,9 +140,9 @@ const ContainerDesktop = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 4rem;
   padding-bottom: 4rem;
-  //border: 10px solid yellow;
+  border: 10px solid yellow;
 `;
 const ContainerDetailsDesktop = styled.div`
   position: relative;
@@ -371,7 +371,7 @@ function ProjectDetail() {
       });
       const resJSON = await res.json();
       console.log('This is Fetch', res);
-      console.log(resJSON);
+      console.log('This is resJson', resJSON);
       if (res.status === 200) {
         setProject(resJSON);
       } else {
@@ -486,20 +486,22 @@ function ProjectDetail() {
                   >
                     <Button
                       whiteMenu
-                      text="View Client"
+                      text={userData.role === 'Freelancer' ? 'View Client' : 'View Freelancer'}
                       width="180px"
                       fontSize="1rem"
                       padding="0.5rem 1rem"
                       onClick={handleNavigateToClient}
                     />
-                    <Button
-                      whiteMenu
-                      text="Edit Project"
-                      width="180px"
-                      fontSize="1rem"
-                      padding="0.5rem 1rem"
-                      onClick={handleNavigateToEditProject}
-                    />
+                    {userData.role === 'Freelancer' && (
+                      <Button
+                        whiteMenu
+                        text="Edit Project"
+                        width="180px"
+                        fontSize="1rem"
+                        padding="0.5rem 1rem"
+                        onClick={handleNavigateToEditProject}
+                      />
+                    )}
                   </div>
                 </IconClickable>
               </ContainerThreeDotsDesktop>

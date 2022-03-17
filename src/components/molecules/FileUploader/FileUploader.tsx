@@ -6,7 +6,7 @@ import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   gap: 3rem;
   align-items: center;
@@ -71,7 +71,7 @@ function FileUploader({ projectId }: File) {
       />
       <Button
         type="submit"
-        text="Upload a File"
+        text="Upload Files"
         onClick={handleUploadDocumentFile}
         height="50px"
         width="140px"

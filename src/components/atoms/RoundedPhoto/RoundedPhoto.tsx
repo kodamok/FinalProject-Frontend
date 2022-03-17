@@ -15,7 +15,7 @@ const ContainerPhoto = styled.div<PhotoStyled>`
   border-radius: 50%;
   width: ${({ width }) => width || '90px'};
   height: ${({ height }) => height || '90px'};
-  background: grey;
+  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@ const ButtonForPhoto = styled.button`
   background-size: 20px;
   background-color: ${({ theme }) => theme.color.main4};
   outline: none;
-  border:none
+  border: none;
 
   top: 10px;
   left: 110px;
@@ -98,7 +98,6 @@ interface Photo {
   icon?: any;
   handleChange?: any;
   onClick?: any;
-  className?: any;
 }
 
 function RoundedPhoto({
@@ -113,8 +112,7 @@ function RoundedPhoto({
   outlineOffset,
   icon,
   handleChange,
-  onClick,
-  className
+  onClick
 }: Photo) {
   return (
     <Container>
@@ -149,7 +147,7 @@ function RoundedPhoto({
           outlineOffset={outlineOffset}
           onClick={onClick}
         >
-          {img && <img src={img} alt={alt} className={className} />}
+          {img && <img src={img} alt={alt} />}
           {icon && !img && icon}
         </ContainerPhoto>
       )}
@@ -167,8 +165,7 @@ RoundedPhoto.defaultProps = {
   RoundedPhotoWithButton: false,
   icon: undefined,
   handleChange: undefined,
-  onClick: false,
-  className: undefined
+  onClick: undefined
 };
 
 export default RoundedPhoto;

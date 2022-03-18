@@ -15,7 +15,7 @@ const ContainerPhoto = styled.div<PhotoStyled>`
   border-radius: 50%;
   width: ${({ width }) => width || '90px'};
   height: ${({ height }) => height || '90px'};
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   align-items: center;
   justify-content: center;

@@ -6,11 +6,12 @@ import IconClickable from '../../atoms/IconClickable/IconClickable';
 import Button from '../../atoms/Button/Button';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import { Context } from '../../../providers/GeneralProvider';
-import CardClient from '../../molecules/CardClient/CardClient';
-import CardProject from '../../molecules/CardProject/CardProject';
+/* import CardClient from '../../molecules/CardClient/CardClient';
+import CardProject from '../../molecules/CardProject/CardProject'; */
 import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
+import CardProfile from '../../molecules/CardProfile/CardProfile';
 
 const ContainerFilterBy = styled.div`
   display: flex;
@@ -184,7 +185,9 @@ function ClientsOrProjects() {
       {choiceRadio === 'projects' ? (
         <ContainerProjects>
           {projects.length ? (
-            projects.map((item: any) => <CardProject key={item._id} projectData={item} />)
+            projects.map((item: any) => (
+              <CardProfile key={item._id} projectData={item} clientData={clients} />
+            ))
           ) : (
             <NoItemsFound text="Projects" />
           )}
@@ -192,7 +195,9 @@ function ClientsOrProjects() {
       ) : (
         <ContainerClients>
           {clients.length ? (
-            clients.map((item: any) => <CardClient key={item._id} clientData={item} />)
+            clients.map((item: any) => (
+              <CardProfile client key={item._id} clientData={item} projectData={projects} />
+            ))
           ) : (
             <NoItemsFound text="Clients" />
           )}

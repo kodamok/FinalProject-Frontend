@@ -227,6 +227,7 @@ function App(): JSX.Element {
             <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/impressum" element={<Impressum />} />
             <Route path="/faqs" element={<FAQs />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         ) : token && role === 'Client' ? (
           <Routes>

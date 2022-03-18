@@ -1,11 +1,15 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { BsThreeDots } from 'react-icons/bs';
+import IconClickable from '../../atoms/IconClickable/IconClickable';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
+import Button from '../../atoms/Button/Button';
 
 const glow = keyframes` 
     0%{
         box-shadow: 0px 0px 0px 0.5px #e76f51,
          0px 0px 10px 1px #fcbf49;
+         transform: scale(0.8);
     }
 
     25%{
@@ -26,6 +30,7 @@ const glow = keyframes`
     100%{
         box-shadow: 0px 0px 0px 0.5px #e76f51,
         0px 0px 10px 1px #fcbf49;
+        transform: scale(0.7);
     }
     `;
 
@@ -36,9 +41,9 @@ const moon = keyframes`
     }
 
     100%{
-        top: -20px;
-        left:-80px;
-        transform: scale(0.9);
+        top: -25px;
+        left:-90px;
+        transform: scale(1);
         
     }
     
@@ -47,9 +52,9 @@ const moon = keyframes`
 const moonReverse = keyframes` 
     0%{
        
-        top: -20px;
-        left:-80px;
-        transform: scale(0.9);
+        top: -25px;
+        left:-90px;
+        transform: scale(1);
     }
 
     100%{
@@ -63,28 +68,139 @@ const moonReverse = keyframes`
 
 const cardTitle = keyframes`
     0%{
-        top:150px;
+        top:-20px;
+        font-size: 1.777rem;
+        transform: translate(0);
+        
     }
 
     100%{
-        top:30px;
-        left: 140px
+        font-size: 1rem;
+        transform: translate(-67px, 50%);
+        top:-140px;
+        left: 110px
     `;
 const cardTitleReverse = keyframes`
     0%{
-        
-        top:30px;
-        left: 140px;
+        font-size: 1.333rem;
+        transform: translate(-67px, 50%);
+        top:-140px;
+        left: 110px;
     }
 
     100%{
-        top:150px;
+        font-size: 1.777rem;
+        transform: translate(0);
+        top:-20px;
+    `;
+const cardPhone = keyframes`
+    0%{
+        /* font-size: 1.333rem;
+        top:-25px;
+        transform: translate(0); */
+        opacity: 0;
+        font-weight: 400;
+        
+    }
+
+    100%{
+        /* font-size: 1rem;
+        transform: translate(-67px, 50%);
+        top:-140px;
+        left: 110px */
+        opacity: 100%;
+        font-weight: 600;
+    `;
+const cardPhoneReverse = keyframes`
+    0%{
+        /* font-size: 1rem;
+        transform: translate(-67px, 50%);
+        top:-140px;
+        left: 110px; */
+        font-weight: 600;
+        opacity: 100%;
+    }
+
+    100%{
+        /* font-size: 1.333rem;
+        transform: translate(0);
+        top:-25px; */
+        opacity: 0;
+        font-weight: 400;
+    `;
+const cardShadow = keyframes`
+    0%{
+        box-shadow:
+  0px 0.5px 0.1px rgba(0, 0, 0, 0.002),
+  0px 1.2px 0.2px rgba(0, 0, 0, 0.004),
+  0px 2px 0.5px rgba(0, 0, 0, 0.005),
+  0px 3.1px 0.8px rgba(0, 0, 0, 0.007),
+  0px 4.6px 1.4px rgba(0, 0, 0, 0.008),
+  0px 6.7px 2.4px rgba(0, 0, 0, 0.009),
+  0px 10px 3.9px rgba(0, 0, 0, 0.01),
+  0px 16px 7.1px rgba(0, 0, 0, 0.01),
+  0px 30px 15px rgba(0, 0, 0, 0.01)
+;
+
+        
+    }
+
+    100%{
+        box-shadow:
+  0px 0.1px 0.1px rgba(0, 0, 0, 0.063),
+  0px 0.1px 0.3px rgba(0, 0, 0, 0.119),
+  0px 0.2px 0.7px rgba(0, 0, 0, 0.17),
+  0px 0.3px 1.2px rgba(0, 0, 0, 0.216),
+  0px 0.5px 2px rgba(0, 0, 0, 0.259),
+  0px 0.7px 3.2px rgba(0, 0, 0, 0.296),
+  0px 1px 4.9px rgba(0, 0, 0, 0.326),
+  0px 1.5px 7.9px rgba(0, 0, 0, 0.348),
+  0px 2.3px 13.6px rgba(0, 0, 0, 0.356),
+  0px 4px 27px rgba(0, 0, 0, 0.34)
+;
+
+      ;
+      
+    `;
+const cardShadowReverse = keyframes`
+    0%{
+        box-shadow:
+        0px 0.1px 0.1px rgba(0, 0, 0, 0.063),
+        0px 0.1px 0.3px rgba(0, 0, 0, 0.119),
+        0px 0.2px 0.7px rgba(0, 0, 0, 0.17),
+        0px 0.3px 1.2px rgba(0, 0, 0, 0.216),
+        0px 0.5px 2px rgba(0, 0, 0, 0.259),
+        0px 0.7px 3.2px rgba(0, 0, 0, 0.296),
+        0px 1px 4.9px rgba(0, 0, 0, 0.326),
+        0px 1.5px 7.9px rgba(0, 0, 0, 0.348),
+        0px 2.3px 13.6px rgba(0, 0, 0, 0.356),
+        0px 4px 27px rgba(0, 0, 0, 0.34)
+      ;
+      
+;
+
+    }
+
+    100%{
+        box-shadow:
+        0px 0.5px 0.1px rgba(0, 0, 0, 0.002),
+        0px 1.2px 0.2px rgba(0, 0, 0, 0.004),
+        0px 2px 0.5px rgba(0, 0, 0, 0.005),
+        0px 3.1px 0.8px rgba(0, 0, 0, 0.007),
+        0px 4.6px 1.4px rgba(0, 0, 0, 0.008),
+        0px 6.7px 2.4px rgba(0, 0, 0, 0.009),
+        0px 10px 3.9px rgba(0, 0, 0, 0.01),
+        0px 16px 7.1px rgba(0, 0, 0, 0.01),
+        0px 30px 15px rgba(0, 0, 0, 0.01)
+      ;
+      
     `;
 
 const Wrap = styled.div`
   width: 300px;
-  height: 285px;
+  height: 300px;
   display: flex;
+  margin: 1rem;
 `;
 /* const Cover = styled.span`
   width: 100px;
@@ -102,56 +218,147 @@ const Wrap = styled.div`
   animation-direction: alternate;
 `; */
 
-const ContactDetails = styled.div`
+const MainDetails = styled.div`
   display: flex;
+  justify-content: center;
   flex-direction: column;
+  width: 100%;
+  /* border: 2px solid white; */
 
   .name {
-    font-size: ${({ theme }) => theme.fontSizeInter.m};
     color: ${({ theme }) => theme.color.main9};
     font-size: ${({ theme }) => theme.fontSizeInter.m};
     font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 600;
     letter-spacing: 0.2rem;
+    position: relative;
+    transform: translate(0);
+    width: 100%;
+    top: -20px;
+    left: 0px;
+    animation-name: ${cardTitleReverse};
+    animation-duration: 1s;
+    /* border: 2px solid white; */
+
+    p {
+      text-align: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .phone {
+    color: ${({ theme }) => theme.color.main9};
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.2rem;
+    position: relative;
+    transform: translate(0);
+    width: 100%;
+    top: -140px;
+    left: 110px;
+    font-size: 1rem;
+    transform: translate(-67px, 50%);
+    opacity: 0;
+    animation-name: ${cardPhoneReverse};
+    animation-duration: 0.5s;
+    /* border: 2px solid white; */
   }
 `;
 
-const NewRoundedPhoto = styled(RoundedPhoto)``;
+const NewRoundedPhoto = styled(RoundedPhoto)`
+  img {
+    z-index: 5;
+  }
+`;
 
 const MainContainer = styled.div`
   padding: 30px 0 40px;
   background-color: #001523;
-  border-radius: 10%;
+  border-radius: 10px;
   width: 100%;
   text-align: center;
   overflow: hidden;
   position: relative;
-  border: 2px solid #e76f51;
+  box-shadow: 0px 0.5px 0.1px rgba(0, 0, 0, 0.002), 0px 1.2px 0.2px rgba(0, 0, 0, 0.004),
+    0px 2px 0.5px rgba(0, 0, 0, 0.005), 0px 3.1px 0.8px rgba(0, 0, 0, 0.007),
+    0px 4.6px 1.4px rgba(0, 0, 0, 0.008), 0px 6.7px 2.4px rgba(0, 0, 0, 0.009),
+    0px 10px 3.9px rgba(0, 0, 0, 0.01), 0px 16px 7.1px rgba(0, 0, 0, 0.01),
+    0px 30px 15px rgba(0, 0, 0, 0.01);
+
+  animation-name: ${cardShadowReverse};
+  animation-duration: 0.5s;
+  animation-iteration-count: ease-in-out;
+  animation-fill-mode: forwards;
+  border: 3px solid black;
 
   :hover {
+    box-shadow: 0px 0.1px 0.1px rgba(0, 0, 0, 0.063), 0px 0.1px 0.3px rgba(0, 0, 0, 0.119),
+      0px 0.2px 0.7px rgba(0, 0, 0, 0.17), 0px 0.3px 1.2px rgba(0, 0, 0, 0.216),
+      0px 0.5px 2px rgba(0, 0, 0, 0.259), 0px 0.7px 3.2px rgba(0, 0, 0, 0.296),
+      0px 1px 4.9px rgba(0, 0, 0, 0.326), 0px 1.5px 7.9px rgba(0, 0, 0, 0.348),
+      0px 2.3px 13.6px rgba(0, 0, 0, 0.356), 0px 4px 27px rgba(0, 0, 0, 0.34);
+
+    ::before {
+      content: '';
+      width: 100%;
+      height: 40%;
+      background-color: transparent;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0px;
+      border: 3px solid #eae2b7;
+      border-radius: 10px;
+      transform: scale(1);
+      opacity: 0;
+      transition: all 0.3s linear 0.7s;
+      animation-name: ${cardPhone};
+      animation-duration: 0.5s;
+      animation-iteration-count: linear;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
+      animation-delay: 0.2s;
+    }
+
+    animation-name: ${cardShadow};
+    animation-duration: 0.5s;
+    animation-iteration-count: ease-in-out;
+    animation-fill-mode: forwards;
+
     .picture {
       animation-name: ${moon};
       animation-duration: 0.5s;
-      animation-iteration-count: ease-in-out;
+      animation-iteration-count: linear;
       animation-fill-mode: forwards;
     }
 
     .name {
       animation-name: ${cardTitle};
       animation-duration: 0.5s;
-      animation-iteration-count: easecubic-bezier(0.56, 0.6, 0.58, 0.62);
+      animation-iteration-count: linear;
       animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
+    }
+
+    .phone {
+      animation-name: ${cardPhone};
+      animation-duration: 0.5s;
+      animation-iteration-count: linear;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-in-out;
+      animation-delay: 0.2s;
     }
     ::before {
     }
 
     .picture img {
       box-shadow: 0 0 0 5px #e76f51;
-      transform: scale(0.8);
+      transform: scale(0.7);
     }
 
     .social {
       bottom: 0;
+      opacity: 100%;
     }
   }
 
@@ -168,16 +375,18 @@ const MainContainer = styled.div`
     ::before {
       content: '';
       width: 100%;
-      height: 0;
-      border-radius: 50%;
-      background-color: #e76f51;
+      height: 40%;
+      background-color: transparent;
       position: absolute;
-      bottom: 150%;
+      top: 0;
       right: 0;
-      left: 0;
-      opacity: 1;
-      transform: scale(0.8);
-      transition: all 0.3s linear 0s;
+      left: 0px;
+      border: 3px solid #eae2b7;
+      border-radius: 10px;
+      transform: translate(-67px, 50%);
+      opacity: 0;
+      animation-name: ${cardPhoneReverse};
+      animation-duration: 1s;
     }
 
     ::after {
@@ -186,12 +395,12 @@ const MainContainer = styled.div`
       height: 100%;
       border-radius: 50%;
       background-color: #1f313e;
-      border: 2px solid white;
+      border: 2px solid #eae2b7;
       position: absolute;
       top: 0;
       left: 0;
-      z-index: -1;
-      box-shadow: 0px 0px 50px 1px #e76f51, 0px 0px 50px 60px rgba(0, 0, 0, 0.288);
+      z-index: -2;
+      box-shadow: 0px 0px 50px 1px #e76f51;
       animation-name: ${glow};
       animation-duration: 5s;
       animation-iteration-count: infinite;
@@ -210,12 +419,8 @@ const MainContainer = styled.div`
     }
   }
 
-  .name {
-    position: absolute;
-    top: 150px;
-    left: 90px;
-    animation-name: ${cardTitleReverse};
-    animation-duration: 1s;
+  .phone {
+    opacitiy: 100%;
   }
 
   .title {
@@ -224,42 +429,67 @@ const MainContainer = styled.div`
   }
 
   .social {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    opacity: 60%;
     width: 100%;
-    padding: 0;
+    padding: 0.7rem 0 0 0.7rem;
     margin: 0;
-    height: 150px;
-    background-color: #e76f51;
+    height: 170px;
+    background-color: #eae2b7;
     position: absolute;
-    bottom: -100px;
+    bottom: -110px;
     left: 0;
     transition: all 0.5s ease 0.5ms;
-    border-top: 2px solid #2a9d8f;
+    border-radius: 10px 10px 0 0;
+    border-left: 3px solid #001523;
+    border-right: 3px solid #001523;
+    border-top: 3px solid #001523;
+    background-clip: padding-box;
 
-    li {
-      display: inline-block;
+    .socialInfo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
 
-      a {
-        /* Currently no links available */
-        display: block;
-        padding: 10px;
-        font-size: 17px;
-        color: white;
-        transition: all 0.3s ease 0s;
-        text-decoration: none;
+      .details {
+        letter-spacing: 0.1rem;
+        display: flex;
+        width: 100%;
+        align-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
 
-        a:hover {
-          color: #1369ce;
-          background-color: #f7f5ec;
+        & > :nth-child(1) {
+          font-weight: 600;
+          font-family: 'Inter';
+          font-size: ${({ theme }) => theme.fontSizeInter.s};
+          color: ${({ theme }) => theme.color.main2};
+          line-height: 1rem;
+          text-shadow: 0px 1px 2px white;
+          padding: 0 0 0.1rem 0;
+        }
+
+        & > :nth-child(2) {
+          color: ${({ theme }) => theme.color.main2};
+          text-align: left;
+          font-family: 'Open Sans';
+          font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
         }
       }
     }
   }
+
+  .threeDots {
+    position: absolute;
+    padding: 0.5rem 1rem 0 0;
+    top: 0;
+    right: 0;
+    z-index: 5;
+  }
 `;
 
 interface client {
+  client?: boolean;
   clientData:
     | {
         _id?: string;
@@ -296,8 +526,10 @@ interface client {
     | any;
 }
 
-function CardProfile({ clientData, projectData }: client) {
-  const findProjectFromClient = () => {
+function CardProfile({ clientData, projectData, client }: client) {
+  console.log('This is client Data', clientData);
+  console.log('Tjis is Projects Data', projectData);
+  /* const findProjectFromClient = () => {
     const getAllProjectsFromOneClient = clientData.projects;
     const getAllProjectsFromFreelancer = projectData;
     const getProjectId = getAllProjectsFromFreelancer.map((item: any) => item._id);
@@ -314,34 +546,97 @@ function CardProfile({ clientData, projectData }: client) {
     console.log(projectsFromSpecificClient);
   };
 
-  findProjectFromClient();
-
+  findProjectFromClient(); */
   return (
     <Wrap>
-      <MainContainer>
-        <div className="picture">
-          {/* <Cover /> */}
-          <NewRoundedPhoto
-            img={clientData.avatar}
-            width="110px"
-            height="110px"
-            alt="face"
-            outline="3px solid #e76f51"
-          />
-        </div>
-        <ContactDetails>
-          <div className="name">{clientData.name}</div>
-          <div className="details">{clientData.email}</div>
-          <div className="details">{clientData.phone}</div>
-        </ContactDetails>
-        <ul className="social">
-          <li>
-            <div>{clientData.email}</div>
-          </li>
-        </ul>
-      </MainContainer>
+      {client ? (
+        <MainContainer>
+          <div className="threeDots">
+            <IconClickable icon={<BsThreeDots fontSize={40} color="#eae2b7" />}>
+              <Button whiteMenu text="Add New Service" width="200px" fontSize="1rem" />
+            </IconClickable>
+          </div>
+          <div className="picture">
+            {/* <Cover /> */}
+            <NewRoundedPhoto
+              img={clientData.avatar}
+              width="110px"
+              height="110px"
+              alt="face"
+              outline="3px solid #e76f51"
+            />
+          </div>
+          <MainDetails>
+            <div className="name">
+              <p>{clientData.name}</p>
+            </div>
+            <div className="phone">
+              <div>+49 123 654 78</div>
+            </div>
+          </MainDetails>
+          <div className="social">
+            <div className="socialInfo">
+              <div className="details">
+                <p>Email:</p>
+                <div>{projectData.companyName}</div>
+              </div>
+
+              <div className="details">
+                <p>Projects:</p>
+                <div>5</div>
+              </div>
+            </div>
+          </div>
+        </MainContainer>
+      ) : (
+        <MainContainer>
+          <div className="threeDots">
+            <IconClickable icon={<BsThreeDots fontSize={40} color="#eae2b7" />}>
+              <Button whiteMenu text="Add New Service" width="200px" fontSize="1rem" />
+            </IconClickable>
+          </div>
+          <div className="picture">
+            {/* <Cover /> */}
+            <NewRoundedPhoto
+              img={projectData.avatar}
+              width="110px"
+              height="110px"
+              alt="face"
+              outline="3px solid #e76f51"
+            />
+          </div>
+          <MainDetails>
+            <div className="name">
+              <p>{projectData.clientName}</p>
+            </div>
+            <div className="phone">
+              <div>+49 123 654 78</div>
+            </div>
+          </MainDetails>
+          <div className="social">
+            <div className="socialInfo">
+              <div className="details">
+                <p>Company:</p>
+                <div>{projectData.phone}</div>
+              </div>
+              <div className="details">
+                <p>Start:</p>
+                <div>{projectData.startDate}</div>
+              </div>
+              <div className="details">
+                <p>Due:</p>
+                <div>{projectData.dueDate}</div>
+              </div>
+            </div>
+          </div>
+        </MainContainer>
+      )}
     </Wrap>
   );
 }
+
+CardProfile.defaultProps = {
+  client: false
+};
 
 export default CardProfile;

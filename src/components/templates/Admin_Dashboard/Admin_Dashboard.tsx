@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
 /* import CardClient from '../../molecules/CardClient/CardClient';
- */ import CardProject from '../../molecules/CardProject/CardProject';
+ */ /* import CardProject from '../../molecules/CardProject/CardProject'; */
 import { backgroundColorSchema, optionsDoughnut } from '../../../helpers/chartSettings';
 import Chart from '../../molecules/Chart/Chart';
 import { Context } from '../../../providers/GeneralProvider';
@@ -185,7 +185,7 @@ function AdminDashboard() {
             <ContainerClients>
               {clients.length ? (
                 clients.map((item: any) => (
-                  <CardProfile key={item._id} clientData={item} projectData={projects} />
+                  <CardProfile client key={item._id} clientData={item} projectData={projects} />
                 ))
               ) : (
                 <NoItemsFound text="Clients" />
@@ -196,7 +196,9 @@ function AdminDashboard() {
             <TitleWithLines text="Recent Projects" />
             <ContainerProjects>
               {projects.length ? (
-                projects.map((item: any) => <CardProject key={item._id} projectData={item} />)
+                projects.map((item: any) => (
+                  <CardProfile key={item._id} projectData={item} clientData={clients} />
+                ))
               ) : (
                 <NoItemsFound text="Projects" />
               )}

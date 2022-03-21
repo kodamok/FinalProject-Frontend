@@ -31,6 +31,7 @@ import { useAuth } from '../hooks/useAuth';
 import useError from '../hooks/useError';
 import FAQs from '../components/molecules/FAQs/FAQs';
 import EditProject from '../components/organisms/EditProject/EditProject';
+import Page404 from '../components/templates/Page404/Page404';
 
 function App(): JSX.Element {
   const { userData, setMessages, setUserData, setClientsGlobal } = useContext(Context);
@@ -49,17 +50,17 @@ function App(): JSX.Element {
         setMessageDisplayed(false);
       }
       // If token exist check whether the token is close to expiration ( < 30s )
-      if (userData.token && !messageDisplay) {
+      if (userData.token) {
         interval = setInterval(() => {
           // If yes then Display Message About It
-          if (+userData.exp - Date.now() < 30000) {
+          if (+userData.exp - Date.now() < 30000 && !messageDisplay) {
             handleError('For Your Safety We Will Logout You in a 30 seconds :)');
             setMessageDisplayed(true);
           }
           // If Token expired Clear UserData and Logout User/Admin
           if (Date.now() > userData.exp) {
             handleLogout();
-            handleError('We Logged Out You For Your Security :)');
+            handleError('We Logged Out You For Your Security :)', true);
             clearInterval(interval);
             setMessageDisplayed(false);
           }
@@ -138,8 +139,7 @@ function App(): JSX.Element {
 
           events.onmessage = (event) => {
             const parsedData = JSON.parse(event.data);
-            // console.log('Parsed', parsedData);
-            // console.log(parsedData.text);
+            console.log('Parsed', parsedData);
             if (parsedData.text === 'stopSSEEventsNow') {
               events.close();
               console.log('I closed the connection Here');
@@ -211,52 +211,46 @@ function App(): JSX.Element {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <MainContainerApp>
-        {token && role === 'Freelancer' ? (
-          <Routes>
-            <Route path="/" element={<AdminDashboard />} />
-            <Route path="/clients" element={<ClientsOrProjects />} />
-            <Route path="/client/:clientId" element={<ClientDetails />} />
-            <Route path="/project/:projectId" element={<ProjectDetail />} />
-            <Route path="/editProject/:projectId" element={<EditProject />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/statistics" element={<Statistics />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/newClient" element={<NewClient />} />
-            <Route path="/newProject/:clientId" element={<NewProject />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/faqs" element={<FAQs />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        ) : token && role === 'Client' ? (
-          <Routes>
-            <Route path="/" element={<UserDashboard />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/project/:projectId" element={<ProjectDetail />} />
-            <Route path="/client/:clientId" element={<ClientDetails />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/faqs" element={<FAQs />} />
-          </Routes>
-        ) : (
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/verifyEmail/:token" element={<VerifyEmail />} />
-            <Route path="/forgotPassword/" element={<ForgotPassword />} />
-            <Route path="/forgotPassword/:token" element={<ResetPassword />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/faqs" element={<FAQs />} />
-          </Routes>
-        )}
+        <Routes>
+          {token && role === 'Freelancer' ? (
+            <>
+              <Route path="/" element={<AdminDashboard />} />
+              <Route path="/clients" element={<ClientsOrProjects />} />
+              <Route path="/client/:clientId" element={<ClientDetails />} />
+              <Route path="/project/:projectId" element={<ProjectDetail />} />
+              <Route path="/editProject/:projectId" element={<EditProject />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/statistics" element={<Statistics />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/newClient" element={<NewClient />} />
+              <Route path="/newProject/:clientId" element={<NewProject />} />
+            </>
+          ) : token && role === 'Client' ? (
+            <>
+              <Route path="/" element={<UserDashboard />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/project/:projectId" element={<ProjectDetail />} />
+              <Route path="/client/:clientId" element={<ClientDetails />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/settings" element={<Settings />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/verifyEmail/:token" element={<VerifyEmail />} />
+              <Route path="/forgotPassword/" element={<ForgotPassword />} />
+              <Route path="/forgotPassword/:token" element={<ResetPassword />} />
+            </>
+          )}
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="/faq" element={<FAQs />} />
+          <Route path="/*" element={<Page404 />} />
+        </Routes>
       </MainContainerApp>
     </ThemeProvider>
   );

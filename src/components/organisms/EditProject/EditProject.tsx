@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { CgPlayListAdd, CgRemove } from 'react-icons/cg';
 import { BsImage } from 'react-icons/bs';
 import { AiOutlineFileText } from 'react-icons/ai';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdFullscreen } from 'react-icons/md';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useForm from '../../../hooks/useForm';
 import { Context } from '../../../providers/GeneralProvider';
@@ -15,7 +15,7 @@ import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 
 const Container = styled.form`
-  max-width: 800px;
+  max-width: 950px;
   margin: 0 auto;
   padding: 2rem 0;
   > svg:hover {
@@ -178,9 +178,11 @@ const ContainerIframesFiles = styled.div`
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+  margin-bottom: 2rem;
   height: auto;
   > div {
     position: relative;
+    border: 1px solid black;
   }
   ${({ theme }) => theme.up(theme.breakpoint.sm)} {
     flex-direction: row;
@@ -189,7 +191,6 @@ const ContainerIframesFiles = styled.div`
 `;
 
 const ContainerPreviewImg = styled.div`
-  margin-top: 2rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -208,6 +209,17 @@ const ContainerPreviewImg = styled.div`
   }
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     flex-direction: row;
+  }
+`;
+
+const AOpen = styled.a`
+  position: absolute;
+  top: 0;
+  right: 16px;
+  color: black;
+  transition: 0.3s;
+  &:hover {
+    transform: scale(1.2);
   }
 `;
 
@@ -465,12 +477,12 @@ function EditProject() {
                   {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
                   <iframe
                     // src={`https://drive.google.com/viewerng/viewer?url=${item.url}&embedded=true`}
-                    src={`https://drive.google.com/gview?url=${item.url}&embedded=true`}
+                    // src={`https://drive.google.com/gview?url=${item.url}&embedded=true`}
                     // src={`https://docs.google.com/gview?url=${item.url}&embedded=true`}
-                    // src={`${item.url}`}
+                    src={`${item.url}`}
                     height="100%"
                     width="100%"
-                    loading="eager"
+                    loading="lazy"
                     frameBorder="0"
                     style={{ border: 0 }}
                   />
@@ -481,7 +493,10 @@ function EditProject() {
                   {/*     <a href={item.url}>Download the PDF</a>. */}
                   {/*   </p> */}
                   {/* </object> */}
-                  <DeleteIcon fontSize={22} onClick={(e: any) => handleRemoveFile(e, i)} />
+                  <AOpen href={item.url} target="_blank" rel="noreferrer">
+                    <MdFullscreen fontSize={32} />
+                  </AOpen>
+                  <DeleteIcon fontSize={24} onClick={(e: any) => handleRemoveFile(e, i)} />
                 </div>
               ))}
           </ContainerIframesFiles>

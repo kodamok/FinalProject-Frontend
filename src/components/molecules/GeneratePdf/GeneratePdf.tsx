@@ -5,6 +5,24 @@ import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
 
 function GeneratePdf() {
+  const dataClient = {
+    name: 'John',
+    companyName: 'Super Company',
+    email: 'company@gmail.com',
+    addressCity: undefined,
+    addressStreet: undefined
+  };
+  const servicesData = [
+    {
+      title: undefined || 'Website Design',
+      price: undefined || '300.00'
+    },
+    {
+      title: undefined || 'Hosting (3 months)',
+      price: undefined || '75.00'
+    }
+  ];
+
   const htmlToDisplay = `<!DOCTYPE html>
 <html>
 	<head>
@@ -114,13 +132,12 @@ function GeneratePdf() {
 						<table>
 							<tr>
 								<td class="title">
-									<img src="https://www.sparksuite.com/images/logo.png" style="width: 100%; max-width: 300px" />
+								  <img src="https://res.cloudinary.com/freelancerapp-dci/image/upload/v1647761192/AlpacaFolder/NS1blk_d0cnuq.png" style="width: 100%; max-width: 300px" />
 								</td>
-
 								<td>
-									Invoice #: 123<br />
-									Created: January 1, 2015<br />
-									Due: February 1, 2015
+									Invoice #: ${Date.now()}<br />
+									Created: ${new Date().toLocaleDateString()}<br />
+									Due: ${new Date(Date.now() + 1000 * 60 * 60 * 24 * 31).toLocaleDateString()}
 								</td>
 							</tr>
 						</table>
@@ -132,15 +149,15 @@ function GeneratePdf() {
 						<table>
 							<tr>
 								<td>
-									Sparksuite, Inc.<br />
-									12345 Sunny Road<br />
+									Nomad Studio<br />
+									12345 Sunny Road<br /> 
 									Sunnyville, CA 12345
 								</td>
 
 								<td>
-									Acme Corp.<br />
-									John Doe<br />
-									john@example.com
+									${dataClient.companyName || 'Sparksuite, Inc.'}<br />
+									${dataClient.addressCity || '32453 Chicago'}<br /> 
+									${dataClient.addressStreet || 'Moon Street, US 32453'}
 								</td>
 							</tr>
 						</table>
@@ -150,13 +167,13 @@ function GeneratePdf() {
 				<tr class="heading">
 					<td>Payment Method</td>
 
-					<td>Check #</td>
+					<td>Type #</td>
 				</tr>
 
 				<tr class="details">
-					<td>Check</td>
+					<td>Transfer</td>
 
-					<td>1000</td>
+					<td>Money</td>
 				</tr>
 
 				<tr class="heading">
@@ -164,6 +181,13 @@ function GeneratePdf() {
 
 					<td>Price</td>
 				</tr>
+				
+				${servicesData.map((item) => {
+          return `<tr class="item">
+            <td>${item.title}</td>
+            <td>$${item.price}</td>
+          </tr>`;
+        })}
 
 				<tr class="item">
 					<td>Website design</td>
@@ -186,7 +210,7 @@ function GeneratePdf() {
 				<tr class="total">
 					<td></td>
 
-					<td>Total: $385.00</td>
+					<td>Total: $${servicesData.reduce((a: number, b: any) => a + +b.price, 0)}</td>
 				</tr>
 			</table>
 		</div>

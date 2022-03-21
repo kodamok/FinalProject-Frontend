@@ -198,6 +198,12 @@ const ButtonLogoutMobilAdmin = styled.div`
   }
 `;
 
+const ContainerSearchBar = styled.div`
+  // ${({ theme }) => theme.down(theme.breakpoint.s)} {
+  //   width: 120px;
+  // }
+`;
+
 const data = [
   {
     path: '/aboutUs',
@@ -359,7 +365,6 @@ function Header() {
               <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
             </StyledLogoSlogan>
             {/* <StyledInput type="text" placeholder="Search" /> */}
-            <SearchBar />
             <ServicesAndLanguageClient>
               <StyledMenuDesktopClient>
                 {dataHeaderClient.map((item) => (
@@ -374,7 +379,7 @@ function Header() {
                   <Button
                     dropMenu
                     color="white"
-                    text="Statistics"
+                    text="Settings"
                     width="100px"
                     onClick={() => navigateTo('/settings')}
                   />
@@ -398,50 +403,56 @@ function Header() {
     return (
       <div>
         {!desktopVersion ? (
-          <Container isOpenMenu={isOpenMenu}>
-            {!isOpenMenu && (
-              <Flex>
-                <div style={{ position: 'relative' }}>
-                  <NavLink path="/" image={NSLogo} alt="Logo" />
-                </div>
-                <div>
-                  {!isOpenMenu && (
-                    <GiHamburgerMenu fontSize={48} cursor="pointer" onClick={handleOpenMenu} />
-                  )}
-                </div>
-              </Flex>
-            )}
-            {isOpenMenu && (
-              <>
-                <FlexOpen>
+          <div>
+            <Container isOpenMenu={isOpenMenu}>
+              {!isOpenMenu && (
+                <Flex>
                   <div style={{ position: 'relative' }}>
                     <NavLink path="/" image={NSLogo} alt="Logo" />
                   </div>
+                  {/* Do we need searchBar here? */}
                   <div>
-                    <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
+                    {!isOpenMenu && (
+                      <GiHamburgerMenu fontSize={48} cursor="pointer" onClick={handleOpenMenu} />
+                    )}
                   </div>
-                </FlexOpen>
-                <StyledMenu>
-                  {dataHeaderAdmin.map((item) => (
-                    <NavLink
-                      key={item.id}
-                      path={item.path}
-                      text={item.text}
-                      onClick={handleOpenMenu}
-                    />
-                  ))}
-                  <NavLink path="/newClient" text="New Customer" onClick={handleOpenMenu} />
-                  <NavLink path="/settings" text="Settings" onClick={handleOpenMenu} />
-                  <NavLink path="/statistics" text="Statistics" onClick={handleOpenMenu} />
-                  <ButtonLogoutMobilAdmin onClick={handleLogout}>Logout</ButtonLogoutMobilAdmin>
-                </StyledMenu>
-                <StyledLogoSlogan>
-                  <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
-                </StyledLogoSlogan>
-                <Contact />
-              </>
-            )}
-          </Container>
+                </Flex>
+              )}
+              {isOpenMenu && (
+                <>
+                  <FlexOpen>
+                    <div style={{ position: 'relative' }}>
+                      <NavLink path="/" image={NSLogo} alt="Logo" />
+                    </div>
+                    <div>
+                      <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
+                    </div>
+                  </FlexOpen>
+                  <StyledMenu>
+                    {dataHeaderAdmin.map((item) => (
+                      <NavLink
+                        key={item.id}
+                        path={item.path}
+                        text={item.text}
+                        onClick={handleOpenMenu}
+                      />
+                    ))}
+                    <NavLink path="/newClient" text="New Customer" onClick={handleOpenMenu} />
+                    <NavLink path="/settings" text="Settings" onClick={handleOpenMenu} />
+                    <NavLink path="/statistics" text="Statistics" onClick={handleOpenMenu} />
+                    <ButtonLogoutMobilAdmin onClick={handleLogout}>Logout</ButtonLogoutMobilAdmin>
+                  </StyledMenu>
+                  <StyledLogoSlogan>
+                    <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
+                  </StyledLogoSlogan>
+                  <Contact />
+                </>
+              )}
+            </Container>
+            <ContainerSearchBar>
+              <SearchBar top="36px" />
+            </ContainerSearchBar>
+          </div>
         ) : (
           // Freelancer Desktop Version ----------------------------------------------
           <ContainerDesktopAdmin>

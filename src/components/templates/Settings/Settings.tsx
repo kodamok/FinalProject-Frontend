@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useContext, useEffect, useState } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
@@ -178,17 +178,17 @@ function Settings() {
   // console.groupEnd();
   // }, []);
 
-  useEffect(() => {
-    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // webkitSpeechRecognition for Chrome and SpeechRecognition for FF
-    const recognition = new window.SpeechRecognition();
-    recognition.onresult = (event: any) => {
-      // SpeechRecognitionEvent type
-      const speechToText = event.results[0][0].transcript;
-      console.log(speechToText);
-      console.log('yup');
-    };
-    recognition.start();
-  }, []);
+  // useEffect(() => {
+  //   window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // webkitSpeechRecognition for Chrome and SpeechRecognition for FF
+  //   const recognition = new window.SpeechRecognition();
+  //   recognition.onresult = (event: any) => {
+  //     // SpeechRecognitionEvent type
+  //     const speechToText = event.results[0][0].transcript;
+  //     console.log(speechToText);
+  //     console.log('yup');
+  //   };
+  //   recognition.start();
+  // }, []);
 
   return (
     <FormContainer onSubmit={handleSubmitUserDataChange}>

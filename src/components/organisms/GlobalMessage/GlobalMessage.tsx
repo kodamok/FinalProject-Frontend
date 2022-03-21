@@ -303,7 +303,6 @@ function GlobalMessage() {
         const resJSON = await res.json();
         if (res.status === 201) {
           resetForm();
-          handleError(resJSON.message, true);
         } else {
           handleError(resJSON.message);
         }

@@ -6,6 +6,7 @@ import CardStatistic from '../../molecules/CardStatistic/CardStatistic';
 import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
+import PageHead from '../../molecules/PageHead/PageHead';
 
 const Container = styled.div`
   padding: 1rem;
@@ -73,11 +74,21 @@ function Statistics() {
     ]
   };
 
+  const pageHeadInfo = [
+    {
+      id: 1,
+      titleOfPage: 'Statistics',
+      threeDotButton: {
+        button1: 'No Action',
+        onClickEvent: 'undefined'
+      }
+    }
+  ];
   if (isLoading) return <LoadingSpin />;
   return (
     <Container>
-      <h4>Statistics</h4>
-      {statistics && statistics.clients && <Chart data={dataStats} options={optionsDoughnut} />}
+      <PageHead pageHeadInfo={pageHeadInfo} />
+      {statistics && statistics.clients > 0 && <Chart data={dataStats} options={optionsDoughnut} />}
       <ContainerCardStatistics>
         {Object.entries(statistics).map((item: [string, any], i) => (
           // eslint-disable-next-line react/no-array-index-key

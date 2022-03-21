@@ -28,7 +28,7 @@ export const useAuth = () => {
   };
 
   const handleLogout = async () => {
-    await sendMessage();
+    sendMessage();
 
     setUserData({
       userId: '',

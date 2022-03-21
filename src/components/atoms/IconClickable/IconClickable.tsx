@@ -16,8 +16,7 @@ const ContainerChildrens = styled.div`
   top: 20px;
   right: 20px;
   background: white;
-  border-radius: 0.6rem;
-  border: 1px solid black;
+  border: 1px solid #eae2b7;
   z-index: 1;
 `;
 

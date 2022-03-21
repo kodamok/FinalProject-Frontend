@@ -1,10 +1,9 @@
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import Button from '../../atoms/Button/Button';
 import { RedSpan } from '../../atoms/RedSpan/RedSpan';
-import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 
 import useForm from '../../../hooks/useForm';
@@ -48,7 +47,7 @@ const FormContainer = styled.form`
   display: block;
   margin: 0px auto;
   padding: 2rem;
-  mix-width: 250px;
+  min-width: 250px;
   max-width: 600px;
   flex-grow: 2;
   border: solid 3px black;
@@ -64,19 +63,18 @@ const FormContainer = styled.form`
 `;
 
 function Contact(): JSX.Element {
-  const { setUserData } = useContext(Context);
   interface ContactMessage {
-    fullName: string;
+    name: string;
     email: string;
-    textArea: string;
+    message: string;
   }
 
   const navigate = useNavigate();
 
   const initialValue: ContactMessage = {
-    fullName: '',
+    name: '',
     email: '',
-    textArea: ''
+    message: ''
   };
 
   const { handleChange, inputs } = useForm(initialValue);
@@ -84,27 +82,24 @@ function Contact(): JSX.Element {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    /* console.log('those are the inputs', inputs); */
 
     const sendMessage = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND}/message`, {
+        const res = await fetch(`${process.env.REACT_APP_BACKEND}/contactForm`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
-            // Authorization: 'Bearer ' + user
           },
           body: JSON.stringify(inputs)
         });
         const resJSON = await res.json();
-        if (res.status === 200) {
-          setUserData(resJSON);
+        if (res.status >= 200 && res.status < 300) {
           navigate('/');
+          handleError('You sent message correctly', true);
+        } else {
+          handleError(resJSON.message);
         }
-
-        handleError(resJSON.message, res.status === 200);
       } catch (error: unknown) {
-        /* console.log('FETCHING ERROR', error); */
         handleError();
       }
     };
@@ -121,12 +116,12 @@ function Contact(): JSX.Element {
       <FormContainer onSubmit={handleSubmit}>
         {' '}
         <InputWithLabel
-          name="fullName"
+          name="name"
           label="Full Name"
-          type="input"
           placeholder="Full Name"
           color="#ffffff"
           onChange={handleChange}
+          value={inputs.name}
           /* value */ required
         />
         <InputWithLabel
@@ -136,18 +131,20 @@ function Contact(): JSX.Element {
           placeholder="E-Mail Address"
           color="white"
           onChange={handleChange}
+          value={inputs.email}
           /* value */ required
         />
         <InputWithLabel
           TextAreaWithLabel
           label="Tell Us Whatever you want..."
-          name="textArea"
+          name="message"
           placeholder="...But be nice :)"
           rows={10}
           maxlength={120}
           color="white"
           required
           onChange={handleChange}
+          value={inputs.message}
         />
         <Button
           text="Send Form"

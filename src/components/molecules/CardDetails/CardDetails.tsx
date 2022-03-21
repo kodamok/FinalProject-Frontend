@@ -29,7 +29,7 @@ const Container = styled.div`
 const ContainerThreeDots = styled.div`
   position: relative;
   margin: auto;
-  left: 9rem;
+  left: 8rem;
 `;
 const Details = styled.div`
   display: flex;
@@ -168,7 +168,7 @@ function CardDetails({ projectData }: Project) {
             {/* the problem is of the time of rendering */}
             {projectData && (
               <Details>
-                <h3>Nomad Studio</h3>
+                <h4>Nomad Studio</h4>
                 <RoundedPhoto
                   img={projectData?.avatar}
                   alt="avatar"
@@ -178,11 +178,11 @@ function CardDetails({ projectData }: Project) {
                 />
                 <DetailsElement>
                   <span>Staring Date</span>
-                  <p>{projectData?.startDate.substring(0, 15)}</p>
+                  <p>{projectData?.startDate?.substring(0, 15)}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Due Date</span>
-                  <p>{projectData?.updatedAt.substring(0, 10)}</p>
+                  <p>{projectData?.updatedAt?.substring(0, 10)}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Company Name</span>
@@ -204,14 +204,7 @@ function CardDetails({ projectData }: Project) {
             )}
           </Container>
           <DownloadInvoiceButton>
-            <Button
-              text="Download Invoice"
-              height="40px"
-              width="180px"
-              fontSize="13px"
-              padding="0.5rem 1rem"
-              onClick={GeneratePdf}
-            />
+            <GeneratePdf />
           </DownloadInvoiceButton>
         </div>
       ) : (
@@ -235,11 +228,11 @@ function CardDetails({ projectData }: Project) {
                       />
                       <DetailsElement>
                         <span>Staring</span>
-                        <p>{projectData?.startDate.substring(0, 15)}</p>
+                        <p>{projectData?.startDate?.substring(0, 15)}</p>
                       </DetailsElement>
                       <DetailsElement>
                         <span>Due Date</span>
-                        <p>{projectData?.updatedAt.substring(0, 10)}</p>
+                        <p>{projectData?.updatedAt?.substring(0, 10)}</p>
                       </DetailsElement>
                     </TitleAndPictureDesktop>
                     <ContainerDetailsElement>

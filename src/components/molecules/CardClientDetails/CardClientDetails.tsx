@@ -31,7 +31,7 @@ const Container = styled.div`
 const ContainerThreeDots = styled.div`
   position: relative;
   margin: auto;
-  left: 9rem;
+  left: 8rem;
 `;
 const Details = styled.div`
   display: flex;
@@ -159,7 +159,7 @@ function CardClientDetails({ clientData }: Client) {
             {/* the problem is of the time of rendering */}
             {clientData && (
               <Details>
-                <h3>Nomad Studio</h3>
+                <h4>Nomad Studio</h4>
                 <RoundedPhoto
                   img={clientData?.avatar}
                   alt="avatar"
@@ -167,7 +167,7 @@ function CardClientDetails({ clientData }: Client) {
                   width="12rem"
                   height="12rem"
                 />
-                <h4>Contact Information</h4>
+                <h5>Contact Information</h5>
                 <DetailsElement>
                   <span>Name</span>
                   <p>{clientData?.name}</p>
@@ -184,7 +184,7 @@ function CardClientDetails({ clientData }: Client) {
                   <span>Phone number</span>
                   <p>{clientData?.name}</p>
                 </DetailsElement>
-                <h4>Billing Information</h4>
+                <h5>Billing Information</h5>
                 <DetailsElement>
                   <span>Id</span>
                   <p>{clientData?.role}</p>

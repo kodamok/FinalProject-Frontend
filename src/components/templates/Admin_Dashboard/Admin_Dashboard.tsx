@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
 /* import CardClient from '../../molecules/CardClient/CardClient';
  */ /* import CardProject from '../../molecules/CardProject/CardProject'; */
@@ -10,13 +11,14 @@ import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 import CardProfile from '../../molecules/CardProfile/CardProfile';
+import PageHead from '../../molecules/PageHead/PageHead';
 
 const Container = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  h3 {
+  /* h3 {
     padding: 1rem 0;
     margin: 0;
   }
@@ -26,7 +28,7 @@ const Container = styled.div`
   h3,
   h4 {
     text-align: center;
-  }
+  } */
 `;
 
 const ContainerClients = styled.div`
@@ -34,7 +36,6 @@ const ContainerClients = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
 `;
 
 const ContainerProjects = styled.div`
@@ -56,8 +57,11 @@ const Stats = styled.div`
   }
 `;
 const ContainerDataAndStats = styled.div`
+  /* border: 2px solid red; */
   display: flex;
   flex-direction: column;
+  align-content: center;
+  width: 100%;
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     display: flex;
     width: 100%;
@@ -74,6 +78,7 @@ function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const { userData } = useContext(Context);
   const { handleError } = useError();
+  const navigate = useNavigate();
 
   const fetchClients = async () => {
     try {
@@ -173,38 +178,50 @@ function AdminDashboard() {
     ]
   };
 
+  const handleNavigateToCreateNewClient = () => {
+    navigate('/newClient');
+  };
+
+  const PageHeadInfo = [
+    {
+      id: 1,
+      titleOfPage: 'Dashboard',
+      threeDotButton: {
+        button1: 'New Project',
+        onClickEvent: handleNavigateToCreateNewClient
+      }
+    }
+  ];
+
   if (isLoading) return <LoadingSpin />;
 
   return (
     <Container>
-      <h3>Dashboard</h3>
+      <PageHead pageHeadInfo={PageHeadInfo} />
       <ContainerDataAndStats>
         <Data>
-          <div>
-            <TitleWithLines text="Recent Clients" />
-            <ContainerClients>
-              {clients.length ? (
-                clients.map((item: any) => (
-                  <CardProfile client key={item._id} clientData={item} projectData={projects} />
-                ))
-              ) : (
-                <NoItemsFound text="Clients" />
-              )}
-            </ContainerClients>
-          </div>
-          <div>
-            <TitleWithLines text="Recent Projects" />
-            <ContainerProjects>
-              {projects.length ? (
-                projects.map((item: any) => (
-                  <CardProfile key={item._id} projectData={item} clientData={clients} />
-                ))
-              ) : (
-                <NoItemsFound text="Projects" />
-              )}
-            </ContainerProjects>
-          </div>
+          <ContainerClients>
+            {clients.length ? (
+              clients.map((item: any) => (
+                <CardProfile client key={item._id} clientData={item} projectData={projects} />
+              ))
+            ) : (
+              <NoItemsFound text="Clients" />
+            )}
+          </ContainerClients>
+
+          <TitleWithLines text="Recent Projects" />
+          <ContainerProjects>
+            {projects.length ? (
+              projects.map((item: any) => (
+                <CardProfile key={item._id} projectData={item} clientData={clients} />
+              ))
+            ) : (
+              <NoItemsFound text="Projects" />
+            )}
+          </ContainerProjects>
         </Data>
+
         <Stats>
           <TitleWithLines text="Statistics" />
           {projects.length || clients.length ? (

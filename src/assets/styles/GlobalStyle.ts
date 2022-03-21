@@ -19,7 +19,8 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;} /*16px*/
 
   body {
-    background: white;
+    background: #eae2b9;
+    opacity: 96%;
     font-family: 'Open Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
     line-height: 1.75;

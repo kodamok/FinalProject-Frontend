@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import Button from '../../atoms/Button/Button';
+import { Context } from '../../../providers/GeneralProvider';
 
 const glow = keyframes` 
     0%{
@@ -202,21 +204,6 @@ const Wrap = styled.div`
   display: flex;
   margin: 1rem;
 `;
-/* const Cover = styled.span`
-  width: 100px;
-  height: 100px;
-  background-color: ${({ theme }) => theme.color.main8};
-  position: absolute;
-  top: -30px;
-  left: -70px;
-  border: 5px solid black;
-  border-radius: 50%;
-  box-shadow: 0px 0px 50px 1px #e76f51, 0px 0px 50px 60px rgba(0, 0, 0, 0.288);
-  box-shadow: 0px 0px 50px 1px #e76f51, 0px 0px 50px 60px rgba(0, 0, 0, 0.288);
-  z-index: 10;
-  animation: ${Glow} 10s linear infinite ease-in-out;
-  animation-direction: alternate;
-`; */
 
 const MainDetails = styled.div`
   display: flex;
@@ -490,6 +477,7 @@ const MainContainer = styled.div`
 
 interface client {
   client?: boolean;
+
   clientData:
     | {
         _id?: string;
@@ -527,33 +515,86 @@ interface client {
 }
 
 function CardProfile({ clientData, projectData, client }: client) {
-  console.log('This is client Data', clientData);
-  console.log('Tjis is Projects Data', projectData);
-  /* const findProjectFromClient = () => {
-    const getAllProjectsFromOneClient = clientData.projects;
-    const getAllProjectsFromFreelancer = projectData;
-    const getProjectId = getAllProjectsFromFreelancer.map((item: any) => item._id);
-    console.log('this are projectData from the freelancer', getAllProjectsFromFreelancer);
-    console.log(getAllProjectsFromOneClient);
-    console.log(getProjectId);
-    let projectsFromSpecificClient;
+  const navigate = useNavigate();
+  const { setOpenChatBoxWithThisUser, userData } = useContext(Context);
 
-    for (let i = 0; i < getAllProjectsFromOneClient.length; i++) {
-      projectsFromSpecificClient = getProjectId.filter(
-        (item: any) => item === getAllProjectsFromOneClient[i]
-      );
-    }
-    console.log(projectsFromSpecificClient);
+  // Navigation Functions
+  const handleNavigateToProjectDetails = () => {
+    navigate(`/project/${projectData._id}`);
   };
 
-  findProjectFromClient(); */
+  const handleNewProjectClick = () => {
+    navigate(`/newProject/${clientData._id}`);
+  };
+
+  const handleNavigateToClientDetails = () => {
+    navigate(`/client/${clientData._id}`);
+  };
+
+  const handleNavigateToChatBoxMessage = () => {
+    if (client) {
+      setOpenChatBoxWithThisUser(clientData._id);
+    }
+    if (!client && userData.role === 'Client') {
+      setOpenChatBoxWithThisUser(projectData.ownerFreelancer);
+    }
+    if (!client && userData.role === 'Freelancer') {
+      setOpenChatBoxWithThisUser(projectData.ownerUser);
+    }
+  };
+
+  // Drop Down Menu CLIENT
+
+  const dropMenuClient = [
+    {
+      id: 1,
+      text: 'New Project',
+      onClickEvent: handleNewProjectClick
+    },
+    {
+      id: 2,
+      text: 'View Client',
+      onClickEvent: handleNavigateToClientDetails
+    },
+    {
+      id: 3,
+      text: 'Send Message',
+      onClickEvent: handleNavigateToChatBoxMessage
+    }
+  ];
+
+  // Drop Down Menu PROJECT
+
+  const dropMenuProject = [
+    {
+      id: 1,
+      text: 'Project Details',
+      onClickEvent: handleNavigateToProjectDetails
+    },
+    {
+      id: 2,
+      text: 'Send Message',
+      onClickEvent: handleNavigateToChatBoxMessage
+    }
+  ];
+
   return (
     <Wrap>
       {client ? (
         <MainContainer>
           <div className="threeDots">
             <IconClickable icon={<BsThreeDots fontSize={40} color="#eae2b7" />}>
-              <Button whiteMenu text="Add New Service" width="200px" fontSize="1rem" />
+              {dropMenuClient.map((item) => (
+                <Button
+                  color="white"
+                  key={item.id}
+                  dropMenu
+                  text={item.text}
+                  width="150px"
+                  fontSize="1rem"
+                  onClick={item.onClickEvent}
+                />
+              ))}
             </IconClickable>
           </div>
           <div className="picture">
@@ -592,7 +633,17 @@ function CardProfile({ clientData, projectData, client }: client) {
         <MainContainer>
           <div className="threeDots">
             <IconClickable icon={<BsThreeDots fontSize={40} color="#eae2b7" />}>
-              <Button whiteMenu text="Add New Service" width="200px" fontSize="1rem" />
+              {dropMenuProject.map((item) => (
+                <Button
+                  color="white"
+                  key={item.id}
+                  dropMenu
+                  text={item.text}
+                  width="150px"
+                  fontSize="1rem"
+                  onClick={item.onClickEvent}
+                />
+              ))}
             </IconClickable>
           </div>
           <div className="picture">

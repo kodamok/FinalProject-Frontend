@@ -431,6 +431,7 @@ const MainContainer = styled.div`
     border-right: 3px solid #001523;
     border-top: 3px solid #001523;
     background-clip: padding-box;
+    overflow: auto;
 
     .socialInfo {
       display: flex;
@@ -478,7 +479,7 @@ const MainContainer = styled.div`
 interface client {
   client?: boolean;
 
-  clientData:
+  clientData?:
     | {
         _id?: string;
         name: string;
@@ -490,7 +491,7 @@ interface client {
       }
     | any;
 
-  projectData:
+  projectData?:
     | {
         _id: string;
         name: string;
@@ -528,7 +529,12 @@ function CardProfile({ clientData, projectData, client }: client) {
   };
 
   const handleNavigateToClientDetails = () => {
-    navigate(`/client/${clientData._id}`);
+    if (userData.role === 'Freelancer') {
+      navigate(`/client/${clientData?._id || projectData?.ownerUser}`);
+    }
+    if (userData.role === 'Client') {
+      navigate(`/client/${clientData?._id || projectData?.ownerFreelancer}`);
+    }
   };
 
   const handleNavigateToChatBoxMessage = () => {
@@ -573,6 +579,11 @@ function CardProfile({ clientData, projectData, client }: client) {
     },
     {
       id: 2,
+      text: 'View Client',
+      onClickEvent: handleNavigateToClientDetails
+    },
+    {
+      id: 3,
       text: 'Send Message',
       onClickEvent: handleNavigateToChatBoxMessage
     }
@@ -605,6 +616,8 @@ function CardProfile({ clientData, projectData, client }: client) {
               height="110px"
               alt="face"
               outline="3px solid #e76f51"
+              border="medium none color"
+              name={clientData.name}
             />
           </div>
           <MainDetails>
@@ -612,20 +625,31 @@ function CardProfile({ clientData, projectData, client }: client) {
               <p>{clientData.name}</p>
             </div>
             <div className="phone">
-              <div>+49 123 654 78</div>
+              <div>{clientData.phone || '+49 123 65...'}</div>
             </div>
           </MainDetails>
           <div className="social">
             <div className="socialInfo">
               <div className="details">
                 <p>Email:</p>
-                <div>{projectData.companyName}</div>
+                <div>{clientData.email}</div>
               </div>
-
               <div className="details">
                 <p>Projects:</p>
-                <div>5</div>
+                <div>{clientData.projects.length}</div>
               </div>
+              {clientData.identityCardNumber && (
+                <div className="details">
+                  <p>Identity Card Number:</p>
+                  <div>{clientData.identityCardNumber}</div>
+                </div>
+              )}
+              {clientData.taxNumber && (
+                <div className="details">
+                  <p>Tax Number:</p>
+                  <div>{clientData.taxNumber}</div>
+                </div>
+              )}
             </div>
           </div>
         </MainContainer>
@@ -654,6 +678,8 @@ function CardProfile({ clientData, projectData, client }: client) {
               height="110px"
               alt="face"
               outline="3px solid #e76f51"
+              border="medium none color"
+              name={projectData.clientName}
             />
           </div>
           <MainDetails>
@@ -661,14 +687,14 @@ function CardProfile({ clientData, projectData, client }: client) {
               <p>{projectData.clientName}</p>
             </div>
             <div className="phone">
-              <div>+49 123 654 78</div>
+              <div>{projectData.websiteName || 'example.com'}</div>
             </div>
           </MainDetails>
           <div className="social">
             <div className="socialInfo">
               <div className="details">
                 <p>Company:</p>
-                <div>{projectData.phone}</div>
+                <div>{projectData.companyName}</div>
               </div>
               <div className="details">
                 <p>Start:</p>
@@ -687,7 +713,9 @@ function CardProfile({ clientData, projectData, client }: client) {
 }
 
 CardProfile.defaultProps = {
-  client: false
+  client: false,
+  projectData: undefined,
+  clientData: undefined
 };
 
 export default CardProfile;

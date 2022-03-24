@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
 import { RedSpan } from '../../atoms/RedSpan/RedSpan';
 import { PurpleSpan } from '../../atoms/PurpleSpan/PurpleSpan';
@@ -174,14 +175,18 @@ function SectionProductDesc1(): JSX.Element {
     navigate('/signup');
   };
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
+  const { t } = useTranslation();
   return (
     <Container>
       {!desktopVersion ? (
         <>
           <TextAndKidneyBackground>
             <h5>
-              Manage <RedSpan>files</RedSpan>, <RedSpan>messages</RedSpan> and all your{' '}
-              <RedSpan>customers</RedSpan> info in <PurpleSpan>one place</PurpleSpan>
+              {t('landingPageSecondaryText1')} <RedSpan> {t('landingPageSecondaryText2')} </RedSpan>
+              , <RedSpan> {t('landingPageSecondaryText3')} </RedSpan>{' '}
+              {t('landingPageSecondaryText4')} <RedSpan>{t('landingPageSecondaryText5')}</RedSpan>{' '}
+              {t('landingPageSecondaryText6')}{' '}
+              <PurpleSpan>{t('landingPageSecondaryText7')}</PurpleSpan>
             </h5>
             <div>
               <img src={KidneyBackground2} alt="kidney background" />
@@ -237,8 +242,10 @@ function SectionProductDesc1(): JSX.Element {
         <>
           <div>
             <h3>
-              Manage <RedSpan>files</RedSpan>, <RedSpan>messages</RedSpan> and all your{' '}
-              <RedSpan>customers</RedSpan> info in <PurpleSpan>one place</PurpleSpan>
+              {t('landingPageSecondaryText1')} <RedSpan>{t('landingPageSecondaryText2')}</RedSpan>,{' '}
+              <RedSpan>{t('landingPageSecondaryText3')}</RedSpan> {t('landingPageSecondaryText4')}{' '}
+              <RedSpan>{t('landingPageSecondaryText5')}</RedSpan> {t('landingPageSecondaryText6')}{' '}
+              <PurpleSpan>{t('landingPageSecondaryText7')}</PurpleSpan>
             </h3>
           </div>
           <ContainerFlex>

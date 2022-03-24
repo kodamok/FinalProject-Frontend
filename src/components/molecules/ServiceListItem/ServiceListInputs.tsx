@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CgPlayListAdd, CgRemove } from 'react-icons/cg';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
+import Input from '../../atoms/Input/Input';
 
 interface DivStyles {
   width?: string | undefined;
@@ -29,7 +29,7 @@ const AddNewServiceContainer = styled.div`
 
   display: grid;
   grid-template-columns: 3fr 1fr 5fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 70px 1fr;
   justify-content: stretch;
 
   .boxTitle {
@@ -67,6 +67,8 @@ const InputsContainer = styled.div`
 
   .servicePrice {
     /* border: 5px solid black; */
+    width: 70px;
+    margin-inline: 1rem;
   }
 
   .serviceDescription {
@@ -109,13 +111,12 @@ function ServiceListItem({ serviceList, setServiceList, handleServiceAdd }: any)
   };
 
   // FUNCTION TO HANDLE INPUT CHANGES AND MANAGING TO THE FORM
-  const handleServiceChange = (e: InputEvent, index: any) => {
+  const handleServiceChange = (e: any, index: any) => {
     const { value, name }: any = e.target as HTMLInputElement;
     const list: Service[] | any = [...serviceList];
     list[index][name] = value as string;
     setServiceList(list);
   };
-
   return (
     <WrapperContainer>
       <Container>
@@ -128,7 +129,8 @@ function ServiceListItem({ serviceList, setServiceList, handleServiceAdd }: any)
             // eslint-disable-next-line react/no-array-index-key
             <InputsContainer key={index}>
               <div className="serviceName">
-                <InputWithLabel
+                <Input
+                  form
                   onChange={(e: any) => handleServiceChange(e, index)}
                   value={singleService.serviceName}
                   type="text"
@@ -139,7 +141,8 @@ function ServiceListItem({ serviceList, setServiceList, handleServiceAdd }: any)
                 />
               </div>
               <div className="servicePrice">
-                <InputWithLabel
+                <Input
+                  form
                   onChange={(e: any) => handleServiceChange(e, index)}
                   value={singleService.price}
                   type="number"
@@ -150,14 +153,14 @@ function ServiceListItem({ serviceList, setServiceList, handleServiceAdd }: any)
                 />
               </div>
               <div className="serviceDescription">
-                <InputWithLabel
+                <Input
+                  textArea
                   onChange={(e: any) => handleServiceChange(e, index)}
                   value={singleService.description}
-                  type="text"
                   name="description"
                   placeholder="Short description"
-                  height="35px"
                   margin="0.2rem"
+                  cols={40}
                 />
               </div>
 
@@ -167,7 +170,7 @@ function ServiceListItem({ serviceList, setServiceList, handleServiceAdd }: any)
                     <CgPlayListAdd size={30} onClick={handleServiceAdd} />
                   </IconBox>
                 )}
-                {serviceList.length > 0 && (
+                {serviceList.length > 1 && (
                   <IconBox>
                     <CgRemove size={20} onClick={() => handleServiceRemove(index)} />
                   </IconBox>

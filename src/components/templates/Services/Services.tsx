@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import plan30 from '../../../assets/illustrations/Plan30.png';
 import plan15 from '../../../assets/illustrations/Plan15.png';
 import plan00 from '../../../assets/illustrations/Plan00.png';
@@ -39,12 +40,12 @@ function Services(): JSX.Element {
     right: 29px;
     position: relative;
   `;
-
+  const { t } = useTranslation();
   return (
     <MainContainer>
       <HeadingContainer>
         <h2>
-          Match your plans with <RedSpan>one of ours</RedSpan>
+          {t('services1')} <RedSpan>{t('services2')}</RedSpan>
         </h2>
       </HeadingContainer>
       <ServicesContainer>

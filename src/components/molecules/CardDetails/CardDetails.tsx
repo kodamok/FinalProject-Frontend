@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { BsThreeDots } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
-import IconClickable from '../../atoms/IconClickable/IconClickable';
-import Button from '../../atoms/Button/Button';
+// import { BsThreeDots } from 'react-icons/bs';
+// import { useNavigate } from 'react-router-dom';
+// import IconClickable from '../../atoms/IconClickable/IconClickable';
+// import Button from '../../atoms/Button/Button';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import GeneratePdf from '../GeneratePdf/GeneratePdf';
-import { Context } from '../../../providers/GeneralProvider';
+// import { Context } from '../../../providers/GeneralProvider';
 
 const Container = styled.div`
   display: flex;
@@ -17,6 +17,7 @@ const Container = styled.div`
   padding: 1rem 4rem;
   border: 1px solid ${({ theme }) => theme.color.main2};
   border-radius: 0.6rem;
+  box-shadow:${({ theme }) => theme.boxShadow.mainShadow};
   background-color: ${({ theme }) => theme.color.main1};
   }
   span {
@@ -26,11 +27,11 @@ const Container = styled.div`
   }
   
 `;
-const ContainerThreeDots = styled.div`
-  position: relative;
-  margin: auto;
-  left: 8rem;
-`;
+// const ContainerThreeDots = styled.div`
+//   position: relative;
+//   margin: auto;
+//   left: 8rem;
+// `;
 const Details = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,6 +57,7 @@ const ContainerDesktop = styled.div`
   align-items: center;
   gap: 1rem;
   border: 1px solid ${({ theme }) => theme.color.main2};
+  box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.color.main1};
 
@@ -65,6 +67,11 @@ const ContainerDesktop = styled.div`
     @media (max-width: 1142px) {
        {
         font-size: 15px;
+      }
+    }
+    @media (max-width: 1079px) {
+       {
+        font-size: 12px;
       }
     }
   }
@@ -111,20 +118,20 @@ interface Project {
   }; */
 }
 function CardDetails({ projectData }: Project) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
-  const { userData } = useContext(Context);
+  // const { userData } = useContext(Context);
 
-  const handleNavigateToClient = () => {
-    if (userData.role === 'Freelancer') {
-      navigate(`/client/${projectData.ownerUser}`);
-    } else {
-      navigate(`/client/${projectData.ownerFreelancer}`);
-    }
-  };
-  const handleNavigateToEditProject = () => {
-    navigate(`/editProject/${projectData._id}`);
-  };
+  // const handleNavigateToClient = () => {
+  //   if (userData.role === 'Freelancer') {
+  //     navigate(`/client/${projectData.ownerUser}`);
+  //   } else {
+  //     navigate(`/client/${projectData.ownerFreelancer}`);
+  //   }
+  // };
+  // const handleNavigateToEditProject = () => {
+  //   navigate(`/editProject/${projectData._id}`);
+  // };
 
   // Card Details Mobil Version
   return (
@@ -132,37 +139,37 @@ function CardDetails({ projectData }: Project) {
       {!desktopVersion ? (
         <div>
           <Container>
-            <ContainerThreeDots>
-              <IconClickable icon={<BsThreeDots fontSize={38} />}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem',
-                    padding: '1rem'
-                  }}
-                >
-                  <Button
-                    whiteMenu
-                    text={userData.role === 'Freelancer' ? 'View Client' : 'View Freelancer'}
-                    width="180px"
-                    fontSize="1rem"
-                    padding="0.5rem 1rem"
-                    onClick={handleNavigateToClient}
-                  />
-                  {userData.role === 'Freelancer' && (
-                    <Button
-                      whiteMenu
-                      text="Edit Project"
-                      width="180px"
-                      fontSize="1rem"
-                      padding="0.5rem 1rem"
-                      onClick={handleNavigateToEditProject}
-                    />
-                  )}
-                </div>
-              </IconClickable>
-            </ContainerThreeDots>
+            {/* <ContainerThreeDots> */}
+            {/*   <IconClickable icon={<BsThreeDots fontSize={38} />}> */}
+            {/*     <div */}
+            {/*       style={{ */}
+            {/*         display: 'flex', */}
+            {/*         flexDirection: 'column', */}
+            {/*         gap: '0.5rem', */}
+            {/*         padding: '1rem' */}
+            {/*       }} */}
+            {/*     > */}
+            {/*       <Button */}
+            {/*         whiteMenu */}
+            {/*         text={userData.role === 'Freelancer' ? 'View Client' : 'View Freelancer'} */}
+            {/*         width="180px" */}
+            {/*         fontSize="1rem" */}
+            {/*         padding="0.5rem 1rem" */}
+            {/*         onClick={handleNavigateToClient} */}
+            {/*       /> */}
+            {/*       {userData.role === 'Freelancer' && ( */}
+            {/*         <Button */}
+            {/*           whiteMenu */}
+            {/*           text="Edit Project" */}
+            {/*           width="180px" */}
+            {/*           fontSize="1rem" */}
+            {/*           padding="0.5rem 1rem" */}
+            {/*           onClick={handleNavigateToEditProject} */}
+            {/*         /> */}
+            {/*       )} */}
+            {/*     </div> */}
+            {/*   </IconClickable> */}
+            {/* </ContainerThreeDots> */}
 
             {/* check this part later, because the ? are not the best solution  */}
             {/* the problem is of the time of rendering */}

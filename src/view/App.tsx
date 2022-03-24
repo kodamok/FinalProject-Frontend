@@ -22,20 +22,21 @@ import VerifyEmail from '../components/molecules/VerifyEmail/VerifyEmail';
 import ForgotPassword from '../components/molecules/ForgotPassword/ForgotPassword';
 import ResetPassword from '../components/molecules/ResetPassword/ResetPassword';
 import Statistics from '../components/templates/Admin_Statistics/Statistics';
-import ClientDetails from '../components/organisms/ClientDetail/ClientDetails';
-import ProjectDetail from '../components/organisms/ProjectDetail/ProjectDetails';
+import ClientDetails from '../components/organisms/ClientDetails/ClientDetails';
+import ProjectDetail from '../components/organisms/ProjectDetails/ProjectDetails';
 import Messages from '../components/templates/Messages/Messages';
 import NewProject from '../components/templates/Admin_NewProject/NewProject';
 import Impressum from '../components/templates/Impressum/Impressum';
 import { useAuth } from '../hooks/useAuth';
 import useError from '../hooks/useError';
-import FAQs from '../components/molecules/FAQs/FAQs';
+import { Faq } from '../components/molecules/FAQs/FAQs';
 import EditProject from '../components/organisms/EditProject/EditProject';
 import Page404 from '../components/templates/Page404/Page404';
 
 function App(): JSX.Element {
   const { userData, setMessages, setUserData, setClientsGlobal } = useContext(Context);
   const [messageDisplay, setMessageDisplayed] = useState(false);
+  const [listening, setListening] = useState(false);
   const navigate = useNavigate();
   const { handleLogout } = useAuth();
   const { token, role } = userData;
@@ -47,6 +48,7 @@ function App(): JSX.Element {
       // When entering the website, check whether the token's time has expired
       if (Date.now() > userData.exp) {
         handleLogout();
+        setListening(false);
         setMessageDisplayed(false);
       }
       // If token exist check whether the token is close to expiration ( < 30s )
@@ -60,6 +62,7 @@ function App(): JSX.Element {
           // If Token expired Clear UserData and Logout User/Admin
           if (Date.now() > userData.exp) {
             handleLogout();
+            setListening(false);
             handleError('We Logged Out You For Your Security :)', true);
             clearInterval(interval);
             setMessageDisplayed(false);
@@ -73,8 +76,6 @@ function App(): JSX.Element {
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData.exp]);
-
-  const [listening, setListening] = useState(false);
 
   // Fetching clientsGlobal from Freelancer
   const fetchClients = async () => {
@@ -122,19 +123,19 @@ function App(): JSX.Element {
   };
   // Fetching clientsGlobal (Freelancer or Client)
   useEffect(() => {
-    if (userData.token && userData.role === 'Freelancer') {
+    if (token && role === 'Freelancer') {
       fetchClients();
     }
-    if (userData.token && userData.role === 'Client') {
+    if (token && role === 'Client') {
       fetchClientsForClient();
     }
-  }, [userData.token]);
+  }, [token]);
 
   useEffect(() => {
     const connectSSE = async () => {
       if (token) {
         if (!listening) {
-          // console.log('I try listening SSE...');
+          console.log('I try listening SSE...');
           const events = new EventSource(`${process.env.REACT_APP_BACKEND}/events/${token}`);
 
           events.onmessage = (event) => {
@@ -157,6 +158,7 @@ function App(): JSX.Element {
 
           setListening(true);
         }
+        console.log('I do Nothing');
       } else {
         setMessages([]);
         setListening(false);
@@ -248,7 +250,7 @@ function App(): JSX.Element {
           <Route path="/services" element={<Services />} />
           <Route path="/aboutUs" element={<AboutUs />} />
           <Route path="/impressum" element={<Impressum />} />
-          <Route path="/faq" element={<FAQs />} />
+          <Route path="/faq" element={<Faq />} />
           <Route path="/*" element={<Page404 />} />
         </Routes>
       </MainContainerApp>

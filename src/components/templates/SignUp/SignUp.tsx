@@ -1,6 +1,7 @@
 import React, { SyntheticEvent, useState } from 'react';
 import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';
+import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
 import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useForm from '../../../hooks/useForm';
@@ -55,6 +56,7 @@ const ContainerDiv = styled.div`
     padding: 2rem 3rem;
     min-height: 500px;
     border: 2px solid black;
+    box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
     border-radius: 0.6rem;
   }
 `;
@@ -158,33 +160,33 @@ function SignUp() {
     };
     signup();
   };
-
+  const { t } = useTranslation();
   return (
     <FormContainer onSubmit={handleSubmit}>
       <div>
-        <h3>CREATE NEW ACCOUNT</h3>
+        <h3>{t('signUpNewAccount')}</h3>
         <div>
           <a href={googleLoginUrl}>
             <Button text="Login with Google" icon={<FcGoogle />} padding="1.3rem 1rem" />
           </a>
         </div>
-        <h3>OR</h3>
+        <h3>{t('signUpOr')}</h3>
         <ContainerDiv>
           <DivOne>
             <div>
               <HeadingAdd>
-                <h4>User Details</h4>
+                <h4>{t('signUpBoxUserDetails')}</h4>
               </HeadingAdd>
               <RoundedPhoto img={inputs.image || ''} alt="face" width="250px" height="250px" />
             </div>
             <ContainerButton>
-              <Button background="#1F313E" text="Upload Photo" />
+              <Button background="#1F313E" text={t('signUpBoxPhoto')} />
               <InputFileStyle name="image" type="file" onChange={handleChange} />
             </ContainerButton>
           </DivOne>
           <DivTwo>
             <div>
-              <h4>Contact Information</h4>
+              <h4>{t('signUpBoxContactInformation')}</h4>
               <InputWithLabel
                 label="Name*"
                 name="name"
@@ -204,7 +206,7 @@ function SignUp() {
               />
               <InputWithLabel
                 label="Password*"
-                name="password"
+                name={t('signUpBoxContactInformationPassword')}
                 type="password"
                 value={inputs.password}
                 onChange={handleChange}
@@ -214,16 +216,16 @@ function SignUp() {
           </DivTwo>
           <DivThree>
             <div>
-              <h4>Billing Information</h4>
+              <h4>{t('signUpBoxBillingInformation')}</h4>
               <InputWithLabel
                 label="Identity Card Number"
-                name="identityCardNumber"
+                name={t('signUpBoxBillingInformationPassport')}
                 value={inputs.identityCardNumber}
                 onChange={handleChange}
               />
               <InputWithLabel
                 label="Tax Number"
-                name="taxNumber"
+                name={t('signUpBoxBillingInformationTaxNumber')}
                 onChange={handleChange}
                 value={inputs.taxNumber}
               />

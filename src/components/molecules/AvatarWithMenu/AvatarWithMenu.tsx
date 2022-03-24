@@ -13,7 +13,6 @@ const AvatarContainer = styled.div<Avatar>`
   & > div {
     display: flex;
     align-items: center;
-    z-index: 1000;
   }
 `;
 
@@ -35,7 +34,8 @@ const AvatarMenu = styled.div`
 `;
 
 const AvatarMenuEmpty = styled.div<Avatar>`
-  border: 1px solid black;
+  // This was cause why was the black dot on header
+  //border: 1px solid black;
   flex-direction: column;
   top: ${({ top }) => top || '50px'};
   position: absolute;

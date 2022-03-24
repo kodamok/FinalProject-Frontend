@@ -1,12 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BsThreeDots } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
-import IconClickable from '../../atoms/IconClickable/IconClickable';
-import Button from '../../atoms/Button/Button';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import { ContainerOptionsToClick } from '../CardClient/CardClient';
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +11,7 @@ const Container = styled.div`
   margin-top: 3rem;
   padding: 1rem 4rem;
   border: 1px solid ${({ theme }) => theme.color.main2};
+  box-shadow:${({ theme }) => theme.boxShadow.mainShadow};
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.color.main1};
   }
@@ -27,12 +23,11 @@ const Container = styled.div`
   h4 {
       margin:auto;
   }
+  h5 {
+    margin: 1rem;
+  }
 `;
-const ContainerThreeDots = styled.div`
-  position: relative;
-  margin: auto;
-  left: 8rem;
-`;
+
 const Details = styled.div`
   display: flex;
   flex-direction: column;
@@ -45,18 +40,16 @@ const DetailsElement = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3px;
-  align-items: center;
 `;
 
 // Style Desktop
 const ContainerDesktop = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 1rem;
   padding: 2rem 3rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   border: 1px solid ${({ theme }) => theme.color.main2};
+  box-shadow:${({ theme }) => theme.boxShadow.mainShadow};
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.color.main1};
   }
@@ -65,20 +58,10 @@ const ContainerDesktop = styled.div`
     font-size: 22px;
   }
 `;
-const ContainerThreeDotsDesktop = styled.div`
-  position: relative;
-  margin: auto;
-  left: 50rem;
-  bottom: 11rem;
-  //border: 10px solid pink;
-  :hover {
-    cursor: pointer;
-  }
-`;
+
 const ContainerDetailDesktop = styled.div`
   display: flex;
   padding: inherit;
-  gap: 10rem;
   //border: 10px solid red;
 `;
 const TitleAndPicture = styled.div`
@@ -86,12 +69,14 @@ const TitleAndPicture = styled.div`
   flex-direction: column;
   align-items: center;
   align-content: space-around;
-  margin: auto;
+  gap: 2rem;
   //border: 10px solid green;
+  h4 {
+    margin: 0;
+  }
 `;
 const DetailsDesktop = styled.div`
   display: flex;
-  gap: 7px;
   color: ${({ theme }) => theme.color.main2};
   align-content: center;
   gap: 5rem;
@@ -99,16 +84,27 @@ const DetailsDesktop = styled.div`
 const ContactInformation = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   //border: 10px solid orange;
+  span,
+  p {
+    margin-right: auto;
+  }
   h4 {
-    margin: auto;
+    margin: 0 auto 1rem auto;
   }
 `;
 const BillingInformation = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //border: 10px solid blue;
+  span,
+  p {
+    margin-right: auto;
+  }
+  h4 {
+    margin: 0 0 1rem 0;
+    padding-left: 17px;
+  }
 `;
 interface Client {
   clientData: any;
@@ -124,37 +120,11 @@ interface Client {
 // Card Details Mobil Version
 function CardClientDetails({ clientData }: Client) {
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
-  const navigate = useNavigate();
-  const handleOpenNewProjectPage = () => {
-    console.log('client', clientData);
-    navigate(`/newProject/${clientData._id}`);
-  };
   return (
     <div>
       {!desktopVersion ? (
         <div>
           <Container>
-            <ContainerThreeDots>
-              <IconClickable icon={<BsThreeDots fontSize={38} />}>
-                <ContainerOptionsToClick>
-                  <Button
-                    whiteMenu
-                    text="New Project"
-                    onClick={handleOpenNewProjectPage}
-                    width="150px"
-                    fontSize="1rem"
-                    padding="0.3rem 1rem"
-                  />
-                  {/*   <Button */}
-                  {/*     text="What ever too" */}
-                  {/*     width="180px" */}
-                  {/*     fontSize="1rem" */}
-                  {/*     padding="0.5rem 1rem" */}
-                  {/*   /> */}
-                </ContainerOptionsToClick>
-              </IconClickable>
-            </ContainerThreeDots>
-
             {/* check this part later, because the ? are not the best solution  */}
             {/* the problem is of the time of rendering */}
             {clientData && (
@@ -173,25 +143,21 @@ function CardClientDetails({ clientData }: Client) {
                   <p>{clientData?.name}</p>
                 </DetailsElement>
                 <DetailsElement>
-                  <span>Surname</span>
-                  <p>{clientData?.name}</p>
-                </DetailsElement>
-                <DetailsElement>
                   <span>Email</span>
                   <p>{clientData?.email}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Phone number</span>
-                  <p>{clientData?.name}</p>
+                  <p>{clientData?.phone}</p>
                 </DetailsElement>
                 <h5>Billing Information</h5>
                 <DetailsElement>
                   <span>Id</span>
-                  <p>{clientData?.role}</p>
+                  <p>{clientData?.identityCardNumber || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Tax Number</span>
-                  <p>{clientData?.taxNumber}</p>
+                  <p>{clientData?.taxNumber || 'No Data'}</p>
                 </DetailsElement>
               </Details>
             )}
@@ -201,33 +167,6 @@ function CardClientDetails({ clientData }: Client) {
         // Card Details Desktop Version
         <div>
           <ContainerDesktop>
-            <ContainerThreeDotsDesktop>
-              <IconClickable icon={<BsThreeDots fontSize={38} />}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem',
-                    padding: '1rem'
-                  }}
-                >
-                  <Button
-                    whiteMenu
-                    text="New Project"
-                    onClick={handleOpenNewProjectPage}
-                    width="150px"
-                    fontSize="1rem"
-                    padding="0.3rem 1rem"
-                  />
-                  {/* <Button */}
-                  {/*   text="What ever too" */}
-                  {/*   width="180px" */}
-                  {/*   fontSize="1rem" */}
-                  {/*   padding="0.5rem 1rem" */}
-                  {/* /> */}
-                </div>
-              </IconClickable>
-            </ContainerThreeDotsDesktop>
             <ContainerDetailDesktop>
               {/* check this part later, because the ? are not the best solution  */}
               {/* the problem is of the time of rendering */}
@@ -235,7 +174,7 @@ function CardClientDetails({ clientData }: Client) {
                 {clientData && (
                   <DetailsDesktop>
                     <TitleAndPicture>
-                      <h5>Nomad Studio</h5>
+                      <h4>Nomad Studio</h4>
                       <RoundedPhoto
                         img={clientData?.avatar}
                         alt="avatar"
@@ -251,27 +190,23 @@ function CardClientDetails({ clientData }: Client) {
                         <p>{clientData?.name}</p>
                       </DetailsElement>
                       <DetailsElement>
-                        <span>Surname</span>
-                        <p>{clientData?.name}</p>
-                      </DetailsElement>
-                      <DetailsElement>
                         <span>Email</span>
                         <p>{clientData?.email}</p>
                       </DetailsElement>
                       <DetailsElement>
                         <span>Phone Number</span>
-                        <p>{clientData?.name}</p>
+                        <p>{clientData?.phone}</p>
                       </DetailsElement>
                     </ContactInformation>
                     <BillingInformation>
                       <h4>Billing</h4>
                       <DetailsElement>
-                        <span>Id</span>
-                        <p>{clientData?.role}</p>
+                        <span>Id-Number</span>
+                        <p>{clientData?.identityCardNumber || 'No Data'}</p>
                       </DetailsElement>
                       <DetailsElement>
-                        <span>Tax Number</span>
-                        <p>{clientData?.taxNumber}</p>
+                        <span>Tax-Number</span>
+                        <p>{clientData?.taxNumber || 'No Data'}</p>
                       </DetailsElement>
                     </BillingInformation>
                   </DetailsDesktop>

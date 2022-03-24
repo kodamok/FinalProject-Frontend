@@ -1,5 +1,6 @@
 import React, { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { FaMicrophone } from 'react-icons/fa';
 import Button from '../../atoms/Button/Button';
 import CardMessage from '../../molecules/CardMessage/CardMessage';
 import { Context } from '../../../providers/GeneralProvider';
@@ -10,6 +11,10 @@ import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
 import PageHead from '../../molecules/PageHead/PageHead';
 import Input from '../../atoms/Input/Input';
+
+interface Props {
+  selected?: any;
+}
 
 const Container = styled.div`
   padding: 1rem 0;
@@ -29,16 +34,21 @@ const Form = styled.form`
   align-content: space-between;
   justify-content: space-between;
   flex-direction: column;
+  //border: 10px solid purple;
 
-  * {
+  > div:first-child {
+    position: relative;
     width: 100%;
   }
-  //border: 10px solid grey;
+  > div:last-child {
+    width: 100%;
+  }
 `;
 
 const ContainerContactListAndMessages = styled.div`
   display: flex;
-  //border: 2px solid #e76f51;
+  border: 2px solid #1f313e;
+  box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
   //margin: 0 auto;
   justify-content: space-between;
   ${({ theme }) => theme.up(theme.breakpoint.sm)} {
@@ -55,7 +65,8 @@ const ContactList = styled.div`
   max-width: 250px;
   overscroll-behavior: contain;
   // TODO Not good - to FIX
-  max-height: 566px;
+  max-height: 510px;
+
   ${({ theme }) => theme.down(theme.breakpoint.sm)} {
     min-width: 50px;
     max-width: 50px;
@@ -63,15 +74,14 @@ const ContactList = styled.div`
 `;
 
 const WrapperBoxMessage = styled.div`
-  width: auto;
-  min-width: auto;
+  //border: 2px solid red;
   ${({ theme }) => theme.down(theme.breakpoint.sm)} {
     width: 100%;
     min-width: 300px;
   }
 `;
 
-const Contact = styled.div`
+const Contact = styled.div<Props>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,6 +91,7 @@ const Contact = styled.div`
   transition: 0.3s;
   background: #001523;
   color: white;
+
   &:hover {
     cursor: pointer;
     color: ${({ theme }) => theme.color.main9};
@@ -92,14 +103,19 @@ const Contact = styled.div`
   }
   ${({ theme }) => theme.down(theme.breakpoint.sm)} {
     padding: 0.2rem;
+    gap: 0;
+    display: block;
+    > div:first-child {
+      display: none;
+    }
   }
 `;
 
 const WrapperMessages = styled.div`
   //padding: 1rem;
   //border: 2px solid black;
-  max-height: 100%;
-  height: 400px;
+  height: 100%;
+  max-height: 400px;
   width: auto;
   max-width: 700px;
   display: flex;
@@ -133,6 +149,16 @@ const PContainer = styled.div`
   font-size: ${({ theme }) => theme.fontSizeInter.ms};
 `;
 
+const Microphone = styled(FaMicrophone)`
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+`;
+
 interface Message {
   message: string;
   receiverId: string;
@@ -147,7 +173,7 @@ function Messages() {
   const { messages, userData } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
   const [clientMessages, setClientMessages] = useState([]);
-  const { inputs, handleChange, resetForm } = useForm(initialValue);
+  const { inputs, handleChange, resetForm, setInputs } = useForm(initialValue);
   const { handleError } = useError();
   const [clients, setClients] = useState<any[]>([]);
   const [actuallyClient, setActuallyClient] = useState<any[]>([]);
@@ -278,6 +304,20 @@ function Messages() {
     }
   }, [messages]);
 
+  const handleSpeech = () => {
+    window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; // webkitSpeechRecognition for Chrome and SpeechRecognition for FF
+    const recognition = new window.SpeechRecognition();
+    recognition.lang = 'en';
+    recognition.onresult = (event: any) => {
+      // SpeechRecognitionEvent type
+      const speechToText = event.results[0][0].transcript;
+      setInputs({
+        ...inputs,
+        message: `${inputs.message.trim()} ${speechToText}`
+      });
+    };
+    recognition.start();
+  };
   const pageHeadInfo = [
     {
       id: 1,
@@ -307,6 +347,7 @@ function Messages() {
                 width="40px"
                 height="40px"
                 outline="2px solid black"
+                name={clientData.name}
               />
             </Contact>
           ))}
@@ -336,14 +377,26 @@ function Messages() {
             </div>
           </WrapperMessages>
           <Form onSubmit={handleSubmitMessage}>
-            <Input
-              margin="50px 0 0.1rem 0"
-              placeholder="Write a Message..."
-              name="message"
-              onChange={handleChange}
-              value={inputs.message}
+            <div>
+              <Input
+                form
+                margin="0 0.1rem 0 0"
+                placeholder="Write a Message..."
+                name="message"
+                onChange={handleChange}
+                value={inputs.message}
+              />
+              <Microphone fontSize={18} onClick={handleSpeech} />
+            </div>
+            <Button
+              dropMenu
+              text="Send"
+              type="submit"
+              background="#001523"
+              color="white"
+              height="4.4rem"
+              width="100%"
             />
-            <Button text="Send a Message" type="submit" background="#001523" />
           </Form>
         </WrapperBoxMessage>
       </ContainerContactListAndMessages>

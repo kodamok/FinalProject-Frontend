@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 /* import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
- */ import Input from '../../atoms/Input/Input';
+ */ import { useTranslation } from 'react-i18next';
+import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
 import { Context } from '../../../providers/GeneralProvider';
@@ -103,12 +104,12 @@ function LogIn() {
   const handleNavigateToForgotPassword = () => {
     navigate('/forgotPassword');
   };
-
+  const { t } = useTranslation();
   return (
     <Container onSubmit={handleSubmit}>
       <h3>LOGIN</h3>
       <Input
-        margin="50px 0 0.1rem 0"
+        margin="0 0rem 1rem 0"
         label="Email"
         name="email"
         onChange={handleChange}
@@ -118,12 +119,12 @@ function LogIn() {
         label="Password"
         type="password"
         name="password"
-        placeholder="Password"
+        placeholder={t('signUpBoxContactInformationPassword')}
         onChange={handleChange}
-        margin="50px 0 0.1rem 0"
+        margin="0 0.1rem 0"
       />
       <ContainerP>
-        <p onClick={handleNavigateToForgotPassword}>I forgot my password</p>
+        <p onClick={handleNavigateToForgotPassword}>{t('loginPassword')}</p>
       </ContainerP>
       <div>
         <Button type="submit" color="#eae2b7" text={isLoading ? 'Loading...' : 'Login'} />
@@ -134,7 +135,7 @@ function LogIn() {
         <Button
           background="#1F313E"
           color="#eae2b7"
-          text="Create New Account"
+          text={t('loginNewAccount')}
           onClick={handleOpenCreateNewAccountPage}
         />
       </div>

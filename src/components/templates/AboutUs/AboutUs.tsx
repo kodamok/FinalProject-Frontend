@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import TeamBackground from '../../../assets/illustrations/TeamBackground.png';
 import { RedSpan } from '../../atoms/RedSpan/RedSpan';
 import face1small from '../../../assets/images/face1small.jpg';
@@ -105,12 +106,15 @@ const TeamMemberName = styled.div`
   }
 `;
 
+// const {t} überall in jeden file
 function AboutUs(): JSX.Element {
+  const { t } = useTranslation();
   return (
     <MainContainer>
       <OpeningTextContainer>
         <h2>
-          We started <RedSpan>the same as you</RedSpan> did
+          {t('aboutUsHeadline1')} <RedSpan>{t('aboutUsHeadline2')}</RedSpan>
+          {t('aboutUsHeadline3')}
         </h2>
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque nisi dicta sit. Debitis,
@@ -125,7 +129,7 @@ function AboutUs(): JSX.Element {
       </OpeningTextContainer>
       <TheTeamContainer>
         <OurTeamTitle>
-          <h3>THE TEAM</h3>
+          <h3>{t('aboutUsTheTeam')}</h3>
         </OurTeamTitle>
         <OurTeamContainer>
           <TeamMemberContainer>

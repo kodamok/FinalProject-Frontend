@@ -1,8 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrClose } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
+import { t } from 'i18next';
 import NSLogo from '../../../assets/images/Logos/newLogos/53x161/NSLogo.png';
 /* import { useNavigate } from 'react-router-dom'; */
 import AvatarWithMenu from '../../molecules/AvatarWithMenu/AvatarWithMenu';
@@ -29,6 +30,11 @@ const Container = styled.div<StyledDivProps>`
   padding: 0.7rem;
   min-height: ${({ isOpenMenu }) => (isOpenMenu ? '100vh' : 'auto')};
   /* border: 2px solid red; */
+  position: relative;
+  //top: 0;
+  //left: 0;
+  //z-index: 0;
+  //width: 100%;
 `;
 
 const Flex = styled.div`
@@ -183,6 +189,7 @@ const ServicesAndLanguageClient = styled.div`
 
 const ButtonLogoutMobil = styled.div`
   color: ${({ theme }) => theme.color.main2};
+  font-weight: 600;
   padding-left: 0.5rem;
   &:hover {
     cursor: pointer;
@@ -192,6 +199,7 @@ const ButtonLogoutMobil = styled.div`
 const ButtonLogoutMobilAdmin = styled.div`
   color: ${({ theme }) => theme.color.main2};
   padding-left: 0.5rem;
+  font-weight: 600;
   &:hover {
     cursor: pointer;
     color: ${({ theme }) => theme.color.main4};
@@ -207,27 +215,27 @@ const ContainerSearchBar = styled.div`
 const data = [
   {
     path: '/aboutUs',
-    text: 'About Us',
+    text: t('headerAboutUs'),
     id: 1
   },
   {
     path: '/services',
-    text: 'Services',
+    text: t('headerServices'),
     id: 2
   },
   {
     path: '/login',
-    text: 'Login',
+    text: t('headerLogin'),
     id: 3
   },
   {
     path: '/signup',
-    text: 'Signup',
+    text: t('headerSignUp'),
     id: 4
   },
   {
     path: '/contact',
-    text: 'Contact',
+    text: t('headerContact'),
     id: 5
   }
 ];
@@ -307,6 +315,22 @@ function Header() {
   };
   // useMediaQuery
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+    if (isOpenMenu) {
+      body!.style.overflow = 'hidden';
+      console.log(body);
+    } else {
+      body!.style.overflow = 'visible';
+    }
+  }, [isOpenMenu]);
+
+  useEffect(() => {
+    if (desktopVersion) {
+      setIsOpenMenu(false);
+    }
+  }, [desktopVersion]);
 
   // console.log('We are on the size of Desktop Version?', desktopVersion);
 

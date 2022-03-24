@@ -73,7 +73,7 @@ const Wrap = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: 1rem;
+  padding: 1rem;
 `;
 
 function ClientsOrProjects() {
@@ -150,7 +150,7 @@ function ClientsOrProjects() {
       id: 1,
       titleOfPage: 'Clients & Projects',
       threeDotButton: {
-        button1: 'New Project',
+        button1: 'New Client',
         onClickEvent: handleNavigateToCreateNewClient
       }
     }

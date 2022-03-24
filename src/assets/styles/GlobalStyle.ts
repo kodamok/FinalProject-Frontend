@@ -38,6 +38,10 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
   }
+
+  input, textarea {
+    padding-left: 15px;
+ }
   
   p {
     margin:0;
@@ -75,16 +79,20 @@ export const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollbar {
     width: 10px;
+    
   }
 
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #eae2b7;
+    background: #001523;
+    width: 10px;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #1F313E;
+    width: 10px;
   }
 
   /* Handle on hover */

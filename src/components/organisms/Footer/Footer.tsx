@@ -77,6 +77,7 @@ const StyledSpan = styled.span`
 const MyFooter = styled.div`
   width: 100%;
   position: relative;
+  margin-top: 5rem;
 `;
 
 // Desktop Styles
@@ -94,6 +95,7 @@ const DesktopFooter = styled.div`
 
 const LeftCol = styled.div`
   display: flex;
+  margin-top: 1rem;
 `;
 
 /* const LogoCol = styled.div`
@@ -104,11 +106,11 @@ const LeftCol = styled.div`
 
 const StyledCol = styled.div`
   /* border: 2px solid white; */
-  width: 140px;
+  /*width: 140px;*/
+  width: 12rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
+  justify-content: space-evenly;
   div > span {
     margin-left: 0.7rem;
 
@@ -119,9 +121,14 @@ const StyledCol = styled.div`
   }
 
   p {
-    text-align: left;
+    padding: 0 10px 0 50px;
     text-decoration: underline;
+    font-size: 15px;
+    text: bold;
   }
+`;
+const Contact = styled.div`
+  margin-top: 1rem;
 `;
 
 const CountryFlag = styled.div`
@@ -181,13 +188,15 @@ function Footer() {
               </div>
             </StyledCol>
             <StyledCol>
-              <div className="contact">
-                <NavLink path="/aboutUs" text="About Us" color="white" />
-                <NavLink path="/services" text="Services" color="white" />
-                <NavLink path="/contact" text="Contact" color="white" />
-                <NavLink path="/impressum" text="Impressum" color="white" />
-                <NavLink path="/faq" text="FAQ" color="white" />
-              </div>
+              <Contact>
+                <div>
+                  <NavLink path="/aboutUs" text="About Us" color="white" />
+                  <NavLink path="/services" text="Services" color="white" />
+                  <NavLink path="/contact" text="Contact" color="white" />
+                  <NavLink path="/impressum" text="Impressum" color="white" />
+                  <NavLink path="/faq" text="FAQ" color="white" />
+                </div>
+              </Contact>
             </StyledCol>
             <StyledCol>
               <p>CONTACT US : </p>

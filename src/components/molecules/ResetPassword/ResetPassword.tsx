@@ -52,7 +52,6 @@ function ResetPassword() {
           handleError(resJSON.message);
         }
       } catch (error: any) {
-        console.log('FETCHING ERROR', error);
         handleError();
       }
     };

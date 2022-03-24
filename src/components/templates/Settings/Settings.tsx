@@ -1,12 +1,14 @@
 import React, { SyntheticEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
-import useForm from '../../../hooks/useForm';
+/* import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
+ */ import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import { Context } from '../../../providers/GeneralProvider';
 import { InputFileStyle } from '../SignUp/SignUp';
+import PageHead from '../../molecules/PageHead/PageHead';
+import Input from '../../atoms/Input/Input';
 
 declare global {
   interface Window {
@@ -19,8 +21,8 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 3rem 1rem;
-  h3,
+  padding: 0 1rem 3rem 1rem;
+
   h4 {
     text-align: left;
     margin: 1rem 0 0 0;
@@ -36,6 +38,10 @@ const FormContainer = styled.form`
   }
 `;
 const ContainerDiv = styled.div`
+  box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
+  padding: 1rem;
+  border: 2px solid black;
+  border-radius: 0.6rem;
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     background: ${({ theme }) => theme.color.main1};
     display: flex;
@@ -88,6 +94,7 @@ const DivThree = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 1rem;
   max-width: 350px;
 `;
 
@@ -190,10 +197,17 @@ function Settings() {
   //   recognition.start();
   // }, []);
 
+  const PageHeadInfo = [
+    {
+      id: 1,
+      titleOfPage: 'Settings'
+    }
+  ];
+
   return (
     <FormContainer onSubmit={handleSubmitUserDataChange}>
       <div>
-        <h3>Settings</h3>
+        <PageHead pageHeadInfo={PageHeadInfo} />
         <ContainerDiv>
           <DivOne>
             <div>
@@ -205,6 +219,7 @@ function Settings() {
                 alt="face"
                 width="250px"
                 height="250px"
+                name={userData.name}
               />
             </div>
             <ContainerButton>
@@ -214,14 +229,16 @@ function Settings() {
           </DivOne>
           <DivTwo>
             <h4>Contact Information</h4>
-            <InputWithLabel
+            <Input
+              form
               label="Name*"
               name="name"
               onChange={handleChange}
               value={inputs.name}
               required
             />
-            <InputWithLabel
+            <Input
+              form
               label="Email*"
               name="email"
               type="email"
@@ -229,14 +246,16 @@ function Settings() {
               value={inputs.email}
               required
             />
-            <InputWithLabel
+            <Input
+              form
               label="New Password"
               name="newPassword"
               type="password"
               value={inputs.newPassword}
               onChange={handleChange}
             />
-            <InputWithLabel
+            <Input
+              form
               label="Repeat New Password"
               name="newPasswordRepeated"
               type="password"
@@ -247,19 +266,22 @@ function Settings() {
           <DivThree>
             <div>
               <h4>Billing Information</h4>
-              <InputWithLabel
+              <Input
+                form
                 label="Identity Card Number"
                 name="identityCardNumber"
                 onChange={handleChange}
                 value={inputs.identityCardNumber}
               />
-              <InputWithLabel
+              <Input
+                form
                 label="Tax Number"
                 name="taxNumber"
                 onChange={handleChange}
                 value={inputs.taxNumber}
               />
-              <InputWithLabel
+              <Input
+                form
                 label="Password To Confirm Changes*"
                 name="password"
                 type="password"

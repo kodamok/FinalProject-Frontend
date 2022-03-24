@@ -1,65 +1,59 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { BsThreeDots } from 'react-icons/bs';
+import Input from '../../atoms/Input/Input';
 import { Context } from '../../../providers/GeneralProvider';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
+
 import ServiceListInputs from '../../molecules/ServiceListItem/ServiceListInputs';
-import IconClickable from '../../atoms/IconClickable/IconClickable';
 import useError from '../../../hooks/useError';
+import PageHead from '../../molecules/PageHead/PageHead';
 
 const PageContainer = styled.div`
-  /* border: 2px solid red; */
+  //border: 2px solid red;
 `;
 
 const FormContainer = styled.form`
-  /* border: 5px solid black; */
+  /* border: 2px solid red; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 70px 2fr 70px;
+  margin: 2rem auto;
   column-gap: 5px;
-  padding-left: 5rem;
+  max-width: 1400px;
+  /* padding-left: 5rem;
   padding-right: 5rem;
-  margin-bottom: 5rem;
+  margin-bottom: 5rem; */
 `;
 
-const Table = styled.div`
-  /* border: 2px solid black;  */
-  grid-column:1 / span 3;
+/* const Intro = styled.div`
+  //border: 2px solid green;
   display: flex;
-  justify-content:space-between;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: 700px;
+  height: 100%;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: ${({ theme }) => theme.fontSizeOpenSans.m};
+  font-weight: 600;
+  text-align: justify;
+  padding: 1rem;
 
-    .newProject {
-      /* border: 2px solid black; */
-      font-size: ${({ theme }) => theme.fontSizeInter.m};
-      text-align: left;
-      
-    }
-
-    .listOfServices {
-  
-
-      /* border: 2px solid black; */
-      font-size: ${({ theme }) => theme.fontSizeInter.m};
-     
-    }
-
-    .threeDots{
-
-    }
+  .left {
+    max-width: 700px;
   }
-`;
+`; */
 
 const BasicInfoContainer = styled.div`
   /*  border: 2px solid green; */
   grid-column: 1 / span 3;
-  grid-row: 2 / span 2;
+  grid-row: 1 / span 3;
   display: inline-grid;
   grid-template-columns: minmax(450px, 2fr) 3.5fr;
+  gap: 4rem;
 
   ${({ theme }) => theme.down(theme.breakpoint.m)} {
     grid-template-columns: minmax(450px, 2fr);
@@ -85,6 +79,7 @@ const LeftContainer = styled.div`
   column-gap: 10px;
   border-radius: 10px;
   border: 3px solid black;
+  box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
 
   .left {
     /* border: 5px solid yellow; */
@@ -172,33 +167,22 @@ function NewProject(): JSX.Element {
     }
   };
 
+  const pageHeadInfo = [
+    {
+      id: 1,
+      titleOfPage: 'New Project',
+      threeDotButton: {
+        button1: 'New Project',
+        onClickEvent: 'noation'
+      }
+    }
+  ];
+
   return (
     <PageContainer>
+      <PageHead pageHeadInfo={pageHeadInfo} />
+
       <FormContainer onSubmit={handleSubmitNewProject}>
-        <Table>
-          <div className="newProject">New Project</div>
-          <div className="listOfServices">List Of Services</div>
-          <div className="threeDots">
-            <IconClickable icon={<BsThreeDots fontSize={40} />}>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                  padding: '0.5rem'
-                }}
-              >
-                <Button
-                  whiteMenu
-                  text="Add New Service"
-                  width="200px"
-                  fontSize="1rem"
-                  onClick={handleServiceAdd}
-                />
-              </div>
-            </IconClickable>
-          </div>
-        </Table>
         <BasicInfoContainer>
           <LeftContainer>
             <div className="left">
@@ -211,14 +195,18 @@ function NewProject(): JSX.Element {
                 border="2px solid black"
                 handleChange={handleChange}
               />
-              <InputWithLabel
+              <Input
+                form
+                margin="0 0 1.8rem 0"
                 label="Start Date*"
                 type="date"
                 name="startDate"
                 onChange={handleChange}
                 required
               />
-              <InputWithLabel
+              <Input
+                form
+                margin="0 0 1.8rem 0"
                 label="End Date*"
                 type="date"
                 name="dueDate"
@@ -227,27 +215,35 @@ function NewProject(): JSX.Element {
               />
             </div>
             <div className="right">
-              <InputWithLabel
+              <Input
+                form
+                margin="0 0 1.8rem 0"
                 label="Company Name*"
                 name="companyName"
                 placeholder="enter the name of the company"
                 onChange={handleChange}
                 required
               />
-              <InputWithLabel
+              <Input
+                form
+                margin="0 0 1.8rem 0"
                 label="Website*"
                 name="website"
                 placeholder="enter a website"
                 onChange={handleChange}
                 required
               />
-              <InputWithLabel
+              <Input
+                form
+                margin="0 0 1.8rem 0"
                 label="Tax Number"
                 name="taxNumber"
                 placeholder="enter a tax ID"
                 onChange={handleChange}
               />
-              <InputWithLabel
+              <Input
+                form
+                margin="0 0 1.8rem 0"
                 label="Description"
                 name="description"
                 placeholder="enter a description"

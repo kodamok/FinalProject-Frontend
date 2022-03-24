@@ -189,23 +189,23 @@ function GeneratePdf() {
           </tr>`;
         })}
 
-				<tr class="item">
-					<td>Website design</td>
+<!--				<tr class="item">-->
+<!--					<td>Website design</td>-->
 
-					<td>$300.00</td>
-				</tr>
+<!--					<td>$300.00</td>-->
+<!--				</tr>-->
 
-				<tr class="item">
-					<td>Hosting (3 months)</td>
+<!--				<tr class="item">-->
+<!--					<td>Hosting (3 months)</td>-->
 
-					<td>$75.00</td>
-				</tr>
+<!--					<td>$75.00</td>-->
+<!--				</tr>-->
 
-				<tr class="item last">
-					<td>Domain name (1 year)</td>
+<!--				<tr class="item last">-->
+<!--					<td>Domain name (1 year)</td>-->
 
-					<td>$10.00</td>
-				</tr>
+<!--					<td>$10.00</td>-->
+<!--				</tr>-->
 
 				<tr class="total">
 					<td></td>
@@ -245,7 +245,7 @@ function GeneratePdf() {
     };
     generatePdf();
   };
-  return <Button type="button" text="Generate Pdf" onClick={handleGeneratePdf} />;
+  return <Button type="button" text="Generate Pdf" width="auto" onClick={handleGeneratePdf} />;
 }
 
 export default GeneratePdf;

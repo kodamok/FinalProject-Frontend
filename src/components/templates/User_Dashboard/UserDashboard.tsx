@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import GlobalMessage from '../../organisms/GlobalMessage/GlobalMessage';
 import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
-import CardProject from '../../molecules/CardProject/CardProject';
 import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 import NoItemsFound from '../../atoms/NoItemsFound/NoItemsFound';
 import { LoadingSpin } from '../../atoms/LoadingSpin/LoadingSpin';
+import PageHead from '../../molecules/PageHead/PageHead';
+import CardProfile from '../../molecules/CardProfile/CardProfile';
 
 const Container = styled.div`
   padding: 1rem;
@@ -84,14 +85,24 @@ function UserDashboard() {
     fetchProjects();
   }, []);
 
+  const PageHeadInfo = [
+    {
+      id: 1,
+      titleOfPage: 'Dashboard',
+      threeDotButton: {
+        button1: 'New Project',
+        onClickEvent: 'no action'
+      }
+    }
+  ];
   if (isLoading) return <LoadingSpin />;
   return (
     <Container>
-      <h3>Dashboard</h3>
+      <PageHead pageHeadInfo={PageHeadInfo} />
       <TitleWithLines text="Recent/Actually Projects" />
       <ContainerProjects>
         {projects.length ? (
-          projects.map((item: any) => <CardProject key={item._id} projectData={item} />)
+          projects.map((item: any) => <CardProfile key={item._id} projectData={item} />)
         ) : (
           <NoItemsFound text="Projects" />
         )}

@@ -7,29 +7,34 @@ export const GlobalStyle = createGlobalStyle`
   *:after {
     box-sizing: inherit;
   }
-  
-  #root{
+
+  #root {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-x: hidden;
   }
-  
-  html {font-size: 100%;
-    box-sizing: border-box;} /*16px*/
+
+  html {
+    font-size: 100%;
+    box-sizing: border-box;
+  }
+
+  /*16px*/
 
   body {
     background: #eae2b9;
     opacity: 96%;
-    font-family: 'Open Sans','Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
     line-height: 1.75;
     color: #000000;
     box-sizing: border-box;
-    margin:0;
+    margin: 0;
   }
-  
-  button, label{
+
+  button, label {
     font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 400;
   }
@@ -44,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
  }
   
   p {
-    margin:0;
+    margin: 0;
   }
 
   a {
@@ -63,41 +68,48 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 4.209rem;
   }
 
-  h2 {font-size: 3.157rem;}
+  h2 {
+    font-size: 3.157rem;
+  }
 
-  h3 {font-size: 2.369rem;}
+  h3 {
+    font-size: 2.369rem;
+  }
 
-  h4 {font-size: 1.777rem;}
+  h4 {
+    font-size: 1.777rem;
+  }
 
-  h5 {font-size: 1.333rem;}
+  h5 {
+    font-size: 1.333rem;
+  }
 
-  small, .text_small {font-size: 0.75rem;}
+  small, .text_small {
+    font-size: 0.75rem;
+  }
 
-  .box{
-    padding:2rem;
+  .box {
+    padding: 2rem;
   }
 
   ::-webkit-scrollbar {
     width: 10px;
-    
+
   }
 
   /* Track */
   ::-webkit-scrollbar-track {
     background: #eae2b7;
     background: #001523;
-    width: 10px;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #1F313E;
-    width: 10px;
+    background: #3a5d74;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
-  };
-  
+  }
 `;

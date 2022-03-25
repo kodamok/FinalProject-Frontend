@@ -6,7 +6,6 @@ import styled from 'styled-components';
 // import Button from '../../atoms/Button/Button';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import GeneratePdf from '../GeneratePdf/GeneratePdf';
 // import { Context } from '../../../providers/GeneralProvider';
 
 const Container = styled.div`
@@ -14,18 +13,18 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 4rem;
+  padding: 1rem 2rem;
   border: 1px solid ${({ theme }) => theme.color.main2};
   border-radius: 0.6rem;
-  box-shadow:${({ theme }) => theme.boxShadow.mainShadow};
+  box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
   background-color: ${({ theme }) => theme.color.main1};
+  ${({ theme }) => theme.down(theme.breakpoint.m)} {
+    padding: 1rem 0.6rem;
   }
   span {
     font-weight: 700;
     font-size: 22px;
-    
   }
-  
 `;
 // const ContainerThreeDots = styled.div`
 //   position: relative;
@@ -36,20 +35,17 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   color: ${({ theme }) => theme.color.main2};
-  align-items: center;
-  gap: 2rem;
+  gap: 0;
+  > h4 {
+    margin: 1rem;
+  }
 `;
 const DetailsElement = styled.div`
   display: flex;
   flex-direction: column;
   padding: 3px;
-  align-items: center;
 `;
-const DownloadInvoiceButton = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-`;
+
 // Style Desktop
 const ContainerDesktop = styled.div`
   display: flex;
@@ -64,12 +60,12 @@ const ContainerDesktop = styled.div`
   span {
     font-weight: 700;
     font-size: 22px;
-    @media (max-width: 1142px) {
+    @media (max-width: 1242px) {
        {
         font-size: 15px;
       }
     }
-    @media (max-width: 1079px) {
+    @media (max-width: 1129px) {
        {
         font-size: 12px;
       }
@@ -89,7 +85,7 @@ const TitleAndPictureDesktop = styled.div`
   align-content: space-around;
   //border: 10px solid green;
 
-  @media (max-width: 1142px) {
+  @media (max-width: 1242px) {
     > h4 {
       font-size: 25px;
     }
@@ -184,7 +180,7 @@ function CardDetails({ projectData }: Project) {
                   height="12rem"
                 />
                 <DetailsElement>
-                  <span>Staring Date</span>
+                  <span>Starting Date</span>
                   <p>{projectData?.startDate?.substring(0, 15)}</p>
                 </DetailsElement>
                 <DetailsElement>
@@ -210,9 +206,6 @@ function CardDetails({ projectData }: Project) {
               </Details>
             )}
           </Container>
-          <DownloadInvoiceButton>
-            <GeneratePdf />
-          </DownloadInvoiceButton>
         </div>
       ) : (
         // Card Details Desktop Version
@@ -233,11 +226,11 @@ function CardDetails({ projectData }: Project) {
                         width="12rem"
                         height="12rem"
                       />
-                      <DetailsElement>
-                        <span>Staring</span>
+                      <DetailsElement style={{ alignSelf: 'flex-start', paddingLeft: '3rem' }}>
+                        <span>Starting Date</span>
                         <p>{projectData?.startDate?.substring(0, 15)}</p>
                       </DetailsElement>
-                      <DetailsElement>
+                      <DetailsElement style={{ alignSelf: 'flex-start', paddingLeft: '3rem' }}>
                         <span>Due Date</span>
                         <p>{projectData?.updatedAt?.substring(0, 10)}</p>
                       </DetailsElement>

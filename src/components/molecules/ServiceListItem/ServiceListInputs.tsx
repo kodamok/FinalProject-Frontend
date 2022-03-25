@@ -8,13 +8,13 @@ interface DivStyles {
 }
 
 const WrapperContainer = styled.div`
-  /* border: 5px solid red; */
+  //border: 5px solid red;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 70px;
   justify-content: stretch;
   overflow-y: scroll;
-  scrollbar-color: yellow blue;
+  overflow: hidden;
   height: 450px;
 `;
 
@@ -52,34 +52,92 @@ const AddNewServiceContainer = styled.div`
   }
 `;
 const InputsContainer = styled.div`
-  /* border: 5px solid green; */
+  //border: 5px solid green;
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: 3fr 1fr 5fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 40px 1fr;
   justify-items: stretch;
   column-gap: 0.5rem;
   padding: 0.5rem;
 
+  ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+     {
+      grid-template-columns: 3fr 1fr 5fr 1fr;
+      grid-template-rows: 30px 40px 1fr;
+    }
+  }
+
+  .serviceNumber {
+    grid-column: 1 / 2;
+    grid-row: 1/2;
+
+    > p {
+      font-weight: 700;
+      font-size: ${({ theme }) => theme.fontSizeOpenSans.ms};
+      color: #9e0059;
+      padding: 0.5rem;
+    }
+  }
+
   .serviceName {
     /* border: 5px solid black; */
+    grid-column: 1 / 2;
+    grid-row: 2/3;
+
+    ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+       {
+        grid-column: 1 / 2;
+        grid-row: 3/4;
+      }
+    }
   }
 
   .servicePrice {
     /* border: 5px solid black; */
     width: 70px;
     margin-inline: 1rem;
+    grid-column: 2 / 3;
+    grid-row: 2/3;
+
+    ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+       {
+        grid-column: 2 / 3;
+        grid-row: 3/4;
+      }
+    }
   }
 
   .serviceDescription {
     /* border: 5px solid black; */
+
+    grid-column: 3 / 4;
+    grid-row: 2/3;
+
+    ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+       {
+        grid-column: 3 / 4;
+        grid-row: 3/4;
+      }
+    }
   }
 
   .icons {
-    /* border: 5px solid black; */
+    grid-column: 4 / -1;
+    grid-row: 2 / 3;
+    //border: 5px solid black;
     display: flex;
     width: 70px;
     justify-self: end;
+    align-items: center;
+    padding: 0.5rem;
+    ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+       {
+        grid-column: 1 / 2;
+        grid-row: 2/3;
+        justify-self: start;
+      }
+    }
   }
 `;
 
@@ -128,6 +186,9 @@ function ServiceListItem({ serviceList, setServiceList, handleServiceAdd }: any)
           {serviceList.map((singleService: any, index: number) => (
             // eslint-disable-next-line react/no-array-index-key
             <InputsContainer key={index}>
+              <div className="serviceNumber">
+                <p> Service {index + 1}</p>
+              </div>
               <div className="serviceName">
                 <Input
                   form

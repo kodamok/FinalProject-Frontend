@@ -5,10 +5,16 @@
     {
       "src": "/img/NS144x156.png",
       "type": "image/png",
-      "sizes": "144x144"
+      "sizes": "144x144",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/NS144x156.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "scope": ".",
   "display": "standalone",
   "orientation": "portrait-primary",

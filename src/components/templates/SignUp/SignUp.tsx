@@ -205,8 +205,8 @@ function SignUp() {
                 required
               />
               <InputWithLabel
-                label="Password*"
-                name={t('signUpBoxContactInformationPassword')}
+                label={`${t('signUpBoxContactInformationPassword')}*`}
+                name="password"
                 type="password"
                 value={inputs.password}
                 onChange={handleChange}
@@ -218,14 +218,14 @@ function SignUp() {
             <div>
               <h4>{t('signUpBoxBillingInformation')}</h4>
               <InputWithLabel
-                label="Identity Card Number"
-                name={t('signUpBoxBillingInformationPassport')}
+                label={`${t('signUpBoxBillingInformationPassport')}`}
+                name="identityCardNumber"
                 value={inputs.identityCardNumber}
                 onChange={handleChange}
               />
               <InputWithLabel
-                label="Tax Number"
-                name={t('signUpBoxBillingInformationTaxNumber')}
+                label={`${t('signUpBoxBillingInformationTaxNumber')}`}
+                name="taxNumber"
                 onChange={handleChange}
                 value={inputs.taxNumber}
               />

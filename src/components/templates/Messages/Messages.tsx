@@ -330,6 +330,16 @@ function Messages() {
   ];
 
   if (isLoading) return <LoadingSpin />;
+  if (!clients.length) {
+    return (
+      <Container>
+        <PageHead pageHeadInfo={pageHeadInfo} />
+        <div style={{ padding: '1rem' }}>
+          <NoItemsFound text="Clients" />
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container>
@@ -361,18 +371,14 @@ function Messages() {
               </PContainer>
             )}
             <div>
-              {!clients.length && <NoItemsFound text="Messages" />}
               {clientMessages.map((item: any, i) => (
                 <CardMessage
-                  // style={{ marginLeft: item.creator === userData.userId ? 'auto' : null }}
                   marginLeft={item.creator === userData.userId}
                   key={item._id}
                   message={item}
                   idName={i === clientMessages.length - 1 ? 'lastMessage' : undefined}
-                  // ref={i === clientMessages.length - 1 ? ref : null}
                 />
               ))}
-              {/* <div ref={lastRef} /> */}
               <AlwaysScrollToBottom />
             </div>
           </WrapperMessages>

@@ -19,7 +19,7 @@ const Background = styled.div`
   }
 `;
 const Container = styled.div`
-  padding: 0 3rem 3.5rem 3rem;
+  padding: 0 1rem 3.5rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,6 +27,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
   }
   > div:first-child > div:last-child {
     display: none;
@@ -35,12 +36,16 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
   }
-  h3 {
+  h1 {
     color: ${({ theme }) => theme.color.main1};
     text-align: center;
+    font-size: ${({ theme }) => theme.fontSizeInter.ml};
+    margin-top: 1.5rem;
     ${({ theme }) => theme.up(theme.breakpoint.m)} {
       margin-top: 1.5rem;
+      font-size: ${({ theme }) => theme.fontSizeInter.xl};
     }
   }
 
@@ -52,7 +57,7 @@ const Container = styled.div`
   }
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     flex-direction: row;
-    gap: 5rem;
+    gap: 4rem;
     align-items: flex-start;
     width: 90%;
     max-width: 1200px;
@@ -87,16 +92,21 @@ const ContainerIconAndText = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
-
-  p {
-    font-size: 17px;
-  }
+//   David
+//   p {
+//     font-size: 17px;
+// }
+  > p {
+    font-size: ${({ theme }) => theme.fontSizeOpenSans.ms};
+    ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+      font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
+    }
 `;
 
 const Wave = styled.img`
   position: absolute;
   bottom: 0;
-  width: 100vw;
+  width: 100%;
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     display: none;
   }
@@ -116,17 +126,17 @@ function HeroSection() {
   const dataHeroSection = [
     {
       text: t('landingPageMainText'),
-      icon: <MdCheckCircleOutline fontSize={36} />,
+      icon: <MdCheckCircleOutline color="#FF0054" fontSize={36} />,
       id: 1
     },
     {
       text: t('landingPageSmallMainTextOne'),
-      icon: <MdCheckCircleOutline fontSize={36} />,
+      icon: <MdCheckCircleOutline color="#FF0054" fontSize={36} />,
       id: 2
     },
     {
       text: t('landingPageSmallMainTextTwo') + t('landingPageSmallMainTextThree'),
-      icon: <MdCheckCircleOutline fontSize={36} />,
+      icon: <MdCheckCircleOutline color="#FF0054" fontSize={36} />,
       id: 3
     }
   ];
@@ -134,9 +144,11 @@ function HeroSection() {
     <Background>
       <Container style={{ position: 'relative' }}>
         <div>
-          <h3 style={{ width: '500px', position: 'relative', zIndex: 1 }}>
-            {t('landingPageMainText')}
-          </h3>
+          <h1 style={{ position: 'relative', zIndex: 1 }}>{t('landingPageMainText')}</h1>
+          {/* <h3 style={{ width: '500px', position: 'relative', zIndex: 1 }}> */}
+          {/*        {t('landingPageMainText')} */}
+          {/*      </h3>  */}
+
           <div>
             <img src={womenOnTheWay} alt="women on the way" />
           </div>

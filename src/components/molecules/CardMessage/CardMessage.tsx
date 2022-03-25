@@ -11,7 +11,7 @@ const Container = styled.div<MessageStyled>`
   margin: ${({ marginLeft: m }) => (m ? '0 0.4rem 0 auto' : '0 0.4rem')};
   position: ${({ position }) => position && position};
   > div > p {
-    background: #5757f3;
+    background: ${({ marginLeft: m }) => (m ? '#5757f3' : '#555')};
     border-radius: 1.4rem;
     padding: 0.2rem 0.6rem;
     color: white;
@@ -23,6 +23,8 @@ const Container = styled.div<MessageStyled>`
   }
   > div {
     display: flex;
+    align-items: center;
+    gap: 0.5rem;
     flex-direction: ${({ marginLeft: m }) => (m ? 'row-reverse' : 'row')};
   }
 `;

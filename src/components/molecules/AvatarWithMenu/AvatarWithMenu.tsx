@@ -95,7 +95,7 @@ function AvatarWithMenu({
     <Wrap>
       {emptyAvatar ? (
         <AvatarContainer onClick={onClick} className={className} width={width}>
-          <AvatarMenuEmpty top={top} background={background}>
+          <AvatarMenuEmpty top={top} background={background} onClick={handleOpenAvatarMenu}>
             {children}
           </AvatarMenuEmpty>
         </AvatarContainer>
@@ -110,7 +110,11 @@ function AvatarWithMenu({
             width="30px"
             height="30px"
           />
-          {isOpenAvatarMenu && <AvatarMenu ref={ref}>{children}</AvatarMenu>}
+          {isOpenAvatarMenu && (
+            <AvatarMenu ref={ref} onClick={handleOpenAvatarMenu}>
+              {children}
+            </AvatarMenu>
+          )}
         </AvatarContainer>
       )}
     </Wrap>

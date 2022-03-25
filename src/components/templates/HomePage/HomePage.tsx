@@ -60,7 +60,7 @@ const ContainerSections = styled.div`
   ${({ theme }) => theme.up(theme.breakpoint.m)} {
     width: 90%;
     max-width: 1440px;
-  }/
+  }
 `;
 
 function HomePage(): JSX.Element {

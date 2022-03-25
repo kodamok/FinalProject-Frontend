@@ -8,8 +8,11 @@ import { Context } from '../../../providers/GeneralProvider';
 
 const Container = styled.div`
   display: flex;
-  gap: 3rem;
   align-items: center;
+  border: 1px solid black;
+  padding: 1rem;
+  box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
+  border-radius: 0.6rem;
 `;
 
 interface FileUploaderInterface {
@@ -26,8 +29,8 @@ interface File {
 
 function FileUploader({ projectId }: File) {
   const { handleError } = useError();
-  const { userData } = useContext(Context);
-  const { inputs, handleChange } = useForm(initialValue);
+  const { userData, setFilesAreUploaded } = useContext(Context);
+  const { inputs, handleChange, clearForm } = useForm(initialValue);
   const handleUploadDocumentFile = (e: any) => {
     e.preventDefault();
     const formData = new FormData();
@@ -49,6 +52,10 @@ function FileUploader({ projectId }: File) {
         );
         const resJSON = await res.json();
         if (res.status === 200) {
+          setFilesAreUploaded(true);
+          const inputFile: any = document.querySelector('#files');
+          inputFile.value = '';
+          clearForm();
           handleError(resJSON.message || 'You uploaded files correctly', true);
         } else {
           handleError(resJSON.message);

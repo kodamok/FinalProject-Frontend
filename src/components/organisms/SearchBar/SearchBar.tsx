@@ -20,7 +20,14 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 20%;
+  flex: 1;
+  max-width: 350px;
+
+  ${({ theme }) => theme.down(theme.breakpoint.m)} {
+     {
+      max-width: none;
+    }
+  }
 `;
 
 const ContainerMicrophone = styled.div`
@@ -112,7 +119,6 @@ function SearchBar({ top }: SearchBarI) {
     <Container ref={ref}>
       <Input
         margin="0"
-        width="300px"
         name="searchBar"
         value={inputs.searchBar}
         onChange={handleChange}

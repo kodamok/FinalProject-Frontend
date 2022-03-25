@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrClose } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import NSLogo from '../../../assets/images/Logos/newLogos/53x161/NSLogo.png';
 /* import { useNavigate } from 'react-router-dom'; */
 import AvatarWithMenu from '../../molecules/AvatarWithMenu/AvatarWithMenu';
@@ -31,6 +31,7 @@ const Container = styled.div<StyledDivProps>`
   min-height: ${({ isOpenMenu }) => (isOpenMenu ? '100vh' : 'auto')};
   /* border: 2px solid red; */
   position: relative;
+  z-index: 9999;
   //top: 0;
   //left: 0;
   //z-index: 0;
@@ -212,34 +213,6 @@ const ContainerSearchBar = styled.div`
   // }
 `;
 
-const data = [
-  {
-    path: '/aboutUs',
-    text: t('headerAboutUs'),
-    id: 1
-  },
-  {
-    path: '/services',
-    text: t('headerServices'),
-    id: 2
-  },
-  {
-    path: '/login',
-    text: t('headerLogin'),
-    id: 3
-  },
-  {
-    path: '/signup',
-    text: t('headerSignUp'),
-    id: 4
-  },
-  {
-    path: '/contact',
-    text: t('headerContact'),
-    id: 5
-  }
-];
-
 const dataDesktop = [
   {
     path: '/aboutUs',
@@ -299,6 +272,34 @@ const dataHeaderClient = [
 ];
 
 function Header() {
+  const { t } = useTranslation();
+  const data = [
+    {
+      path: '/aboutUs',
+      text: t('headerAboutUs'),
+      id: 1
+    },
+    {
+      path: '/services',
+      text: t('headerServices'),
+      id: 2
+    },
+    {
+      path: '/login',
+      text: t('headerLogin'),
+      id: 3
+    },
+    {
+      path: '/signup',
+      text: t('headerSignUp'),
+      id: 4
+    },
+    {
+      path: '/contact',
+      text: t('headerContact'),
+      id: 5
+    }
+  ];
   const { userData } = useContext(Context);
   const { handleLogout } = useAuth();
 
@@ -490,12 +491,7 @@ function Header() {
                 {dataHeaderAdmin.map((item) => (
                   <NavLink key={item.id} path={item.path} text={item.text} color="white" />
                 ))}
-                <NavLink
-                  path="/statistics"
-                  text="Statistics"
-                  onClick={handleOpenMenu}
-                  color="white"
-                />
+                <NavLink path="/statistics" text="Statistics" color="white" />
               </StyledMenuDesktopAdmin>
               <CountryFlagClient>
                 <LanguageMenu />

@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import TeamBackground from '../../../assets/illustrations/TeamBackground.png';
 import { RedSpan } from '../../atoms/RedSpan/RedSpan';
-import face1small from '../../../assets/images/face1small.jpg';
-import face2small from '../../../assets/images/face2small.jpg';
-import face3small from '../../../assets/images/face3small.jpg';
-import face4small from '../../../assets/images/face4small.jpg';
-import face5small from '../../../assets/images/face5small.jpg';
+import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
+import david from '../../../assets/images/team/david.jpg';
+import priscilla from '../../../assets/images/team/priscilla.jpg';
+import patryk from '../../../assets/images/team/patryk.png';
+import marlene from '../../../assets/images/team/marlene.jpg';
+import gabo from '../../../assets/images/team/gabo.jpg';
 
 const MainContainer = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const MainContainer = styled.div`
 
 export const OpeningTextContainer = styled.div`
   padding: 0 1.5rem 1.5rem 1.5rem;
-  max-width: 800px;
+  max-width: 850px;
   margin: 0 auto;
 
   h2 {
@@ -52,52 +53,11 @@ const TeamMemberContainer = styled.div`
   padding: 1.5rem;
 `;
 
-const PhotoOfTeamMember1 = styled.div`
-  background-image: url(${face1small});
-  background-position: center;
-  border: 3px solid ${({ theme }) => theme.color.main4};
-  border-radius: 50%;
-  height: 250px;
-  width: 250px;
-`;
-const PhotoOfTeamMember2 = styled.div`
-  background-image: url(${face2small});
-  background-position: center;
-  border: 3px solid ${({ theme }) => theme.color.main4};
-  border-radius: 50%;
-  height: 250px;
-  width: 250px;
-`;
-const PhotoOfTeamMember3 = styled.div`
-  background-image: url(${face3small});
-  background-position: center;
-  border: 3px solid ${({ theme }) => theme.color.main4};
-  border-radius: 50%;
-  height: 250px;
-  width: 250px;
-`;
-const PhotoOfTeamMember4 = styled.div`
-  background-image: url(${face4small});
-  background-position: center;
-  border: 3px solid ${({ theme }) => theme.color.main4};
-  border-radius: 50%;
-  height: 250px;
-  width: 250px;
-`;
-const PhotoOfTeamMember5 = styled.div`
-  background-image: url(${face5small});
-  background-position: center;
-  border: 3px solid ${({ theme }) => theme.color.main4};
-  border-radius: 50%;
-  height: 250px;
-  width: 250px;
-`;
-
 const TeamMemberName = styled.div`
   h4 {
     font-size: ${({ theme }) => theme.fontSizeInter.m};
     text-align: center;
-    margin: 0;
+    margin: 1.2rem 0 0 0;
   }
 
   p {
@@ -113,18 +73,37 @@ function AboutUs(): JSX.Element {
     <MainContainer>
       <OpeningTextContainer>
         <h2>
-          {t('aboutUsHeadline1')} <RedSpan>{t('aboutUsHeadline2')}</RedSpan>
+          {t('aboutUsHeadline1')} <RedSpan>{t('aboutUsHeadline2')} </RedSpan>
           {t('aboutUsHeadline3')}
         </h2>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque nisi dicta sit. Debitis,
-          obcaecati sapiente harum, praesentium quasi laborum doloremque modi sunt quibusdam, totam
-          libero ipsum? Voluptas assumenda laboriosam odit! Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Eaque veritatis quasi facilis doloribus, id officia ipsa quas nisi
-          provident inventore porro, dicta dolore beatae consectetur, voluptas sint est illum
-          laboriosam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad saepe ducimus
-          veritatis quisquam cum ipsam tempore. Repellendus minus iure vitae aut hic et omnis sed.
-          Fugit laboriosam totam reprehenderit a?
+          We met each other in the DCI 1 year web Developement program. We were all coming from
+          different backgrounds but we all had one goal in common: to finish our program an start
+          working as Web Developers. Throughout the year each one found different challenges but at
+          the same time we somehow intertwined helping each other to be better. After the year we
+          had to deliver a Final Project in less than 2 months. This site is that project: <br />
+          <h5>What is this website about?</h5>A website which includes all the basic tools necessary
+          for any freelancer to interact with its customer and avoid jumping from platform to
+          platform falling in to infinite searches about where is what.
+          <h5>How the website works?</h5>
+          After the freelancer created his account, inside the account you can create a new customer
+          with a user name and a password. That user name and password is the log in information
+          necessary so your customer can access the website and start communicating and seeing all
+          the necessary updates as well as sharing files/photos associated to the project. Dont
+          forget to give him the login and password you created.
+          <h5>What tools ara available?</h5>
+          <h5>For the freelancer:</h5>
+          - Share photos and files. <br />- Keep track of all your customers.
+          <br /> - All the conversations related to the project in one place.
+          <br /> - An archive for all the present and past projects.
+          <br /> - Statistics about our performance as a freelance.
+          <br /> - PDF Download of the table of services provided.
+          <br /> - All the contact information from your customers in one place
+          <h5>For the customer:</h5>
+          <br /> - All the conversations related to the project in one place.
+          <br /> - Upload of files/photos related to the project.
+          <br /> - Manage username and password for more privacy.
+          <br /> - Access to project details.
         </p>
       </OpeningTextContainer>
       <TheTeamContainer>
@@ -133,38 +112,79 @@ function AboutUs(): JSX.Element {
         </OurTeamTitle>
         <OurTeamContainer>
           <TeamMemberContainer>
-            <PhotoOfTeamMember1 />
+            <RoundedPhoto
+              width="250px"
+              height="250px"
+              border="2px solid black"
+              img={marlene}
+              alt="FrontEnd Developer"
+            />
+
             <TeamMemberName>
-              <h4>Name Surname</h4>
-              <p>CO-FOUNDER &amp; CTO</p>
+              <h4>Marlene Wieduwilt</h4>
+              <p>Front-end Developer</p>
             </TeamMemberName>
           </TeamMemberContainer>
           <TeamMemberContainer>
-            <PhotoOfTeamMember2 />
+            <RoundedPhoto
+              border="2px solid black"
+              width="250px"
+              height="250px"
+              img={gabo}
+              alt="FrontEnd Developer"
+            />
+
             <TeamMemberName>
-              <h4>Name Surname</h4>
-              <p>CO-FOUNDER &amp; CTO</p>
+              <h4>Gabriel Fernandez</h4>
+              <p>Front-end Developer</p>
             </TeamMemberName>
           </TeamMemberContainer>
           <TeamMemberContainer>
-            <PhotoOfTeamMember3 />
+            <RoundedPhoto
+              border="2px solid black"
+              width="250px"
+              height="250px"
+              img={priscilla}
+              alt="FrontEnd Developer"
+            />
+
             <TeamMemberName>
-              <h4>Name Surname</h4>
-              <p>CO-FOUNDER &amp; CTO</p>
+              <h4>Priscilla Andinwo</h4>
+              <p>Front-end Developer</p>
             </TeamMemberName>
           </TeamMemberContainer>
           <TeamMemberContainer>
-            <PhotoOfTeamMember4 />
+            <RoundedPhoto
+              border="2px solid black"
+              width="250px"
+              height="250px"
+              img={patryk}
+              alt="Project Manager"
+            />
+
             <TeamMemberName>
-              <h4>Name Surname</h4>
-              <p>CO-FOUNDER &amp; CTO</p>
+              <h4>Patryk Lisowski</h4>
+              <p>
+                Project Manager, <br />
+                Full-stack Developer
+              </p>
             </TeamMemberName>
           </TeamMemberContainer>
           <TeamMemberContainer>
-            <PhotoOfTeamMember5 />
+            <RoundedPhoto
+              width="250px"
+              height="250px"
+              img={david}
+              alt="Team Member UX Designer/FrontEnd"
+              border="2px solid black"
+            />
+
             <TeamMemberName>
-              <h4>Name Surname</h4>
-              <p>CO-FOUNDER &amp; CTO</p>
+              <h4>David Rabinovich</h4>
+              <p>
+                UX/UI Designer, <br />
+                Front-end Developer
+              </p>
             </TeamMemberName>
           </TeamMemberContainer>
         </OurTeamContainer>

@@ -61,6 +61,8 @@ interface ContextType {
   setOpenChatBoxWithThisUser: Dispatch<SetStateAction<string>>;
   clientsGlobal: never[];
   setClientsGlobal: Dispatch<SetStateAction<never[]>>;
+  filesAreUploaded: boolean;
+  setFilesAreUploaded: Dispatch<SetStateAction<boolean>>;
 }
 
 export const Context = createContext<ContextType>({
@@ -91,7 +93,9 @@ export const Context = createContext<ContextType>({
   openChatBoxWithThisUser: '',
   setOpenChatBoxWithThisUser: () => undefined,
   clientsGlobal: [],
-  setClientsGlobal: () => undefined
+  setClientsGlobal: () => undefined,
+  filesAreUploaded: false,
+  setFilesAreUploaded: () => undefined
 });
 
 function GeneralProvider({ children }: { children: ReactNode }): ReactElement {
@@ -116,6 +120,7 @@ function GeneralProvider({ children }: { children: ReactNode }): ReactElement {
   const [messages, setMessages] = useState<never[]>([]);
   const [openChatBoxWithThisUser, setOpenChatBoxWithThisUser] = useState<string>('');
   const [clientsGlobal, setClientsGlobal] = useState([]);
+  const [filesAreUploaded, setFilesAreUploaded] = useState(false);
 
   const value = useMemo(() => {
     return {
@@ -132,7 +137,9 @@ function GeneralProvider({ children }: { children: ReactNode }): ReactElement {
       openChatBoxWithThisUser,
       setOpenChatBoxWithThisUser,
       clientsGlobal,
-      setClientsGlobal
+      setClientsGlobal,
+      filesAreUploaded,
+      setFilesAreUploaded
     };
   }, [
     example,
@@ -148,7 +155,9 @@ function GeneralProvider({ children }: { children: ReactNode }): ReactElement {
     openChatBoxWithThisUser,
     setOpenChatBoxWithThisUser,
     clientsGlobal,
-    setClientsGlobal
+    setClientsGlobal,
+    filesAreUploaded,
+    setFilesAreUploaded
   ]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import i18next from 'i18next';
-
 import Button from '../../atoms/Button/Button';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import AvatarWithMenu from '../AvatarWithMenu/AvatarWithMenu';
@@ -55,7 +54,8 @@ const Text = styled.span`
 const Bla = styled.div`
   display: flex;
   flex-direction: column;
-  z-index: 500;
+  position: relative;
+  z-index: 5;
 `;
 const languages = [
   { id: 1, code: 'de', name: 'Deutsch', country_code: 'de' },

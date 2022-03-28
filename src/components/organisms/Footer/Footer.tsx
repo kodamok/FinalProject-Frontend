@@ -9,7 +9,7 @@ import { IoLogoInstagram } from 'react-icons/io';
 import mobileFooterWave from '../../../assets/illustrations/mobileFooterWaveBlue.png';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 /* import companyLogo from '../../../assets/illustrations/COMPANYLOGO.png'; */
-import NS3wht from '../../../assets/images/Logos/newLogos/81x195/NS3wht.png';
+import NS3wht from '../../../assets/images/Logos/81x195/NS3wht.png';
 import LanguageMenu from '../../molecules/LanguageMenu/LanguageMenu';
 import NavLink from '../../atoms/NavLink/NavLink';
 // import NavLink from '../../atoms/NavLink/NavLink';

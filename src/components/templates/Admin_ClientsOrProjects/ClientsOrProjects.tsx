@@ -198,7 +198,7 @@ function ClientsOrProjects() {
   // SHOW/HIDE FILTER RADIO BUTTONS ACCORDING TO MEDIA QUERIES IN CSS
 
   const [mobileFilter, setMobileFilter] = useState(true);
-  const [windowWidth, setWindowWidth] = useState(window.screen.width);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const ref: any = useRef(null);
   useOnClickOutside(ref, () => setMobileFilter(false));
 

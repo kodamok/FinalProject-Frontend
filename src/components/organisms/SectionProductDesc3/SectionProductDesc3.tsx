@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Box } from '../SectionProductDesc1/SectionProductDesc1';
 import Button from '../../atoms/Button/Button';
 import { RedSpan } from '../../atoms/RedSpan/RedSpan';
@@ -164,11 +165,13 @@ function SectionProductDesc3(): JSX.Element {
   const handleNavigateToSignup = () => {
     navigate('/signup');
   };
+  const { t } = useTranslation();
   return (
     <Container>
       <div>
         <h5>
-          Adjust your <RedSpan>earning</RedSpan> to your<RedSpan> work performance</RedSpan>
+          {t('landingPageFourthText1')} <RedSpan> {t('landingPageFourthText2')} </RedSpan>{' '}
+          {t('landingPageFourthText3')} <RedSpan> {t('landingPageFourthText4')} </RedSpan>
         </h5>
       </div>
       <ContainerFlex>
@@ -189,10 +192,10 @@ function SectionProductDesc3(): JSX.Element {
           <img src={Security} alt="security illustration" />
         </div>
         <h5 style={{ margin: '0' }}>
-          <RedSpan>Security</RedSpan>
+          <RedSpan>{t('landingPageFifthText1')}</RedSpan>
         </h5>
         <h5 style={{ margin: '0' }}>
-          is very<RedSpan> important</RedSpan>
+          {t('landingPageFifthText2')} <RedSpan> {t('landingPageFifthText3')} </RedSpan>
         </h5>
         <h5 style={{ margin: '0' }}>
           <span
@@ -202,7 +205,7 @@ function SectionProductDesc3(): JSX.Element {
               textShadow: '3px 3px 2px rgba(0,0,0,0.3)'
             }}
           >
-            to us!
+            {t('landingPageFifthText4')}
           </span>
         </h5>
       </SecuritySection>

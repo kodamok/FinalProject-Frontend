@@ -73,7 +73,7 @@ function AboutUs(): JSX.Element {
     <MainContainer>
       <OpeningTextContainer>
         <h2>
-          {t('aboutUsHeadline1')} <RedSpan>{t('aboutUsHeadline2')} </RedSpan>
+          {t('aboutUsHeadline1')} <RedSpan> {t('aboutUsHeadline2')} </RedSpan>
           {t('aboutUsHeadline3')}
         </h2>
         <p>

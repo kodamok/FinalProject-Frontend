@@ -1,8 +1,7 @@
 import React, { SyntheticEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
-/* import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
- */ import useForm from '../../../hooks/useForm';
+import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import { Context } from '../../../providers/GeneralProvider';

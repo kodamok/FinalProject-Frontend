@@ -152,7 +152,7 @@ const IconBox = styled.div`
 
 type Service = {
   serviceName: string;
-  price: number;
+  price: string;
   description: string;
 };
 

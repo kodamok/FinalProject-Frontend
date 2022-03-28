@@ -213,66 +213,65 @@ const ContainerSearchBar = styled.div`
   // }
 `;
 
-const dataDesktop = [
-  {
-    path: '/aboutUs',
-    text: 'About Us',
-    id: 1
-  },
-  {
-    path: '/services',
-    text: 'Services',
-    id: 2
-  },
-  {
-    path: '/contact',
-    text: 'Contact',
-    id: 3
-  },
-  {
-    path: '/login',
-    text: 'Login',
-    id: 4
-  }
-];
-const dataHeaderAdmin = [
-  {
-    path: '/',
-    text: 'Dashboard',
-    id: 1
-  },
-  {
-    path: '/clients',
-    text: 'Clients/Projects',
-    id: 2
-  },
-  {
-    path: '/messages',
-    text: 'Messages',
-    id: 3
-  }
-];
-
-const dataHeaderClient = [
-  {
-    path: '/',
-    text: 'Dashboard',
-    id: 1
-  },
-  {
-    path: '/projects',
-    text: 'Projects',
-    id: 2
-  },
-  {
-    path: '/messages',
-    text: 'Messages',
-    id: 3
-  }
-];
-
 function Header() {
   const { t } = useTranslation();
+  const dataDesktop = [
+    {
+      path: '/aboutUs',
+      text: t('headerAboutUs'),
+      id: 1
+    },
+    {
+      path: '/services',
+      text: t('headerServices'),
+      id: 2
+    },
+    {
+      path: '/contact',
+      text: t('headerContact'),
+      id: 3
+    },
+    {
+      path: '/login',
+      text: t('headerLogin'),
+      id: 4
+    }
+  ];
+  const dataHeaderAdmin = [
+    {
+      path: '/',
+      text: 'Dashboard',
+      id: 1
+    },
+    {
+      path: '/clients',
+      text: t('headerAdminProjects'),
+      id: 2
+    },
+    {
+      path: '/messages',
+      text: t('headerAdminMessages'),
+      id: 3
+    }
+  ];
+
+  const dataHeaderClient = [
+    {
+      path: '/',
+      text: 'Dashboard',
+      id: 1
+    },
+    {
+      path: '/projects',
+      text: t('headerClientProjects'),
+      id: 2
+    },
+    {
+      path: '/messages',
+      text: t('headerClientMessages'),
+      id: 3
+    }
+  ];
   const data = [
     {
       path: '/aboutUs',
@@ -314,6 +313,9 @@ function Header() {
   const handleOpenMenu = () => {
     setIsOpenMenu((prev) => !prev);
   };
+  const handleCloseMenu = () => {
+    setIsOpenMenu(false);
+  };
   // useMediaQuery
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
 
@@ -348,7 +350,10 @@ function Header() {
                 <div style={{ position: 'relative' }}>
                   <NavLink path="/" image={NSLogo} alt="Logo" />
                 </div>
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <CountryFlagAdmin>
+                    <LanguageMenu />
+                  </CountryFlagAdmin>
                   {!isOpenMenu && (
                     <GiHamburgerMenu fontSize={48} cursor="pointer" onClick={handleOpenMenu} />
                   )}
@@ -359,7 +364,7 @@ function Header() {
               <>
                 <FlexOpen>
                   <div style={{ position: 'relative' }}>
-                    <NavLink path="/" image={NSLogo} alt="Logo" />
+                    <NavLink path="/" image={NSLogo} alt="Logo" onClick={handleCloseMenu} />
                   </div>
                   <div>
                     <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -374,10 +379,11 @@ function Header() {
                       onClick={handleOpenMenu}
                     />
                   ))}
+                  <NavLink path="/settings" text="Settings" onClick={handleOpenMenu} />
                   <ButtonLogoutMobil onClick={handleLogout}>Logout</ButtonLogoutMobil>
                 </StyledMenu>
                 <StyledLogoSlogan>
-                  <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
+                  <NavLink path="/" bigLogo image={NSLogo} alt="Logo" onClick={handleCloseMenu} />
                 </StyledLogoSlogan>
                 <Contact />
               </>
@@ -436,7 +442,10 @@ function Header() {
                     <NavLink path="/" image={NSLogo} alt="Logo" />
                   </div>
                   {/* Do we need searchBar here? */}
-                  <div>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <CountryFlagAdmin>
+                      <LanguageMenu />
+                    </CountryFlagAdmin>
                     {!isOpenMenu && (
                       <GiHamburgerMenu fontSize={48} cursor="pointer" onClick={handleOpenMenu} />
                     )}
@@ -447,7 +456,7 @@ function Header() {
                 <>
                   <FlexOpen>
                     <div style={{ position: 'relative' }}>
-                      <NavLink path="/" image={NSLogo} alt="Logo" />
+                      <NavLink path="/" image={NSLogo} alt="Logo" onClick={handleCloseMenu} />
                     </div>
                     <div>
                       <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -468,7 +477,7 @@ function Header() {
                     <ButtonLogoutMobilAdmin onClick={handleLogout}>Logout</ButtonLogoutMobilAdmin>
                   </StyledMenu>
                   <StyledLogoSlogan>
-                    <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
+                    <NavLink path="/" bigLogo image={NSLogo} alt="Logo" onClick={handleCloseMenu} />
                   </StyledLogoSlogan>
                   <Contact />
                 </>
@@ -564,7 +573,10 @@ function Header() {
               <div>
                 <NavLink path="/" image={NSLogo} alt="Logo" />
               </div>
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <CountryFlagAdmin>
+                  <LanguageMenu />
+                </CountryFlagAdmin>
                 {!isOpenMenu && (
                   <GiHamburgerMenu fontSize={48} cursor="pointer" onClick={handleOpenMenu} />
                 )}
@@ -575,7 +587,7 @@ function Header() {
             <>
               <FlexOpen>
                 <div>
-                  <NavLink path="/" image={NSLogo} alt="Logo" />
+                  <NavLink path="/" image={NSLogo} alt="Logo" onClick={handleCloseMenu} />
                 </div>
                 <div>
                   <GrClose onClick={handleOpenMenu} cursor="pointer" fontSize={48} />
@@ -592,7 +604,7 @@ function Header() {
                 ))}
               </StyledMenu>
               <StyledLogoSlogan>
-                <NavLink path="/" bigLogo image={NSLogo} alt="Logo" />
+                <NavLink path="/" bigLogo image={NSLogo} alt="Logo" onClick={handleCloseMenu} />
               </StyledLogoSlogan>
               <Contact />
             </>

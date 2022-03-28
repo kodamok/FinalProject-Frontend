@@ -140,7 +140,7 @@ function CardClient({ clientData }: client) {
           outline="3px solid black"
         />
         <div>
-          <h5>{clientData.name}</h5>
+          <h5>{clientData.name || 'No Data'}</h5>
         </div>
         <div>
           <IconClickable icon={<BsThreeDots fontSize={28} />}>
@@ -176,11 +176,11 @@ function CardClient({ clientData }: client) {
       <div>
         <ElementData>
           <span>Phone:</span>
-          <p>{clientData.phone}</p>
+          <p>{clientData.phone || 'No Data'}</p>
         </ElementData>
         <ElementData>
           <span>Email:</span>
-          <p>{clientData.email}</p>
+          <p>{clientData.email || 'No Data'}</p>
         </ElementData>
         <ElementData>
           <span>Projects:</span>

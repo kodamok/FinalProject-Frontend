@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   ContainerPhoto,
   FlexPhoto,
@@ -85,11 +86,14 @@ function SectionProductDesc2(): JSX.Element {
   const handleNavigateToServices = () => {
     navigate('/services');
   };
+
+  const { t } = useTranslation();
   return (
     <Container>
       <div>
         <h5>
-          You can <RedSpan>live your life</RedSpan> without worrying of who sent what where
+          {t('landingPageThirdText1')} <RedSpan>{t('landingPageThirdText2')}</RedSpan>{' '}
+          {t('landingPageThirdText3')}
         </h5>
       </div>
       <ContainerFlex>
@@ -113,7 +117,7 @@ function SectionProductDesc2(): JSX.Element {
       </ContainerFlex>
       <div>
         <Button
-          text="Choose a Plan"
+          text={t('landingPageThirdTextButton')}
           color="#001523"
           background="#fcbf49"
           onClick={handleNavigateToServices}

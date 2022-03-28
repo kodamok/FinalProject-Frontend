@@ -64,7 +64,7 @@ function NavLink({ path, text, image, alt, bigLogo, border, onClick, color, font
   return (
     <Container border={border} fontWeight={fontWeight}>
       {bigLogo ? (
-        <BigLogo to={path}>
+        <BigLogo to={path} onClick={onClick}>
           {image && <img src={image} alt={alt} />}
           {text && <ContainerNavText>{text}</ContainerNavText>}
         </BigLogo>

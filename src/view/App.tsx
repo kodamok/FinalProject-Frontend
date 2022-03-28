@@ -58,6 +58,7 @@ function App(): JSX.Element {
           if (+userData.exp - Date.now() < 30000 && !messageDisplay) {
             handleError('For Your Safety We Will Logout You in a 30 seconds :)');
             setMessageDisplayed(true);
+            clearInterval(interval);
           }
           // If Token expired Clear UserData and Logout User/Admin
           if (Date.now() > userData.exp) {
@@ -178,7 +179,9 @@ function App(): JSX.Element {
         body: JSON.stringify({ code })
       });
       const resJSON = await res.json();
-      if (res.status === 200) {
+      console.log(resJSON);
+      if (res.status >= 200 && res.status < 300) {
+        console.log('in OK', resJSON);
         setUserData(resJSON);
         navigate('/');
         handleError('You are correctly logged in', true);

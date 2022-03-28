@@ -184,7 +184,7 @@ function SectionProductDesc1(): JSX.Element {
             <h5>
               {t('landingPageSecondaryText1')} <RedSpan> {t('landingPageSecondaryText2')} </RedSpan>
               , <RedSpan> {t('landingPageSecondaryText3')} </RedSpan>{' '}
-              {t('landingPageSecondaryText4')} <RedSpan>{t('landingPageSecondaryText5')}</RedSpan>{' '}
+              {t('landingPageSecondaryText4')} <RedSpan> {t('landingPageSecondaryText5')} </RedSpan>{' '}
               {t('landingPageSecondaryText6')}{' '}
               <PurpleSpan>{t('landingPageSecondaryText7')}</PurpleSpan>
             </h5>
@@ -231,7 +231,7 @@ function SectionProductDesc1(): JSX.Element {
           </Testimonials>
           <div>
             <Button
-              text="Start Free Trial"
+              text={t('landingPageSecondaryTextButton')}
               background="#001523"
               color="#fcbf49"
               onClick={handleNavigateToSignup}

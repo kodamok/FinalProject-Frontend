@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import GlobalMessage from '../../organisms/GlobalMessage/GlobalMessage';
 import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
@@ -53,6 +54,7 @@ const ContainerProjects = styled.div`
 // ];
 
 function Projects() {
+  const { t } = useTranslation();
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { userData } = useContext(Context);
@@ -87,18 +89,14 @@ function Projects() {
   const PageHeadInfo = [
     {
       id: 1,
-      titleOfPage: 'My Projects',
-      threeDotButton: {
-        button1: 'New Project',
-        onClickEvent: 'no action'
-      }
+      titleOfPage: t('projectsHeadline1')
     }
   ];
 
   if (isLoading) return <LoadingSpin />;
   return (
     <Container>
-      <PageHead pageHeadInfo={PageHeadInfo} /> <TitleWithLines text="All Projects" />
+      <PageHead pageHeadInfo={PageHeadInfo} /> <TitleWithLines text={t('projectsHeadline2')} />
       <ContainerProjects>
         {projects.length ? (
           projects.map((item, i) => (
@@ -106,7 +104,7 @@ function Projects() {
             <CardProfile key={i} projectData={item} />
           ))
         ) : (
-          <NoItemsFound text="Projects" />
+          <NoItemsFound text={t('projectsButton')} />
         )}
       </ContainerProjects>
       <GlobalMessage />

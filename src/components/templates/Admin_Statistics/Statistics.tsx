@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import Chart from '../../molecules/Chart/Chart';
 import CardStatistic from '../../molecules/CardStatistic/CardStatistic';
 import useError from '../../../hooks/useError';
@@ -22,6 +23,7 @@ const ContainerCardStatistics = styled.div`
 `;
 
 function Statistics() {
+  const { t } = useTranslation();
   const [statistics, setStatistics]: any = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { handleError } = useError();
@@ -76,11 +78,7 @@ function Statistics() {
   const pageHeadInfo = [
     {
       id: 1,
-      titleOfPage: 'Statistics',
-      threeDotButton: {
-        button1: 'No Action',
-        onClickEvent: 'undefined'
-      }
+      titleOfPage: t('headerAdminStatistics')
     }
   ];
   if (isLoading) return <LoadingSpin />;

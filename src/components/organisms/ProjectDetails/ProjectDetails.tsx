@@ -415,7 +415,8 @@ function ProjectDetail() {
   const [project, setProject]: any = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [showPreviews, setShowPreviews] = useState(false);
-  const { userData, filesAreUploaded, setFilesAreUploaded } = useContext(Context);
+  const { userData, filesAreUploaded, setFilesAreUploaded, setOpenChatBoxWithThisUser } =
+    useContext(Context);
   const { handleError } = useError();
   const { projectId } = useParams();
 
@@ -486,8 +487,14 @@ function ProjectDetail() {
   const handleNavigateToEditProject = () => {
     navigate(`/editProject/${projectId}`);
   };
-  // const [total, setTotal] = useState([]);
-  // const handleTotal = project.price.reduce((sum: number, value: number) => sum + value);
+  const handleNavigateToChatBoxMessage = () => {
+    if (userData.role === 'Client') {
+      setOpenChatBoxWithThisUser(project.ownerFreelancer);
+    }
+    if (userData.role === 'Freelancer') {
+      setOpenChatBoxWithThisUser(project.ownerUser);
+    }
+  };
 
   // Total of the services
   console.log(`This is the project`, project.services);
@@ -496,23 +503,37 @@ function ProjectDetail() {
   const total = projectServices?.reduce((a: any, v: any) => a + +v.price, 0);
   console.log(`This is the total`, total);
 
-  const PageHeadInfo = [
-    {
-      id: 1,
-      titleOfPage: `Project Details`,
-      threeDotButton: {
-        button1: 'Edit Project',
-        onClickEvent: handleNavigateToEditProject
+  let PageHeadInfo;
+  if (userData.role === 'Client') {
+    PageHeadInfo = [
+      {
+        id: 1,
+        titleOfPage: `Project Details`,
+        threeDotButton: {
+          button1: 'View Client',
+          onClickEvent: handleNavigateToClient
+        }
       }
-    },
-    {
-      id: 2,
-      threeDotButton: {
-        button1: 'View Client',
-        onClickEvent: handleNavigateToClient
+    ];
+  } else if (userData.role === 'Freelancer') {
+    PageHeadInfo = [
+      {
+        id: 1,
+        titleOfPage: `Project Details`,
+        threeDotButton: {
+          button1: 'Edit Project',
+          onClickEvent: handleNavigateToEditProject
+        }
+      },
+      {
+        id: 2,
+        threeDotButton: {
+          button1: 'View Client',
+          onClickEvent: handleNavigateToClient
+        }
       }
-    }
-  ];
+    ];
+  }
 
   if (isLoading) return <LoadingSpin />;
   return (
@@ -531,8 +552,8 @@ function ProjectDetail() {
                     <GrClose onClick={handleModal} cursor="pointer" fontSize={18} />
                   </div>
                   <ModalText>
-                    <p>Description of {serviceToModal.serviceName}:</p>
-                    <p>{serviceToModal.description}</p>
+                    <p>Description of {serviceToModal.serviceName || 'No Data'}:</p>
+                    <p>{serviceToModal.description || 'No Data'}</p>
                   </ModalText>
                 </ModalContainerDesktop>
               </ModalBackgroundDesktop>
@@ -564,8 +585,11 @@ function ProjectDetail() {
               {project.services.length > 0 &&
                 project.services.map((item: any, i: number) => (
                   <ContainerServiceAndPrice onClick={() => handleModalIndex(i)}>
-                    <p>{item.serviceName}</p>
-                    <p>{item.price}€</p>
+                    <p>{item.serviceName || 'No Data'}</p>
+                    <p>
+                      {item.price || 'No Data'}
+                      {item.price ? '€' : ''}
+                    </p>
                   </ContainerServiceAndPrice>
                 ))}
               <ContainerTotal>
@@ -582,7 +606,7 @@ function ProjectDetail() {
                 padding="0.5rem 1rem"
                 onClick={handleNavigateToEditProject}
               />
-              <GeneratePdf />
+              <GeneratePdf project={project} />
             </ContainerButtonAndGenerate>
             <ContainerButtonAndFiles>
               <Button
@@ -681,6 +705,7 @@ function ProjectDetail() {
                 text={`Send Message To ${userData.role === 'Freelancer' ? 'Client' : 'Freelancer'}`}
                 width="100%"
                 padding="1.5rem 2rem"
+                onClick={handleNavigateToChatBoxMessage}
               />
             </ContainerDetailsDesktop>
             <ProjectInvoicesFilesDesktop>
@@ -694,8 +719,8 @@ function ProjectDetail() {
                         <GrClose onClick={handleModal} cursor="pointer" fontSize={18} />
                       </div>
                       <ModalText>
-                        <p>Description of {serviceToModal.serviceName}:</p>
-                        <p>{serviceToModal.description}</p>
+                        <p>Description of {serviceToModal.serviceName || 'No Data'}:</p>
+                        <p>{serviceToModal.description || 'No Data'}</p>
                       </ModalText>
                     </ModalContainerDesktop>
                   </ModalBackgroundDesktop>
@@ -709,9 +734,12 @@ function ProjectDetail() {
                   {project.services.length > 0 &&
                     project.services.map((item: any, i: number) => (
                       <ContainerServiceAndPrice onClick={() => handleModalIndex(i)}>
-                        <p>{item.serviceName}</p>
-                        <p>{item.price}€</p>
-                        <p>{item.description}</p>
+                        <p>{item.serviceName || 'No Data'}</p>
+                        <p>
+                          {item.price || 'No Data'}
+                          {item.price ? '€' : ''}
+                        </p>
+                        <p>{item.description || 'No Data'}</p>
                       </ContainerServiceAndPrice>
                     ))}
                 </WrapperServicesDesktop>
@@ -754,7 +782,7 @@ function ProjectDetail() {
                     padding="0.5rem 1rem"
                     onClick={handleNavigateToEditProject}
                   />
-                  <GeneratePdf />
+                  <GeneratePdf project={project} />
                   {/* <Button */}
                   {/*   text="+ Add note" */}
                   {/*   height="50px" */}

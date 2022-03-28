@@ -2,8 +2,7 @@ import React, { SyntheticEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-/* import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
- */ import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
@@ -116,7 +115,7 @@ function LogIn() {
         placeholder="Email"
       />
       <Input
-        label="Password"
+        label={t('signUpBoxContactInformationPassword')}
         type="password"
         name="password"
         placeholder={t('signUpBoxContactInformationPassword')}

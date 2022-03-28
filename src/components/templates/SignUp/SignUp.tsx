@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';
 import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import { googleLoginUrl } from '../../../helpers/googleLoginUrl';
+import Input from '../../atoms/Input/Input';
 
 const FormContainer = styled.form`
   display: flex;
@@ -187,7 +187,7 @@ function SignUp() {
           <DivTwo>
             <div>
               <h4>{t('signUpBoxContactInformation')}</h4>
-              <InputWithLabel
+              <Input
                 label="Name*"
                 name="name"
                 placeholder="Give your Name"
@@ -196,7 +196,7 @@ function SignUp() {
                 required
               />
 
-              <InputWithLabel
+              <Input
                 label="Email*"
                 name="email"
                 type="email"
@@ -204,7 +204,7 @@ function SignUp() {
                 onChange={handleChange}
                 required
               />
-              <InputWithLabel
+              <Input
                 label={`${t('signUpBoxContactInformationPassword')}*`}
                 name="password"
                 type="password"
@@ -217,13 +217,13 @@ function SignUp() {
           <DivThree>
             <div>
               <h4>{t('signUpBoxBillingInformation')}</h4>
-              <InputWithLabel
+              <Input
                 label={`${t('signUpBoxBillingInformationPassport')}`}
                 name="identityCardNumber"
                 value={inputs.identityCardNumber}
                 onChange={handleChange}
               />
-              <InputWithLabel
+              <Input
                 label={`${t('signUpBoxBillingInformationTaxNumber')}`}
                 name="taxNumber"
                 onChange={handleChange}

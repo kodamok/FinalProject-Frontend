@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import Input from '../../atoms/Input/Input';
 import { Context } from '../../../providers/GeneralProvider';
 import Button from '../../atoms/Button/Button';
@@ -27,7 +28,7 @@ const FormContainer = styled.form`
   max-width: 1400px;
   padding: 2rem;
   margin-bottom: 5rem;
-  b ${({ theme }) => theme.down(theme.breakpoint.m)} {
+  ${({ theme }) => theme.down(theme.breakpoint.m)} {
      {
       grid-column: 1;
       grid-row: 2;
@@ -171,18 +172,19 @@ const projectInfo: initial = {
 };
 
 function NewProject(): JSX.Element {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const { userData } = useContext(Context);
-  const { inputs, handleChange } = useForm(projectInfo);
+  const { inputs, handleChange, clearForm } = useForm(projectInfo);
   const { handleError } = useError();
 
-  const [serviceList, setServiceList] = useState([{ serviceName: '', price: 0, description: '' }]);
+  const [serviceList, setServiceList] = useState([{ serviceName: '', price: '', description: '' }]);
   inputs.services = [...serviceList];
   const params = useParams();
 
   // LISTS PREVIOS SERVICES ALREADY ADDED AND ADDS NEW SERVICES
   const handleServiceAdd = () => {
-    setServiceList([...serviceList, { serviceName: '', price: 0, description: '' }]);
+    setServiceList([...serviceList, { serviceName: '', price: '', description: '' }]);
   };
 
   // SUBMIT THE NEW PROJECT INFORMATION
@@ -202,6 +204,8 @@ function NewProject(): JSX.Element {
       const resJSON = await res.json();
       if (res.status >= 200 && res.status < 300) {
         handleError(resJSON.message, true);
+        clearForm();
+        setServiceList([{ serviceName: '', price: '', description: '' }]);
       } else {
         handleError(resJSON.message);
       }
@@ -216,7 +220,11 @@ function NewProject(): JSX.Element {
   const pageHeadInfo = [
     {
       id: 1,
-      titleOfPage: 'New Project'
+      titleOfPage: t('newProject'),
+      threeDotButton: {
+        button1: t('newProject'),
+        onClickEvent: 'noation'
+      }
     }
   ];
 
@@ -240,30 +248,33 @@ function NewProject(): JSX.Element {
               <Input
                 form
                 margin="0 0 1.8rem 0"
-                label="Start Date*"
+                label={t('newProjectStartDate')}
                 type="date"
                 name="startDate"
                 onChange={handleChange}
+                value={inputs.startDate}
                 required
               />
               <Input
                 form
                 margin="0 0 1.8rem 0"
-                label="End Date*"
+                label={t('newProjectEndDate')}
                 type="date"
                 name="dueDate"
                 required
                 onChange={handleChange}
+                value={inputs.dueDate}
               />
             </div>
             <div className="right">
               <Input
                 form
                 margin="0 0 1.8rem 0"
-                label="Company Name*"
+                label={t('newProjectCompanyName')}
                 name="companyName"
                 placeholder="enter the name of the company"
                 onChange={handleChange}
+                value={inputs.companyName}
                 required
               />
               <Input
@@ -273,23 +284,26 @@ function NewProject(): JSX.Element {
                 name="website"
                 placeholder="enter a website"
                 onChange={handleChange}
+                value={inputs.website}
                 required
               />
               <Input
                 form
                 margin="0 0 1.8rem 0"
-                label="Tax Number"
+                label={t('signUpBoxBillingInformationTaxNumber')}
                 name="taxNumber"
                 placeholder="enter a tax ID"
                 onChange={handleChange}
+                value={inputs.taxNumber}
               />
               <Input
                 form
                 margin="0 0 1.8rem 0"
-                label="Description"
+                label={t('newProjectCDescription')}
                 name="description"
                 placeholder="enter a description"
                 onChange={handleChange}
+                value={inputs.description}
               />
             </div>
             <ButtonWrapper>

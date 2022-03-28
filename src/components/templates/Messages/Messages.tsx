@@ -1,6 +1,7 @@
 import React, { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FaMicrophone } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
 import CardMessage from '../../molecules/CardMessage/CardMessage';
 import { Context } from '../../../providers/GeneralProvider';
@@ -42,17 +43,22 @@ const Form = styled.form`
   }
   > div:last-child {
     width: 100%;
+    > button {
+      border-bottom-right-radius: 0.4rem;
+    }
   }
 `;
 
 const ContainerContactListAndMessages = styled.div`
   display: flex;
   border: 2px solid #1f313e;
+  margin: 3rem 0;
+  border-radius: 0.6rem;
   box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
   //margin: 0 auto;
   justify-content: space-between;
   ${({ theme }) => theme.up(theme.breakpoint.sm)} {
-    margin: 0 auto;
+    margin: 3rem auto 3rem auto;
   }
   //gap: 3rem;
 `;
@@ -65,20 +71,28 @@ const ContactList = styled.div`
   max-width: 250px;
   overscroll-behavior: contain;
   // TODO Not good - to FIX
-  max-height: 510px;
+  max-height: 610px;
+  border-top-left-radius: 0.4rem;
+  border-bottom-left-radius: 0.4rem;
 
   ${({ theme }) => theme.down(theme.breakpoint.sm)} {
-    min-width: 50px;
-    max-width: 50px;
+    min-width: 70px;
+    max-width: 70px;
   }
 `;
 
 const WrapperBoxMessage = styled.div`
   //border: 2px solid red;
-  ${({ theme }) => theme.down(theme.breakpoint.sm)} {
-    width: 100%;
-    min-width: 300px;
-  }
+  // ${({ theme }) => theme.down(theme.breakpoint.sm)} {
+  //   width: 100%;
+  //   min-width: 300px;
+  // }
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top-right-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
 `;
 
 const Contact = styled.div<Props>`
@@ -114,8 +128,8 @@ const Contact = styled.div<Props>`
 const WrapperMessages = styled.div`
   //padding: 1rem;
   //border: 2px solid black;
-  height: 100%;
-  max-height: 400px;
+  max-height: 100%;
+  height: 500px;
   width: auto;
   max-width: 700px;
   display: flex;
@@ -126,7 +140,7 @@ const WrapperMessages = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    overflow-y: scroll;
+    overflow: auto;
     overscroll-behavior: contain;
     height: 100%;
     padding-top: 0.4rem;
@@ -139,6 +153,10 @@ const WrapperMessages = styled.div`
     min-width: 700px;
     max-width: 700px;
   }
+  ${({ theme }) => theme.up(theme.breakpoint.l)} {
+    min-width: 1000px;
+    max-width: 1000px;
+  }
 `;
 
 const PContainer = styled.div`
@@ -147,6 +165,7 @@ const PContainer = styled.div`
   padding: 1rem;
   font-family: 'Inter';
   font-size: ${({ theme }) => theme.fontSizeInter.ms};
+  border-top-right-radius: 0.4rem;
 `;
 
 const Microphone = styled(FaMicrophone)`
@@ -170,6 +189,7 @@ const initialValue: Message = {
 };
 
 function Messages() {
+  const { t } = useTranslation();
   const { messages, userData } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
   const [clientMessages, setClientMessages] = useState([]);
@@ -279,13 +299,15 @@ function Messages() {
 
   // Assign actually client on begin and set client messages
   useEffect(() => {
-    if (actuallyClient.length < 1 && clients.length > 0 && messages.length > 0) {
+    if (actuallyClient.length < 1 && clients.length > 0) {
       setActuallyClient([clients[0]]);
-      setClientMessages(() =>
-        messages.filter(
-          (item: any) => item.creator === clients[0]._id || item.receiver === clients[0]._id
-        )
-      );
+      if (messages.length > 0) {
+        setClientMessages(() =>
+          messages.filter(
+            (item: any) => item.creator === clients[0]._id || item.receiver === clients[0]._id
+          )
+        );
+      }
     }
     if (actuallyClient.length > 0) {
       inputs.receiverId = actuallyClient[0]._id;
@@ -321,11 +343,7 @@ function Messages() {
   const pageHeadInfo = [
     {
       id: 1,
-      titleOfPage: 'Messages',
-      threeDotButton: {
-        button1: 'No Action',
-        onClickEvent: 'undefined'
-      }
+      titleOfPage: t('messages')
     }
   ];
 

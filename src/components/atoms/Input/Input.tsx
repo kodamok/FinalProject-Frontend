@@ -35,7 +35,6 @@ const Container = styled.div<ContainerProp>`
     font: 15px/24px 'Open Sans', sans-serif;
     color: black;
     letter-spacing: 1px;
-
     :focus {
       outline: none;
       border-bottom: 0;

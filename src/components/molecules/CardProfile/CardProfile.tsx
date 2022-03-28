@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import IconClickable from '../../atoms/IconClickable/IconClickable';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import Button from '../../atoms/Button/Button';
@@ -334,6 +335,7 @@ const MainContainer = styled.div`
       animation-fill-mode: forwards;
       animation-timing-function: ease-in-out;
       animation-delay: 0.2s;
+      font-size: ${({ theme }) => theme.fontSizeOpenSans.xs};
     }
     ::before {
     }
@@ -588,7 +590,7 @@ function CardProfile({ clientData, projectData, client }: client) {
       onClickEvent: handleNavigateToChatBoxMessage
     }
   ];
-
+  const { t } = useTranslation();
   return (
     <Wrap>
       {client ? (
@@ -629,14 +631,14 @@ function CardProfile({ clientData, projectData, client }: client) {
               </p>
             </div>
             <div className="phone">
-              <div>{clientData.phone}</div>
+              <div>{clientData.phone || 'No Data'}</div>
             </div>
           </MainDetails>
           <div className="social">
             <div className="socialInfo">
               <div className="details">
                 <p>Email:</p>
-                <div>{clientData.email}</div>
+                <div>{clientData.email || 'No Data'}</div>
               </div>
               <div className="details">
                 <p>Projects:</p>
@@ -688,25 +690,33 @@ function CardProfile({ clientData, projectData, client }: client) {
           </div>
           <MainDetails>
             <div className="name">
-              <p>{projectData.clientName}</p>
+              <p>{projectData.clientName || 'No Data'}</p>
             </div>
+            {/* What to display here? Website Name too long anyway i think - Patryk :-) */}
+            {/* <div className="phone"> */}
+            {/*   <p>{projectData.websiteName || 'No Data'}</p> */}
+            {/* </div> */}
             <div className="phone">
-              <div>{projectData.websiteName || 'example.com'}</div>
+              <p>{`Due: ${projectData.dueDate}` || 'No Data'}</p>
             </div>
           </MainDetails>
           <div className="social">
             <div className="socialInfo">
               <div className="details">
-                <p>Company:</p>
-                <div>{projectData.companyName}</div>
+                <p>{t('cardProfileCompany')}</p>
+                <div>{projectData.companyName || 'No Data'}</div>
               </div>
               <div className="details">
-                <p>Start:</p>
-                <div>{projectData.startDate}</div>
+                <p>Website</p>
+                <div>{projectData.websiteName || 'No Data'}</div>
               </div>
               <div className="details">
-                <p>Due:</p>
-                <div>{projectData.dueDate}</div>
+                <p>{t('cardProfileStart')} Date</p>
+                <div>{projectData.startDate || 'No Data'}</div>
+              </div>
+              <div className="details">
+                <p>{t('cardProfileDue')} Date</p>
+                <div>{projectData.dueDate || 'No Data'}</div>
               </div>
             </div>
           </div>

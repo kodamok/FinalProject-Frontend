@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BsThreeDots, BsQuestionCircle } from 'react-icons/bs';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
@@ -23,14 +23,19 @@ const Container = styled.div`
 const H3 = styled.h3`
   text-align: left;
   font-weight: 400;
-  margin-bottom: 1rem;
+  font-size: clamp(
+    ${({ theme }) => theme.fontSizeInter.ms},
+    5vw + 0.5rem,
+    ${({ theme }) => theme.fontSizeInter.ml}
+  );
+  margin: 1rem 0;
   width: 100%;
   color: ${({ theme }) => theme.color.main2};
   text-shadow: -1px 2px 5px #ffffff;
 `;
 
 const RightIcons = styled.div`
-  border: 2px solid red;
+  //border: 2px solid red;
   position: relative;
   display: flex;
   align-items: center;
@@ -44,24 +49,12 @@ const ThreeDotMenu = styled.div`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   align-items: center;
-  //background-color: #fcbf49;
+  background-color: #fcbf49;
   //background: ${({ theme }) => theme.color.main5};
   box-shadow: ${({ theme }) => theme.boxShadow.mainShadow};
   border: 1px solid black;
   border-radius: 10px;
   min-height: 42px;
-
-  .questionMarkContent {
-    display: none;
-    visibility: hidden;
-    position: absolute;
-    top: 20px;
-    right: 70px;
-    width: 200px;
-    height: 200px;
-    background: #eae2b7;
-    border: 2px solid #e76f51;
-  }
 `;
 
 const QuestionMarkIcon = styled.div`
@@ -69,12 +62,24 @@ const QuestionMarkIcon = styled.div`
   position: relative;
   width: 30px;
   height: 30px;
-  border: 2px solid blue;
+  //border: 2px solid blue;
 
-  :hover {
-    .questionMarkContent {
-      display: block;
-      visibility: visible;
+  .questionMarkContent {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    min-width: 200px;
+    min-height: 10ch;
+    background: #001523;
+    border: 2px solid #e76f51;
+    padding: 0.5rem;
+    border-radius: 0 10px 0 0;
+
+    p {
+      font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 500;
+      font-size: ${({ theme }) => theme.fontSizeOpenSans.ms};
+      color: #ffffff;
     }
   }
 `;
@@ -85,6 +90,16 @@ interface Head {
 }
 
 function PageHead({ pageHeadInfo, children }: Head) {
+  const [questionMark, setQuestionMark] = useState(false);
+
+  const handleOpenHelp = (e: any) => {
+    e.stopPropagation();
+    setQuestionMark((prev) => !prev);
+  };
+
+  const handleCloseHelp = () => {
+    setQuestionMark(false);
+  };
   return (
     <Wrap>
       <Container>
@@ -92,13 +107,18 @@ function PageHead({ pageHeadInfo, children }: Head) {
 
         <ThreeDotMenu>
           <div>{children}</div>
-          <QuestionMarkIcon>
-            <BsQuestionCircle fontSize={30} />
-          </QuestionMarkIcon>
-          <div className="questionMarkContent">
-            <p>blablablablablablablablablablablablablablablablablablablablabla</p>
-          </div>
+
           <RightIcons>
+            {pageHeadInfo[0].helpButton ? (
+              <QuestionMarkIcon onMouseEnter={handleOpenHelp} onMouseLeave={handleCloseHelp}>
+                <BsQuestionCircle fontSize={25} />
+                {questionMark && (
+                  <div className="questionMarkContent">
+                    <p>{pageHeadInfo[0].helpButton}</p>
+                  </div>
+                )}
+              </QuestionMarkIcon>
+            ) : null}
             {pageHeadInfo[0].threeDotButton ? (
               <IconClickable icon={<BsThreeDots fontSize={40} color="#001523" />}>
                 {pageHeadInfo.map((item: any) => (
@@ -106,7 +126,7 @@ function PageHead({ pageHeadInfo, children }: Head) {
                     dropMenu
                     key={item.id}
                     text={item.threeDotButton.button1}
-                    width="200px"
+                    width="150px"
                     fontSize="1rem"
                     padding="0.1rem 1rem"
                     onClick={item.threeDotButton.onClickEvent}

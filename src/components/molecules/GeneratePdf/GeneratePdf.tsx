@@ -4,24 +4,33 @@ import Button from '../../atoms/Button/Button';
 import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
 
-function GeneratePdf() {
+function GeneratePdf({ project }: any) {
   const dataClient = {
-    name: 'John',
-    companyName: 'Super Company',
+    name: project.clientName || '-',
+    companyName: project.companyName || '-',
     email: 'company@gmail.com',
+    website: project.websiteName || '-',
     addressCity: undefined,
-    addressStreet: undefined
+    addressStreet: undefined,
+    taxNumber: project.taxNumber || '-'
   };
-  const servicesData = [
-    {
-      title: undefined || 'Website Design',
-      price: undefined || '300.00'
-    },
-    {
-      title: undefined || 'Hosting (3 months)',
-      price: undefined || '75.00'
-    }
-  ];
+  // const servicesData = [
+  //   {
+  //     title: undefined || 'Website Design',
+  //     price: undefined || '300.00'
+  //   },
+  //   {
+  //     title: undefined || 'Hosting (3 months)',
+  //     price: undefined || '75.00'
+  //   }
+  // ];
+  interface Service {
+    serviceName: string;
+    price: string;
+    description: string;
+  }
+  console.log(project.services);
+  const servicesData: Service[] = project.services;
 
   const htmlToDisplay = `<!DOCTYPE html>
 <html>
@@ -156,8 +165,8 @@ function GeneratePdf() {
 
 								<td>
 									${dataClient.companyName || 'Sparksuite, Inc.'}<br />
-									${dataClient.addressCity || '32453 Chicago'}<br /> 
-									${dataClient.addressStreet || 'Moon Street, US 32453'}
+									Tax Number: ${dataClient.taxNumber || 'T-1268334862'}<br />
+									${dataClient.email || 'Moon Street, US 32453'}
 								</td>
 							</tr>
 						</table>
@@ -181,14 +190,14 @@ function GeneratePdf() {
 
 					<td>Price</td>
 				</tr>
-				
-				${servicesData.map((item) => {
-          return `<tr class="item">
-            <td>${item.title}</td>
+				${servicesData
+          .map((item: Service) => {
+            return `<tr class="item">
+            <td>${item.serviceName}</td>
             <td>$${item.price}</td>
           </tr>`;
-        })}
-
+          })
+          .join('')}
 <!--				<tr class="item">-->
 <!--					<td>Website design</td>-->
 

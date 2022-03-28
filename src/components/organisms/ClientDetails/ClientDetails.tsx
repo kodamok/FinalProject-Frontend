@@ -11,7 +11,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
-  padding: 1rem;
 `;
 
 const ContainerClientDetails = styled.div`

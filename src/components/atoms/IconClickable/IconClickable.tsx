@@ -16,8 +16,8 @@ const ContainerChildrens = styled.div`
   top: 20px;
   right: 20px;
   background: white;
-  border: 1px solid #eae2b7;
-  z-index: 1;
+  border: 1px solid #e76f51;
+  z-index: 100;
 `;
 
 const ContainerIcon = styled.div``;

@@ -1,3 +1,4 @@
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const Spin = keyframes`
@@ -8,18 +9,32 @@ const Spin = keyframes`
         transform: rotate(360deg);
     }
 `;
-export const LoadingSpin = styled.div`
+const LoadingSpinStyle = styled.div`
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #eae2b7;
   border-right: 16px solid #001523;
   border-bottom: 16px solid #9e0059;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   -webkit-animation: ${Spin} 3s linear infinite;
   animation: ${Spin} 3s linear infinite;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
+export function LoadingSpin() {
+  return (
+    <Container>
+      <LoadingSpinStyle />
+    </Container>
+  );
+}

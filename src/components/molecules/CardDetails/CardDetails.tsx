@@ -181,27 +181,27 @@ function CardDetails({ projectData }: Project) {
                 />
                 <DetailsElement>
                   <span>Starting Date</span>
-                  <p>{projectData?.startDate?.substring(0, 15)}</p>
+                  <p>{projectData?.startDate?.substring(0, 15) || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Due Date</span>
-                  <p>{projectData?.updatedAt?.substring(0, 10)}</p>
+                  <p>{projectData?.updatedAt?.substring(0, 10) || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Company Name</span>
-                  <p>{projectData?.companyName}</p>
+                  <p>{projectData?.companyName || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Customer Name</span>
-                  <p>{projectData?.clientName}</p>
+                  <p>{projectData?.clientName || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Website</span>
-                  <p>{projectData?.websiteName}</p>
+                  <p>{projectData?.websiteName || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Tax Number</span>
-                  <p>{projectData?.taxNumber}</p>
+                  <p>{projectData?.taxNumber || 'No Data'}</p>
                 </DetailsElement>
               </Details>
             )}
@@ -228,29 +228,29 @@ function CardDetails({ projectData }: Project) {
                       />
                       <DetailsElement style={{ alignSelf: 'flex-start', paddingLeft: '3rem' }}>
                         <span>Starting Date</span>
-                        <p>{projectData?.startDate?.substring(0, 15)}</p>
+                        <p>{projectData?.startDate?.substring(0, 15) || 'No Data'}</p>
                       </DetailsElement>
                       <DetailsElement style={{ alignSelf: 'flex-start', paddingLeft: '3rem' }}>
                         <span>Due Date</span>
-                        <p>{projectData?.updatedAt?.substring(0, 10)}</p>
+                        <p>{projectData?.updatedAt?.substring(0, 10) || 'No Data'}</p>
                       </DetailsElement>
                     </TitleAndPictureDesktop>
                     <ContainerDetailsElement>
                       <DetailsElement>
                         <span>Company Name</span>
-                        <p>{projectData?.companyName}</p>
+                        <p>{projectData?.companyName || 'No Data'}</p>
                       </DetailsElement>
                       <DetailsElement>
                         <span>Customer Name</span>
-                        <p>{projectData?.clientName}</p>
+                        <p>{projectData?.clientName || 'No Data'}</p>
                       </DetailsElement>
                       <DetailsElement>
                         <span>Website</span>
-                        <p>{projectData?.websiteName}</p>
+                        <p>{projectData?.websiteName || 'No Data'}</p>
                       </DetailsElement>
                       <DetailsElement>
                         <span>Tax Number</span>
-                        <p>{projectData?.taxNumber}</p>
+                        <p>{projectData?.taxNumber || 'No Data'}</p>
                       </DetailsElement>
                     </ContainerDetailsElement>
                   </DetailsDesktop>

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useError from '../../../hooks/useError';
+import Input from '../../atoms/Input/Input';
 
 const Container = styled.div`
   padding: 2rem;
@@ -58,7 +58,7 @@ function ForgotPassword() {
   };
   return (
     <Container>
-      <InputWithLabel type="email" label="Your Email" name="email" onChange={handleChange} />
+      <Input type="email" label="Your Email" name="email" onChange={handleChange} />
       <Button text="Submit" onClick={handleSendLinkToResetPassword} />
     </Container>
   );

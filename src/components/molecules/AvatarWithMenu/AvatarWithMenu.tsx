@@ -9,7 +9,7 @@ const AvatarContainer = styled.div<Avatar>`
   display: flex;
   position: relative;
   /* border: 3px solid black; */
-  width: ${({ width }) => width || '0'};
+  width: ${({ width }) => width || 'auto'};
   & > div {
     display: flex;
     align-items: center;

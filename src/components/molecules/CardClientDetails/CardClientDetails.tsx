@@ -46,8 +46,8 @@ const DetailsElement = styled.div`
 const ContainerDesktop = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 2rem 3rem;
-  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+  margin: 2rem 0;
   border: 1px solid ${({ theme }) => theme.color.main2};
   box-shadow:${({ theme }) => theme.boxShadow.mainShadow};
   border-radius: 0.6rem;
@@ -101,11 +101,15 @@ const BillingInformation = styled.div`
   p {
     margin-right: auto;
   }
+`;
+
+const WholeContainer = styled.div`
   h4 {
-    margin: 0 0 1rem 0;
-    padding-left: 17px;
+    text-align: left;
+    margin: 0.5rem 0;
   }
 `;
+
 interface Client {
   clientData: any;
   /*  projectData: {
@@ -119,9 +123,9 @@ interface Client {
 }
 // Card Details Mobil Version
 function CardClientDetails({ clientData }: Client) {
-  const desktopVersion = useMediaQuery('(min-width: 1060px)');
+  const desktopVersion = useMediaQuery('(min-width: 810px)');
   return (
-    <div>
+    <WholeContainer>
       {!desktopVersion ? (
         <div>
           <Container>
@@ -131,26 +135,26 @@ function CardClientDetails({ clientData }: Client) {
               <Details>
                 <h4>Nomad Studio</h4>
                 <RoundedPhoto
-                  img={clientData?.avatar}
+                  img={clientData?.avatar || clientData?.google.picture}
                   alt="avatar"
                   outline="3px solid black"
                   width="12rem"
                   height="12rem"
                 />
-                <h5>Contact Information</h5>
+                {/* <h5>Contact Information</h5> */}
                 <DetailsElement>
                   <span>Name</span>
-                  <p>{clientData?.name}</p>
+                  <p>{clientData?.name || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Email</span>
-                  <p>{clientData?.email}</p>
+                  <p>{clientData?.email || 'No Data'}</p>
                 </DetailsElement>
                 <DetailsElement>
                   <span>Phone number</span>
-                  <p>{clientData?.phone}</p>
+                  <p>{clientData?.phone || 'No Data'}</p>
                 </DetailsElement>
-                <h5>Billing Information</h5>
+                {/* <h5>Billing Information</h5> */}
                 <DetailsElement>
                   <span>Id</span>
                   <p>{clientData?.identityCardNumber || 'No Data'}</p>
@@ -176,7 +180,7 @@ function CardClientDetails({ clientData }: Client) {
                     <TitleAndPicture>
                       <h4>Nomad Studio</h4>
                       <RoundedPhoto
-                        img={clientData?.avatar}
+                        img={clientData?.avatar || clientData?.google.picture}
                         alt="avatar"
                         outline="3px solid black"
                         width="12rem"
@@ -187,15 +191,15 @@ function CardClientDetails({ clientData }: Client) {
                       <h4>Contact</h4>
                       <DetailsElement>
                         <span>Name</span>
-                        <p>{clientData?.name}</p>
+                        <p>{clientData?.name || 'No Data'}</p>
                       </DetailsElement>
                       <DetailsElement>
                         <span>Email</span>
-                        <p>{clientData?.email}</p>
+                        <p>{clientData?.email || 'No Data'}</p>
                       </DetailsElement>
                       <DetailsElement>
                         <span>Phone Number</span>
-                        <p>{clientData?.phone}</p>
+                        <p>{clientData?.phone || 'No Data'}</p>
                       </DetailsElement>
                     </ContactInformation>
                     <BillingInformation>
@@ -216,7 +220,7 @@ function CardClientDetails({ clientData }: Client) {
           </ContainerDesktop>
         </div>
       )}
-    </div>
+    </WholeContainer>
   );
 }
 export default CardClientDetails;

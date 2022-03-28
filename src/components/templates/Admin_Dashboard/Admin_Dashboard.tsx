@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import TitleWithLines from '../../atoms/TitleWithLines/TitleWithLines';
 import Chart from '../../molecules/Chart/Chart';
 import { Context } from '../../../providers/GeneralProvider';
@@ -33,6 +34,7 @@ const ContainerClients = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
 `;
 
 const ContainerProjects = styled.div`
@@ -70,6 +72,7 @@ const ContainerDataAndStats = styled.div`
 `;
 
 function AdminDashboard() {
+  const { t } = useTranslation();
   const [clients, setClients]: any = useState([]);
   const [projects, setProjects]: any = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -161,9 +164,12 @@ function AdminDashboard() {
       id: 1,
       titleOfPage: 'Dashboard',
       threeDotButton: {
-        button1: 'New Client',
+        button1: t('adminDashboardButton'),
         onClickEvent: handleNavigateToCreateNewClient
-      }
+      },
+      helpButton:
+        // eslint-disable-next-line max-len
+        '- Here you will find the most recent customers, projects and statistics of your perfomrnace as freelancer'
     }
   ];
 
@@ -175,7 +181,7 @@ function AdminDashboard() {
       <Chart data={undefined} options={undefined} />
       <ContainerDataAndStats>
         <Data>
-          <TitleWithLines text="Recent Clients" />
+          <TitleWithLines text={t('adminDashboardRecentClients')} />
           <ContainerClients>
             {clients.length ? (
               clients.map((item: any) => <CardProfile client key={item._id} clientData={item} />)
@@ -189,7 +195,7 @@ function AdminDashboard() {
             {projects.length ? (
               projects.map((item: any) => <CardProfile key={item._id} projectData={item} />)
             ) : (
-              <NoItemsFound text="Projects" />
+              <NoItemsFound text={t('adminDashboardRecentProjects')} />
             )}
           </ContainerProjects>
         </Data>

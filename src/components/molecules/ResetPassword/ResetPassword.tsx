@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useError from '../../../hooks/useError';
+import Input from '../../atoms/Input/Input';
 
 const Container = styled.div`
   padding: 2rem;
@@ -59,12 +59,7 @@ function ResetPassword() {
   };
   return (
     <Container>
-      <InputWithLabel
-        type="password"
-        label="Your New Password"
-        name="password"
-        onChange={handleChange}
-      />
+      <Input type="password" label="Your New Password" name="password" onChange={handleChange} />
       <Button text="Submit" onClick={handleResetPassword} />
     </Container>
   );

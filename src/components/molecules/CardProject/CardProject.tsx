@@ -136,7 +136,7 @@ function CardProject({ projectData }: client) {
           outline="3px solid black"
         />
         <div>
-          <h5>{projectData.websiteName}</h5>
+          <h5>{projectData.websiteName || 'No Data'}</h5>
         </div>
         <div>
           <IconClickable icon={<BsThreeDots fontSize={28} />}>
@@ -172,19 +172,19 @@ function CardProject({ projectData }: client) {
       <div>
         <ElementData>
           <span>Start Date:</span>
-          <p>{projectData.startDate?.substring(0, 10)}</p>
+          <p>{projectData.startDate?.substring(0, 10) || 'No Data'}</p>
         </ElementData>
         <ElementData>
           <span>Due Data:</span>
-          <p>{projectData.dueDate?.substring(0, 10)}</p>
+          <p>{projectData.dueDate?.substring(0, 10) || 'No Data'}</p>
         </ElementData>
         <ElementData>
           <span>Client:</span>
-          <p>{projectData.clientName}</p>
+          <p>{projectData.clientName || 'No Data'}</p>
         </ElementData>
         <ElementData>
           <span>Company Name:</span>
-          <p>{projectData.companyName}</p>
+          <p>{projectData.companyName || 'No Data'}</p>
         </ElementData>
         <div>
           <BiArrowFromBottom onClick={handleCloseDetails} fontSize={24} />

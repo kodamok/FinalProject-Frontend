@@ -9,10 +9,10 @@ import { Context } from '../../../providers/GeneralProvider';
 import useError from '../../../hooks/useError';
 import CardMessage from '../../molecules/CardMessage/CardMessage';
 import { AlwaysScrollToBottom } from '../../templates/Messages/Messages';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import Input from '../../atoms/Input/Input';
 
 const Form = styled.form`
   padding: 1rem;
@@ -128,6 +128,7 @@ const ChatBox = styled.div`
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    color: white;
   }
 
   > div:first-child > div:nth-child(2) > svg:hover {
@@ -182,6 +183,7 @@ const ChatBoxSmall = styled.div`
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    color: white;
   }
   > div:last-child > svg:hover {
     cursor: pointer;
@@ -270,7 +272,7 @@ const ContainerOpenContactList = styled.div`
 
 const Microphone = styled(FaMicrophone)`
   position: absolute;
-  top: 24px;
+  top: 11px;
   right: 8px;
   &:hover {
     cursor: pointer;
@@ -443,7 +445,7 @@ function GlobalMessage() {
           </div>
           <Form onSubmit={handleSubmitMessage}>
             <div>
-              <InputWithLabel
+              <Input
                 placeholder="Write a Message..."
                 name="message"
                 onChange={handleChange}

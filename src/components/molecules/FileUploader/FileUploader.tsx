@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import Button from '../../atoms/Button/Button';
 import useForm from '../../../hooks/useForm';
 import useError from '../../../hooks/useError';
 import { Context } from '../../../providers/GeneralProvider';
+import Input from '../../atoms/Input/Input';
 
 const Container = styled.div`
   display: flex;
@@ -70,12 +70,7 @@ function FileUploader({ projectId }: File) {
 
   return (
     <Container>
-      <InputWithLabel
-        multiple
-        type="file"
-        /* label="File" */ name="files"
-        onChange={handleChange}
-      />
+      <Input multiple type="file" /* label="File" */ name="files" onChange={handleChange} />
       <Button
         type="submit"
         text="Upload Files"

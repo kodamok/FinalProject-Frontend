@@ -1,14 +1,14 @@
 import React, { SyntheticEvent, useContext, useState } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import Button from '../../atoms/Button/Button';
-
 import { Context } from '../../../providers/GeneralProvider';
 import useForm from '../../../hooks/useForm';
-import InputWithLabel from '../../atoms/InputWithLabel/InputWithLabel';
 import useError from '../../../hooks/useError';
 import { InputFileStyle } from '../SignUp/SignUp';
 import RoundedPhoto from '../../atoms/RoundedPhoto/RoundedPhoto';
 import PageHead from '../../molecules/PageHead/PageHead';
+import Input from '../../atoms/Input/Input';
 // import useError from '../../../hooks/useError';
 
 const FormContainer = styled.form`
@@ -91,6 +91,7 @@ const DivThree = styled.div`
 `;
 
 function NewClient() {
+  const { t } = useTranslation();
   const { userData } = useContext(Context);
   interface initial {
     name: string;
@@ -144,11 +145,7 @@ function NewClient() {
   const pageHeadInfo = [
     {
       id: 1,
-      titleOfPage: 'Create New Client',
-      threeDotButton: {
-        button1: 'No Action',
-        onClickEvent: 'undefined'
-      }
+      titleOfPage: t('adminCreateNewClient')
     }
   ];
 
@@ -166,21 +163,21 @@ function NewClient() {
                 <RoundedPhoto img={inputs.image || ''} alt="face" width="250px" height="250px" />
               </div>
               <ContainerButton>
-                <Button background="#1F313E" text="Upload Photo" />
+                <Button background="#1F313E" text={t('adminCreateNewClientUploadPhoto')} />
                 <InputFileStyle name="image" type="file" onChange={handleChange} />
               </ContainerButton>
             </DivOne>
             <DivTwo>
-              <h4>Contact</h4>
-              <InputWithLabel
+              <h4>{t('adminCreateNewClientContact')}</h4>
+              <Input
                 label="Name*"
                 name="name"
-                placeholder="Give your Name"
+                placeholder={t('contactChatName')}
                 onChange={handleChange}
                 value={inputs.name}
                 required
               />
-              <InputWithLabel
+              <Input
                 label="Email*"
                 name="email"
                 type="email"
@@ -188,16 +185,16 @@ function NewClient() {
                 value={inputs.email}
                 required
               />
-              <InputWithLabel
-                label="Password*"
+              <Input
+                label={t('signUpBoxContactInformationPassword')}
                 name="password"
                 type="password"
                 onChange={handleChange}
                 value={inputs.password}
                 required
               />
-              <InputWithLabel
-                label="Phone Number"
+              <Input
+                label={t('adminCreateNewClientPhoneNumber')}
                 name="phoneNumber"
                 type="tel"
                 onChange={handleChange}
@@ -206,15 +203,15 @@ function NewClient() {
             </DivTwo>
             <DivThree>
               <div>
-                <h4>Billing</h4>
-                <InputWithLabel
-                  label="Identity Card Number"
+                <h4>{t('adminCreateNewClientBilling')}</h4>
+                <Input
+                  label={t('signUpBoxBillingInformationPassport')}
                   name="identityCardNumber"
                   onChange={handleChange}
                   value={inputs.identityCardNumber}
                 />
-                <InputWithLabel
-                  label="Tax Number"
+                <Input
+                  label={t('signUpBoxBillingInformationTaxNumber')}
                   name="taxNumber"
                   onChange={handleChange}
                   value={inputs.taxNumber}

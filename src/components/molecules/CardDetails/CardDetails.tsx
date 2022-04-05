@@ -135,38 +135,6 @@ function CardDetails({ projectData }: Project) {
       {!desktopVersion ? (
         <div>
           <Container>
-            {/* <ContainerThreeDots> */}
-            {/*   <IconClickable icon={<BsThreeDots fontSize={38} />}> */}
-            {/*     <div */}
-            {/*       style={{ */}
-            {/*         display: 'flex', */}
-            {/*         flexDirection: 'column', */}
-            {/*         gap: '0.5rem', */}
-            {/*         padding: '1rem' */}
-            {/*       }} */}
-            {/*     > */}
-            {/*       <Button */}
-            {/*         whiteMenu */}
-            {/*         text={userData.role === 'Freelancer' ? 'View Client' : 'View Freelancer'} */}
-            {/*         width="180px" */}
-            {/*         fontSize="1rem" */}
-            {/*         padding="0.5rem 1rem" */}
-            {/*         onClick={handleNavigateToClient} */}
-            {/*       /> */}
-            {/*       {userData.role === 'Freelancer' && ( */}
-            {/*         <Button */}
-            {/*           whiteMenu */}
-            {/*           text="Edit Project" */}
-            {/*           width="180px" */}
-            {/*           fontSize="1rem" */}
-            {/*           padding="0.5rem 1rem" */}
-            {/*           onClick={handleNavigateToEditProject} */}
-            {/*         /> */}
-            {/*       )} */}
-            {/*     </div> */}
-            {/*   </IconClickable> */}
-            {/* </ContainerThreeDots> */}
-
             {/* check this part later, because the ? are not the best solution  */}
             {/* the problem is of the time of rendering */}
             {projectData && (

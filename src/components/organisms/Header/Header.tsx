@@ -4,12 +4,9 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { GrClose } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import NSLogo from '../../../assets/images/Logos/newLogos/53x161/NSLogo.png';
-/* import { useNavigate } from 'react-router-dom'; */
+import NSLogo from '../../../assets/images/Logos/53x161/NSLogo.png';
 import AvatarWithMenu from '../../molecules/AvatarWithMenu/AvatarWithMenu';
-/* import CompanyLogo from '../../../assets/illustrations/COMPANYLOGO.png'; */
-/* import logoForWhiteBackground from '../../../assets/images/Logos/logoForWhiteBackground.svg';
- */ import NavLink from '../../atoms/NavLink/NavLink';
+import NavLink from '../../atoms/NavLink/NavLink';
 import Contact from '../../molecules/Contact/Contact';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import { Context } from '../../../providers/GeneralProvider';
@@ -321,11 +318,11 @@ function Header() {
 
   useEffect(() => {
     const body = document.querySelector('body');
-    if (isOpenMenu) {
-      body!.style.overflow = 'hidden';
-      console.log(body);
-    } else {
-      body!.style.overflow = 'visible';
+    if (isOpenMenu && body) {
+      body.style.overflow = 'hidden';
+    }
+    if (!isOpenMenu && body) {
+      body.style.overflow = 'visible';
     }
   }, [isOpenMenu]);
 
@@ -334,8 +331,6 @@ function Header() {
       setIsOpenMenu(false);
     }
   }, [desktopVersion]);
-
-  // console.log('We are on the size of Desktop Version?', desktopVersion);
 
   // Testing AdminHeader
   // const adminLogIn = true;

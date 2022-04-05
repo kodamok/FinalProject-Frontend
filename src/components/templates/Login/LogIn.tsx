@@ -84,14 +84,13 @@ function LogIn() {
           body: JSON.stringify(inputs)
         });
         const resJSON = await res.json();
-        console.log(resJSON);
+
         if (res.status === 200) {
           navigate('/');
           setUserData(resJSON);
         }
         handleError(resJSON.message, res.status === 200);
       } catch (error: any) {
-        console.log('FETCHING ERROR', error);
         handleError();
       } finally {
         setIsLoading(false);

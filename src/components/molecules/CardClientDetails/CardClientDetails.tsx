@@ -135,7 +135,7 @@ function CardClientDetails({ clientData }: Client) {
               <Details>
                 <h4>Nomad Studio</h4>
                 <RoundedPhoto
-                  img={clientData?.avatar || clientData?.google.picture}
+                  img={clientData?.avatar || clientData?.google?.picture}
                   alt="avatar"
                   outline="3px solid black"
                   width="12rem"
@@ -180,7 +180,7 @@ function CardClientDetails({ clientData }: Client) {
                     <TitleAndPicture>
                       <h4>Nomad Studio</h4>
                       <RoundedPhoto
-                        img={clientData?.avatar || clientData?.google.picture}
+                        img={clientData?.avatar || clientData?.google?.picture}
                         alt="avatar"
                         outline="3px solid black"
                         width="12rem"

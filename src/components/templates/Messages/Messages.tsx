@@ -210,14 +210,13 @@ function Messages() {
         }
       });
       const resJSON = await res.json();
-      // console.log(resJSON);
+
       if (res.status === 200) {
         setClients(resJSON);
       } else {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     } finally {
       setIsLoading(false);
@@ -236,15 +235,13 @@ function Messages() {
         }
       });
       const resJSON = await res.json();
-      // console.log(resJSON);
+
       if (res.status === 200) {
-        console.log(resJSON);
         setClients(resJSON);
       } else {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     } finally {
       setIsLoading(false);
@@ -256,7 +253,6 @@ function Messages() {
     e.preventDefault();
     const sendMessage = async () => {
       try {
-        console.log('This message is sending...', inputs);
         const res = await fetch(`${process.env.REACT_APP_BACKEND}/message`, {
           method: 'POST',
           headers: {
@@ -266,14 +262,13 @@ function Messages() {
           body: JSON.stringify(inputs)
         });
         const resJSON = await res.json();
-        console.log({ resJSON });
+
         if (res.status === 201) {
           resetForm();
         } else {
           handleError(resJSON.message);
         }
       } catch (error: any) {
-        console.log('Something wrong with sending message', error);
         handleError();
       }
     };
@@ -282,7 +277,6 @@ function Messages() {
 
   // Set actually client and his messages after click on his Avatar
   const handleDisplayMessages = (id: string) => {
-    console.log(id);
     setClientMessages(messages.filter((item: any) => item.creator === id || item.receiver === id));
     setActuallyClient(clients.filter((item: any) => item._id === id));
   };
@@ -370,7 +364,7 @@ function Messages() {
                 <h5>{clientData.name}</h5>
               </div>
               <RoundedPhoto
-                img={clientData.avatar}
+                img={clientData.avatar || clientData.google?.picture}
                 alt="face"
                 width="40px"
                 height="40px"

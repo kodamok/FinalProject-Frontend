@@ -149,7 +149,6 @@ function Settings() {
           handleError(resJSON.message);
         }
       } catch (error: any) {
-        console.log('FETCHING ERROR', error);
         handleError();
       } finally {
         setIsLoading(false);
@@ -172,14 +171,11 @@ function Settings() {
   //   window.speechSynthesis.speak(speech);
   // }
   // console.group('User Details');
-  // console.log('name: Sudheer Jonna');
-  // console.log('job: Software Developer');
+
   //
   // // Nested Group
   // console.group('Address');
-  // console.log('Street: Commonwealth');
-  // console.log('City: Los Angeles');
-  // console.log('State: California');
+
   //
   // console.groupEnd();
   // }, []);
@@ -190,8 +186,7 @@ function Settings() {
   //   recognition.onresult = (event: any) => {
   //     // SpeechRecognitionEvent type
   //     const speechToText = event.results[0][0].transcript;
-  //     console.log(speechToText);
-  //     console.log('yup');
+
   //   };
   //   recognition.start();
   // }, []);

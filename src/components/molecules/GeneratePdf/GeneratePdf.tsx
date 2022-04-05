@@ -29,7 +29,7 @@ function GeneratePdf({ project }: any) {
     price: string;
     description: string;
   }
-  console.log(project.services);
+
   const servicesData: Service[] = project.services;
 
   const htmlToDisplay = `<!DOCTYPE html>
@@ -248,7 +248,6 @@ function GeneratePdf({ project }: any) {
           handleError(resJSON.message);
         }
       } catch (error: any) {
-        console.log('FETCHING ERROR', error);
         handleError();
       }
     };

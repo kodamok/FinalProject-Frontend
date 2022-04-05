@@ -430,15 +430,13 @@ function ProjectDetail() {
         }
       });
       const resJSON = await res.json();
-      console.log('This is Fetch', res);
-      console.log('This is resJson', resJSON);
+
       if (res.status === 200) {
         setProject(resJSON);
       } else {
         handleError();
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     } finally {
       setIsLoading(false);
@@ -463,7 +461,6 @@ function ProjectDetail() {
     // And is combined with the the modal openModal state
     setOpenModal(true);
   };
-  console.log('This is what DESCRIPTION print', serviceToModal);
 
   // useMediaQuery
   const desktopVersion = useMediaQuery('(min-width: 1060px)');
@@ -497,11 +494,10 @@ function ProjectDetail() {
   };
 
   // Total of the services
-  console.log(`This is the project`, project.services);
+
   const projectServices = project.services;
 
   const total = projectServices?.reduce((a: any, v: any) => a + +v.price, 0);
-  console.log(`This is the total`, total);
 
   let PageHeadInfo;
   if (userData.role === 'Client') {
@@ -618,7 +614,7 @@ function ProjectDetail() {
                   <p>Images</p>
                   <ContainerUploadedImages>
                     {project.images.length > 0 &&
-                      project.images.slice(0, 7).map((item: any) => (
+                      project.images.map((item: any) => (
                         <div key={item.key}>
                           <a href={item.url} target="_blank" rel="noreferrer">
                             <BsImage fontSize={36} />
@@ -643,7 +639,7 @@ function ProjectDetail() {
                   <p>Images</p>
                   <ContainerPreviewImg>
                     {project.images.length > 0 &&
-                      project.images.slice(0, 7).map((item: any) => (
+                      project.images.map((item: any) => (
                         <div key={item.key}>
                           <a href={item.url} target="_blank" rel="noreferrer">
                             {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
@@ -809,7 +805,7 @@ function ProjectDetail() {
                 <p>Images({project?.images?.length})</p>
                 <ContainerUploadedImages>
                   {project.images.length > 0 &&
-                    project.images.slice(0, 7).map((item: any) => (
+                    project.images.map((item: any) => (
                       <div key={item.key}>
                         <a href={item.url} target="_blank" rel="noreferrer">
                           <BsImage fontSize={36} />
@@ -834,7 +830,7 @@ function ProjectDetail() {
                 <p>Images({project?.images?.length})</p>
                 <ContainerPreviewImg>
                   {project.images.length > 0 &&
-                    project.images.slice(0, 7).map((item: any) => (
+                    project.images.map((item: any) => (
                       <div key={item.key}>
                         <a href={item.url} target="_blank" rel="noreferrer">
                           {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}

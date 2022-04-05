@@ -32,7 +32,7 @@ function ResetPassword() {
   const { inputs, handleChange } = useForm(initialValue);
   const handleResetPassword = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('Your New Password', inputs.password);
+
     const resetPassword = async () => {
       try {
         const res = await fetch(`${process.env.REACT_APP_BACKEND}/resetPassword`, {
@@ -44,7 +44,7 @@ function ResetPassword() {
           body: JSON.stringify(inputs)
         });
         const resJSON = await res.json();
-        console.log(resJSON);
+
         if (res.status === 200) {
           navigate('/login');
           handleError(resJSON.message, true);

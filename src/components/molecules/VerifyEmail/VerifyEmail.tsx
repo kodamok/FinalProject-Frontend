@@ -23,7 +23,7 @@ function VerifyEmail() {
   const { handleError } = useError();
   const handleVerifyEmail = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('You try verify Email with this token', token);
+
     const verifyEmail = async () => {
       try {
         const res = await fetch(`${process.env.REACT_APP_BACKEND}/verifyEmail`, {
@@ -33,8 +33,6 @@ function VerifyEmail() {
             Authorization: `Bearer ${token}`
           }
         });
-        const resJSON = await res.json();
-        console.log(resJSON);
         if (res.status >= 200 && res.status < 300) {
           navigate('/login');
           handleError('You verified email, now you can login', true);

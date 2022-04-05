@@ -141,7 +141,6 @@ function ClientsOrProjects() {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     }
   };
@@ -156,14 +155,13 @@ function ClientsOrProjects() {
         }
       });
       const resJSON = await res.json();
-      console.log(resJSON);
+
       if (res.status === 200) {
         setProjects(resJSON);
       } else {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     }
   };

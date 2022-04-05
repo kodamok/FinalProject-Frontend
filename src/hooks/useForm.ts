@@ -35,7 +35,6 @@ export default function useForm(initial = initValue) {
       // setPreviewImage(window.URL.createObjectURL(inputs.image) as any);
       const { files }: any = e.target as HTMLInputElement;
       if (files.length === 1 && files[0].type.startsWith('image') && inputs.files !== null) {
-        console.log('Using Cloudinary...');
         await new Compressor(files[0], {
           quality: 0.6,
           success(result: File | Blob) {
@@ -70,7 +69,6 @@ export default function useForm(initial = initValue) {
             new Compressor(files[i], {
               quality: 0.6,
               success(result: File | Blob) {
-                console.log({ result });
                 filteredFiles.push(result);
               },
               error() {
@@ -81,7 +79,7 @@ export default function useForm(initial = initValue) {
             filteredFiles.push(files[i]);
           }
         }
-        console.log('Using AWS S3...', files);
+
         setInputs({
           ...inputs,
           [name]: filteredFiles

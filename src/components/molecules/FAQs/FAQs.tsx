@@ -22,17 +22,11 @@ export function Faq() {
     }
   ];
 
-  console.log(data[2].description);
-
   return (
     <Container>
       <div>
-        {data.map((item, index) => (
-          <>
-            {console.log('EACH ITEM', item)}
-            {console.log(`${index}.`, item)}
-            <AccordionItem key={item.id} itemToDisplay={item} />
-          </>
+        {data.map((item) => (
+          <AccordionItem key={item.id} itemToDisplay={item} />
         ))}
       </div>
     </Container>
@@ -40,7 +34,6 @@ export function Faq() {
 }
 
 function AccordionItem({ itemToDisplay }: any) {
-  console.log({ itemToDisplay });
   const [showDescription, setShowDescription1] = useState(false);
 
   const handleOpenDescription = () => {

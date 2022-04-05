@@ -61,12 +61,12 @@ const ContainerDiv = styled.div`
   }
 `;
 
-const ParagraphAdd = styled.div`
-  display: none;
-  ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    display: block;
-  }
-`;
+// const ParagraphAdd = styled.div`
+//   display: none;
+//   ${({ theme }) => theme.up(theme.breakpoint.m)} {
+//     display: block;
+//   }
+// `;
 
 const ContainerButton = styled.div`
   display: flex;
@@ -141,7 +141,7 @@ function SignUp() {
           body: JSON.stringify(inputs)
         });
         const resJSON = await res.json();
-        console.log(resJSON);
+
         if (res.status === 201) {
           handleError(
             resJSON.message || 'You created account correctly, now verify your email',
@@ -152,7 +152,6 @@ function SignUp() {
           handleError(resJSON.message);
         }
       } catch (error: any) {
-        console.log('FETCHING ERROR', error);
         handleError();
       } finally {
         setIsLoading(false);
@@ -229,9 +228,9 @@ function SignUp() {
                 onChange={handleChange}
                 value={inputs.taxNumber}
               />
-              <ParagraphAdd>
-                <p>Lorem isi corrupti voluptatibus?</p>
-              </ParagraphAdd>
+              {/* <ParagraphAdd> */}
+              {/*   <p>Lorem isi corrupti voluptatibus?</p> */}
+              {/* </ParagraphAdd> */}
             </div>
             <ContainerButton>
               <Button

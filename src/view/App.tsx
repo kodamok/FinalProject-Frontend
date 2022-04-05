@@ -44,10 +44,22 @@ function App(): JSX.Element {
 
   useEffect(() => {
     let interval: any;
+
     if (userData.token) {
       // When entering the website, check whether the token's time has expired
       if (Date.now() > userData.exp) {
-        handleLogout();
+        setUserData({
+          userId: '',
+          token: '',
+          name: '',
+          exp: '',
+          role: '',
+          email: '',
+          identityCardNumber: '',
+          taxNumber: '',
+          avatar: ''
+        });
+        navigate('/');
         setListening(false);
         setMessageDisplayed(false);
       }
@@ -68,7 +80,6 @@ function App(): JSX.Element {
             clearInterval(interval);
             setMessageDisplayed(false);
           }
-          // console.log('Left', ((userData.exp - Date.now()) / 1000).toFixed(0), 's To Logout');
         }, 5000);
       } else {
         clearInterval(interval);
@@ -89,14 +100,13 @@ function App(): JSX.Element {
         }
       });
       const resJSON = await res.json();
-      // console.log(resJSON);
+
       if (res.status === 200) {
         setClientsGlobal(resJSON);
       } else {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     }
   };
@@ -111,14 +121,13 @@ function App(): JSX.Element {
         }
       });
       const resJSON = await res.json();
-      // console.log(resJSON);
+
       if (res.status === 200) {
         setClientsGlobal(resJSON);
       } else {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     }
   };
@@ -136,30 +145,27 @@ function App(): JSX.Element {
     const connectSSE = async () => {
       if (token) {
         if (!listening) {
-          console.log('I try listening SSE...');
           const events = new EventSource(`${process.env.REACT_APP_BACKEND}/events/${token}`);
 
           events.onmessage = (event) => {
             const parsedData = JSON.parse(event.data);
-            console.log('Parsed', parsedData);
+
             if (parsedData.text === 'stopSSEEventsNow') {
               events.close();
-              console.log('I closed the connection Here');
             }
             setMessages((messagesItems) => messagesItems.concat(parsedData));
           };
 
           events.onerror = (e) => {
-            console.log('SSE ERROR', e);
+            console.log(e);
           };
 
           events.onopen = () => {
-            console.log('Connection works ...');
+            console.log('Connection works...');
           };
 
           setListening(true);
         }
-        console.log('I do Nothing');
       } else {
         setMessages([]);
         setListening(false);
@@ -179,9 +185,8 @@ function App(): JSX.Element {
         body: JSON.stringify({ code })
       });
       const resJSON = await res.json();
-      console.log(resJSON);
+
       if (res.status >= 200 && res.status < 300) {
-        console.log('in OK', resJSON);
         setUserData(resJSON);
         navigate('/');
         handleError('You are correctly logged in', true);
@@ -189,7 +194,6 @@ function App(): JSX.Element {
         handleError(resJSON.message, res.status === 200);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     }
   };
@@ -202,12 +206,9 @@ function App(): JSX.Element {
     // const clientCode = urlParams.get('code');
 
     if (urlParams.error) {
-      const { error }: any = urlParams;
-      console.log(`An error occurred: ${error}`);
       handleError('Something went wrong with Google Login, try later again');
     }
     if (urlParams.code) {
-      console.log(`The code is: ${urlParams.code}`);
       handleGoogleLogin(urlParams.code);
     }
   }, [window.location.search]);

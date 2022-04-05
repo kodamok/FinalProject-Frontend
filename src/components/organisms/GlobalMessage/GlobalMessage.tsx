@@ -133,8 +133,8 @@ const ChatBox = styled.div`
 
   > div:first-child > div:nth-child(2) > svg:hover {
     cursor: pointer;
-    background: white;
     border-radius: 50%;
+    transform: scale(1.2);
   }
 
   > div:first-child > div:nth-child(2) > svg {
@@ -187,7 +187,7 @@ const ChatBoxSmall = styled.div`
   }
   > div:last-child > svg:hover {
     cursor: pointer;
-    background: white;
+    transform: scale(1.2);
     border-radius: 50%;
   }
   ${({ theme }) => theme.down(theme.breakpoint.m)} {
@@ -299,16 +299,17 @@ function GlobalMessage() {
   const { inputs, handleChange, resetForm, setInputs } = useForm(initialValue);
   const [clientMessages, setClientMessages] = useState([]);
   const [actuallyClient, setActuallyClient] = useState<any[]>([]);
-  const handleOpenContactListChat = () => {
-    setIsOpenContactList((prev) => !prev);
-    setOpenChatWithMessages(false);
-  };
-  // const [clientsGlobal, setClientsGlobal] = useState<any[]>([]);
   const { userData, messages, openChatBoxWithThisUser, setOpenChatBoxWithThisUser, clientsGlobal } =
     useContext(Context);
   const { handleError } = useError();
   const [openChatWithMessages, setOpenChatWithMessages] = useState(false);
   const [displayChatBoxOnTheBottom, setDisplayChatBoxOnTheBottom] = useState(false);
+
+  const handleOpenContactListChat = () => {
+    setIsOpenContactList((prev) => !prev);
+    setOpenChatWithMessages(false);
+  };
+
   // Opening ChatBox With Messages
   const handleOpenChatBoxWithMessages = () => {
     setOpenChatWithMessages((prev) => !prev);
@@ -323,7 +324,6 @@ function GlobalMessage() {
     e.preventDefault();
     const sendMessage = async () => {
       try {
-        console.log('This message is sending...', inputs);
         const res = await fetch(`${process.env.REACT_APP_BACKEND}/message`, {
           method: 'POST',
           headers: {
@@ -339,7 +339,6 @@ function GlobalMessage() {
           handleError(resJSON.message);
         }
       } catch (error: any) {
-        console.log('Something wrong with sending message', error);
         handleError();
       }
     };
@@ -397,7 +396,6 @@ function GlobalMessage() {
     recognition.onresult = (event: any) => {
       // SpeechRecognitionEvent type
       const speechToText = event.results[0][0].transcript;
-      console.log(speechToText);
 
       setInputs({
         ...inputs,
@@ -416,7 +414,7 @@ function GlobalMessage() {
               <RoundedPhoto
                 width="40px"
                 height="40px"
-                img={actuallyClient[0].avatar}
+                img={actuallyClient[0].avatar || actuallyClient[0].google?.picture}
                 alt="avatar"
                 name={actuallyClient[0].name}
               />
@@ -463,7 +461,7 @@ function GlobalMessage() {
               <RoundedPhoto
                 width="40px"
                 height="40px"
-                img={actuallyClient[0].avatar}
+                img={actuallyClient[0].avatar || actuallyClient[0].google?.picture}
                 alt="avatar"
                 name={actuallyClient[0].name}
               />
@@ -497,7 +495,7 @@ function GlobalMessage() {
               {clientsGlobal.map((clientData: any) => (
                 <Contact key={clientData._id} onClick={() => handleOpenChatBox(clientData._id)}>
                   <RoundedPhoto
-                    img={clientData.avatar}
+                    img={clientData.avatar || clientData.google?.picture}
                     alt="face"
                     width="40px"
                     height="40px"
@@ -505,8 +503,6 @@ function GlobalMessage() {
                   />
                   <div>
                     <p>{clientData.name}</p>
-                    {/* {console.log(clientData)} */}
-                    {/* <p>{clientData.messages[0].text}</p> */}
                   </div>
                 </Contact>
               ))}

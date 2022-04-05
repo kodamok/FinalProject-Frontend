@@ -102,11 +102,11 @@ function SearchBar({ top }: SearchBarI) {
       });
       setIsSpeeching(false);
     };
-    recognition.onspeechend = function () {
+    recognition.onspeechend = () => {
       setIsSpeeching(false);
       recognition.stop();
     };
-    recognition.onerror = function () {
+    recognition.onerror = () => {
       setIsSpeeching(false);
       recognition.stop();
     };

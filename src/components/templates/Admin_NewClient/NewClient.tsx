@@ -44,12 +44,12 @@ const ContainerDiv = styled.div`
   }
 `;
 
-const ParagraphAdd = styled.div`
-  display: none;
-  ${({ theme }) => theme.up(theme.breakpoint.m)} {
-    display: block;
-  }
-`;
+// const ParagraphAdd = styled.div`
+//   display: none;
+//   ${({ theme }) => theme.up(theme.breakpoint.m)} {
+//     display: block;
+//   }
+// `;
 
 const ContainerButton = styled.div`
   display: flex;
@@ -135,7 +135,6 @@ function NewClient() {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     } finally {
       setIsLoading(false);
@@ -216,9 +215,9 @@ function NewClient() {
                   onChange={handleChange}
                   value={inputs.taxNumber}
                 />
-                <ParagraphAdd>
-                  <p>Lquia nisi corrupti voluptatibus?</p>
-                </ParagraphAdd>
+                {/* <ParagraphAdd> */}
+                {/*   <p>Lquia nisi corrupti voluptatibus?</p> */}
+                {/* </ParagraphAdd> */}
               </div>
               <ContainerButton>
                 <Button

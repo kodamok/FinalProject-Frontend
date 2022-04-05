@@ -53,7 +53,7 @@ describe('Test Snapshots', () => {
     expect(2 + 2).toBe(4);
   });
 
-  it('<HomePage />', () => {
+  it('<HomePage /> render', () => {
     const comp = renderWithThemeProvider(<HomePage />);
     expect(comp.container.firstChild).toMatchSnapshot();
   });

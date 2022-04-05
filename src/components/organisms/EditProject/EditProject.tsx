@@ -257,15 +257,13 @@ function EditProject() {
         }
       });
       const resJSON = await res.json();
-      console.log('This is Fetch', res);
-      console.log(resJSON);
+
       if (res.status === 200) {
         setProject(resJSON);
       } else {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     } finally {
       setIsLoading(false);
@@ -289,14 +287,13 @@ function EditProject() {
         body: JSON.stringify(inputs)
       });
       const resJSON = await res.json();
-      console.log(resJSON);
+
       if (res.status === 200) {
         handleError(resJSON.message, true);
       } else {
         handleError(resJSON.message);
       }
     } catch (error: any) {
-      console.log('FETCHING ERROR', error);
       handleError();
     } finally {
       setIsLoadingSubmit(false);
@@ -398,10 +395,21 @@ function EditProject() {
     navigate(`/client/${project.ownerUser}`);
   };
 
+  const handleNavigateToViewProject = () => {
+    navigate(`/project/${project._id}`);
+  };
+
   const PageHeadInfo = [
     {
       id: 1,
       titleOfPage: `Edit Project`,
+      threeDotButton: {
+        button1: 'View Project',
+        onClickEvent: handleNavigateToViewProject
+      }
+    },
+    {
+      id: 2,
       threeDotButton: {
         button1: 'View Client',
         onClickEvent: handleNavigateToViewClient

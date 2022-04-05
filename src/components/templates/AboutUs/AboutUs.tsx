@@ -26,7 +26,10 @@ export const OpeningTextContainer = styled.div`
   }
 
   p {
-    padding: 0 2rem 1.5rem 2rem;
+    padding: 0 1rem 1rem 1rem;
+    ${({ theme }) => theme.up(theme.breakpoint.sm)} {
+      padding: 0 2rem 1rem 2rem;
+    }
   }
 `;
 const TheTeamContainer = styled.div`
@@ -76,35 +79,27 @@ function AboutUs(): JSX.Element {
           {t('aboutUsHeadline1')} <RedSpan> {t('aboutUsHeadline2')} </RedSpan>
           {t('aboutUsHeadline3')}
         </h2>
-        <p>
-          We met each other in the DCI 1 year web Developement program. We were all coming from
-          different backgrounds but we all had one goal in common: to finish our program an start
-          working as Web Developers. Throughout the year each one found different challenges but at
-          the same time we somehow intertwined helping each other to be better. After the year we
-          had to deliver a Final Project in less than 2 months. This site is that project: <br />
-          <h5>What is this website about?</h5>A website which includes all the basic tools necessary
-          for any freelancer to interact with its customer and avoid jumping from platform to
-          platform falling in to infinite searches about where is what.
-          <h5>How the website works?</h5>
-          After the freelancer created his account, inside the account you can create a new customer
-          with a user name and a password. That user name and password is the log in information
-          necessary so your customer can access the website and start communicating and seeing all
-          the necessary updates as well as sharing files/photos associated to the project. Dont
-          forget to give him the login and password you created.
-          <h5>What tools ara available?</h5>
-          <h5>For the freelancer:</h5>
-          - Share photos and files. <br />- Keep track of all your customers.
-          <br /> - All the conversations related to the project in one place.
-          <br /> - An archive for all the present and past projects.
-          <br /> - Statistics about our performance as a freelance.
-          <br /> - PDF Download of the table of services provided.
-          <br /> - All the contact information from your customers in one place
-          <h5>For the customer:</h5>
-          <br /> - All the conversations related to the project in one place.
-          <br /> - Upload of files/photos related to the project.
-          <br /> - Manage username and password for more privacy.
-          <br /> - Access to project details.
-        </p>
+        <div>
+          <p>{t('aboutUsWeStartedTheSameAsYouDidText')}</p>
+          <h5>{t('aboutUsWhatIsWebsiteAbout')}</h5>
+          <p>{t('aboutUsWhatIsWebsiteAboutText')}</p>
+          <h5>{t('aboutUsHowTheWebsiteWorksHeadline')}</h5>
+          <p>{t('aboutUsHowTheWebsiteWorksText')}</p>
+          <h5>{t('aboutUsWhatToolsAreAvailable')}</h5>
+          <h5>{t('aboutUsForTheFreelancer')}</h5>
+          <p>{t('1')}</p>
+          <p>{t('2')}</p>
+          <p>{t('3')}</p>
+          <p>{t('4')}</p>
+          <p>{t('5')}</p>
+          <p>{t('6')}</p>
+          <p>{t('7')}</p>
+          <h5>{t('aboutUsForTheCustomer')}</h5>
+          <p>{t('8')}</p>
+          <p>{t('9')}</p>
+          <p>{t('10')}</p>
+          <p>{t('11')}</p>
+        </div>
       </OpeningTextContainer>
       <TheTeamContainer>
         <OurTeamTitle>

@@ -121,7 +121,7 @@ const cardPhoneReverse = keyframes`
         top:-140px;
         left: 110px; */
         font-weight: 600;
-        opacity: 100%;
+        opacity: 0;
     }
 
     100%{
@@ -613,7 +613,7 @@ function CardProfile({ clientData, projectData, client }: client) {
           <div className="picture">
             {/* <Cover /> */}
             <NewRoundedPhoto
-              img={clientData.avatar}
+              img={clientData.avatar || clientData.google?.picture}
               width="110px"
               height="110px"
               alt="face"

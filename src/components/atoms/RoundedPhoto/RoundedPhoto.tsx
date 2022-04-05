@@ -86,6 +86,9 @@ const InputFileStyle = styled.input`
     outline: 3px solid black;
   }
 `;
+const Acronym = styled.div`
+  color: ${({ theme }) => theme.color.main9};
+`;
 interface Photo {
   img: string | undefined | null;
   alt: string;
@@ -120,12 +123,12 @@ function RoundedPhoto({
   // let acronym: string;
   // if (name) {
   //   acronym = name[0].toUpperCase();
-  //   console.log(acronym);
+
   // }
 
   const getAcronym = (nameToAcronym: string) => {
     const splittedArray = nameToAcronym.split(' ');
-    console.log({ splittedArray });
+
     let finishedAcronym = '';
     for (let i = 0; i < splittedArray.length; i++) {
       finishedAcronym += splittedArray[i][0].toUpperCase();
@@ -155,7 +158,7 @@ function RoundedPhoto({
               </div>
             )}
             {icon && !img && <div>{icon}</div>}
-            {!img && !icon && name && <div>{getAcronym(name)}</div>}
+            {!img && !icon && name && <Acronym>{getAcronym(name)}</Acronym>}
           </ContainerPhoto>
         </PhotoWithButton>
       ) : (
@@ -169,7 +172,7 @@ function RoundedPhoto({
         >
           {img && <img src={img} alt={alt} />}
           {icon && !img && icon}
-          {!img && !icon && name && <div>{getAcronym(name)}</div>}
+          {!img && !icon && name && <Acronym>{getAcronym(name)}</Acronym>}
         </ContainerPhoto>
       )}
     </Container>

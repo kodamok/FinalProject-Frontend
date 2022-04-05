@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../providers/GeneralProvider';
+import useError from './useError';
 
 export const useAuth = () => {
   const navigate = useNavigate();
   const { setUserData, userData } = useContext(Context);
+  const { handleError } = useError();
   // const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   const sendMessage = async () => {
     try {
@@ -16,14 +18,8 @@ export const useAuth = () => {
         }
       });
       await res.json();
-      // console.log(resJSON);
-      // if (res.status === 201) {
-      //   console.log('Ok');
-      // } else {
-      //   console.log('Nope');
-      // }
     } catch (error: any) {
-      console.log('Something wrong with sending message', error);
+      handleError();
     }
   };
 
